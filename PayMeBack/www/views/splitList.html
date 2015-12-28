@@ -1,5 +1,8 @@
 ﻿<ion-view title="Splits">
     <ion-content class="padding">
+        <button class="button button-icon" ng-click="add_click()">
+            <i class="icon ion-compose"></i>
+        </button>
         <ion-list>
             <ion-item ng-repeat="split in splits" ui-sref="splitView({splitId: {{ split.id }} })">
                 {{ split.date }}
