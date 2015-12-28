@@ -1,0 +1,33 @@
+﻿# Visual Studio user-specific files
+*.suo
+*.user
+*.docstates
+.vs/*
+
+# Build working directories
+PayMeBack/bin
+PayMeBack/bld
+PayMeBack/platforms
+
+# Include plugin sub-directories, but not top level files (except for fetch.json)
+PayMeBack/plugins/*
+!PayMeBack/plugins/*/
+!PayMeBack/plugins/fetch.json
+
+# Local nu-get packages
+PayMeBack/packages/*/
+
+# NodeJS dependencies
+PayMeBack/node_modules
+
+# Bower dependencies
+PayMeBack/bower_components
+
+# Build-time variables
+PayMeBack/www/scripts/BuildVars.js
+
+# Windows thumbnail cache
+Thumbs.db
+
+# Windows folder config
+Desktop.ini
