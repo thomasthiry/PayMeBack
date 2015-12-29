@@ -8,7 +8,8 @@ describe('SplitService', function () {
         splitRepositorySpy = {
             list: jasmine.createSpy(),
             get: jasmine.createSpy(),
-            insert: jasmine.createSpy()
+            insert: jasmine.createSpy(),
+            saveToStorage: jasmine.createSpy()
         };
         module(function ($provide) {
             $provide.value('splitRepository', splitRepositorySpy);
@@ -38,9 +39,17 @@ describe('SplitService', function () {
 
     describe('create', function () {
         var expectedSplitName = 'Tue Dec 29 2015 15:40';
+        var splits;
+        beforeEach(function () {
+            splits = splitService.create();
+        });
+
         it('should call the repository with name ' + expectedSplitName, function () {
-            var splits = splitService.create();
             expect(splitRepositorySpy.insert).toHaveBeenCalledWith(expectedSplitName);
+        });
+
+        it('should call saveToStorage on the repository', function () {
+            expect(splitRepositorySpy.saveToStorage).toHaveBeenCalled();
         });
     });
 });

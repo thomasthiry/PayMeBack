@@ -19,3 +19,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 app.value('dateTimeProvider', { now: function () { return new Date(); } });
+
+app.run(function (splitRepository) {
+    splitRepository.loadFromStorage();
+})

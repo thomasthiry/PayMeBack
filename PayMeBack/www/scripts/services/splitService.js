@@ -12,7 +12,11 @@
         },
         create: function() {
             var name = formatDateTime(dateTimeProvider.now());
-            return splitRepository.insert(name);
+            var split = splitRepository.insert(name);
+
+            splitRepository.saveToStorage();
+
+            return split;
         },
     };
 }]);

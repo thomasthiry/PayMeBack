@@ -63,10 +63,10 @@ describe('SplitRepository', function () {
         it('should call local storage', function () {
             expect(localStorage.getItem).toHaveBeenCalledWith('splits');
         });
+
         it('should contain more splits than before', function () {
             expect(initialSplits.length).toEqual(0);
             expect(finalSplits.length).toEqual(2);
-
         });
     });
 
