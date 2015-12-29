@@ -11,8 +11,8 @@
             return splitRepository.get(splitId);
         },
         create: function() {
-            var date = formatDateTime(dateTimeProvider.now());
-            return splitRepository.insert(date);
+            var name = formatDateTime(dateTimeProvider.now());
+            return splitRepository.insert(name);
         },
     };
 }]);

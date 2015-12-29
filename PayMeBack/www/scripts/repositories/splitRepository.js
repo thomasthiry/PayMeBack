@@ -1,11 +1,12 @@
 ﻿angular.module('PayMeBack').factory('splitRepository', function () {
-    var _splits = [{ id: 1, date: 'yesterday' }, { id: 2, date: 'today' }, { id: 3, date: 'Sat 25 Oct 2015' }];
+    var _splits = [];
+    var StorageKeySplits = 'splits';
 
     function getLastestId() {
         var ids = _splits.map(function (currentValue, index, array) { return currentValue.id });
         var maxId = Math.max.apply(Math, ids);
 
-        return maxId > 0 ? maxId : 1;
+        return maxId > 0 ? maxId : 0;
     }
 
     return {
@@ -22,6 +23,15 @@
             _splits.push(split);
 
             return split;
+        },
+        loadFromStorage: function () {
+            var storageString = localStorage.getItem(StorageKeySplits);
+            if (storageString != null) {
+                _splits = JSON.parse(storageString);
+            }
+        },
+        saveToStorage: function () {
+            localStorage.setItem(StorageKeySplits, JSON.stringify(_splits));
         }
     };
 });
