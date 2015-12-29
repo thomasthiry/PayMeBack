@@ -2,7 +2,7 @@
     $scope.splits = splitService.list();
 
     $scope.add_click = function () {
-        var newSplit = splitService.createSplit();
+        var newSplit = splitService.create();
         $state.go('splitView', {splitId: newSplit.id});
     };
 }]);

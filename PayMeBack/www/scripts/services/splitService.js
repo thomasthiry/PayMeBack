@@ -1,6 +1,6 @@
-﻿angular.module('PayMeBack').factory('splitService', ['splitRepository', function (splitRepository) {
+﻿angular.module('PayMeBack').factory('splitService', ['dateTimeProvider', 'splitRepository', function (dateTimeProvider, splitRepository) {
     function formatDateTime(date) {
-        return date.toISOString().slice(0, 16).replace('T', ' ');
+        return date.toString().slice(0, 21);
     }
 
     return {
@@ -10,8 +10,8 @@
         get: function (splitId) {
             return splitRepository.get(splitId);
         },
-        createSplit: function() {
-            var date = formatDateTime(new Date());
+        create: function() {
+            var date = formatDateTime(dateTimeProvider.now());
             return splitRepository.insert(date);
         },
     };

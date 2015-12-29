@@ -17,3 +17,5 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/splits');
 });
+
+app.value('dateTimeProvider', { now: function () { return new Date(); } });
