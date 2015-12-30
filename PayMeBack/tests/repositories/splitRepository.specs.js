@@ -17,7 +17,7 @@ describe('SplitRepository', function () {
         });
 
         it('should return the inserted split', function () {
-            expect(insertedSplit.date).toEqual(splitName);
+            expect(insertedSplit.name).toEqual(splitName);
         });
 
         it('should have an id of 1', function () {
@@ -34,7 +34,7 @@ describe('SplitRepository', function () {
             var fetchedSplit = splitRepository.get(insertedSplit.id);
 
             expect(fetchedSplit.id).toEqual(insertedSplit.id);
-            expect(fetchedSplit.date).toEqual(splitName);
+            expect(fetchedSplit.name).toEqual(splitName);
         });
     });
 
@@ -54,7 +54,7 @@ describe('SplitRepository', function () {
         beforeEach(function () {
             initialSplits = splitRepository.list();
             
-            spyOn(localStorage, 'getItem').and.returnValue('[{ "id": 1, "date": "Sat 25 Dec 14:48" }, { "id": 2, "date": "Sun 26 Dec 10:18" }]');;
+            spyOn(localStorage, 'getItem').and.returnValue('[{ "id": 1, "name": "Sat 25 Dec 2015 14:48" }, { "id": 2, "name": "Sun 26 Dec 2015 10:18" }]');;
             splitRepository.loadFromStorage();
 
             finalSplits = splitRepository.list();
@@ -73,12 +73,12 @@ describe('SplitRepository', function () {
     describe('saveToStorage', function () {
         beforeEach(function () {
             spyOn(localStorage, 'setItem');
-            splitRepository.insert('Sat 25 Dec 14:48');
+            splitRepository.insert('Sat 25 Dec 2015 14:48');
             splitRepository.saveToStorage();
         });
 
         it('should call local storage', function () {
-            expect(localStorage.setItem).toHaveBeenCalledWith('splits', '[{"date":"Sat 25 Dec 14:48","id":1}]');
+            expect(localStorage.setItem).toHaveBeenCalledWith('splits', '[{"name":"Sat 25 Dec 2015 14:48","id":1}]');
         });
     });
 });

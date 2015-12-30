@@ -17,8 +17,8 @@
             var matchingSplits = _splits.filter(function (value, index, ar) { return value.id == splitId });
             return matchingSplits.length > 0 ? matchingSplits[0] : null;
         },
-        insert: function (date) {
-            var split = { date: date, id: getLastestId() + 1 };
+        insert: function (name) {
+            var split = { name: name, id: getLastestId() + 1 };
 
             _splits.push(split);
 
