@@ -1,4 +1,4 @@
-﻿angular.module('PayMeBack').factory('splitService', ['dateTimeProvider', 'splitRepository', function (dateTimeProvider, splitRepository) {
+﻿angular.module('PayMeBack').factory('splitService', ['dateTimeProvider', 'splitRepository', 'contactRepository', function (dateTimeProvider, splitRepository, contactRepository) {
     function formatDateTime(date) {
         return date.toString().slice(0, 21);
     }
@@ -17,6 +17,13 @@
             splitRepository.saveToStorage();
 
             return split;
+        },
+        addContact: function (contactEmail) {
+            var splitContact = contactRepository.get({ email: contactEmail });
+            if (splitContact == null) {
+                splitContact = new SplitContact(0, contactEmail);
+                splitContact.id = contactRepository.insert(splitContact);
+            }
         },
     };
 }]);

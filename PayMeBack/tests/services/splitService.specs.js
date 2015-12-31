@@ -1,5 +1,6 @@
 ﻿var splitService;
 var splitRepositorySpy;
+var contactRepositorySpy;
 
 describe('SplitService', function () {
     beforeEach(function () {
@@ -9,12 +10,15 @@ describe('SplitService', function () {
             list: jasmine.createSpy(),
             get: jasmine.createSpy(),
             insert: jasmine.createSpy(),
-            saveToStorage: jasmine.createSpy()
+            saveToStorage: jasmine.createSpy(),
+        };
+        contactRepositorySpy = {
+            get: jasmine.createSpy(),
+            insert: jasmine.createSpy(),
         };
         module(function ($provide) {
             $provide.value('splitRepository', splitRepositorySpy);
-        });
-        module(function ($provide) {
+            $provide.value('contactRepository', contactRepositorySpy);
             $provide.value('dateTimeProvider', { now: function () { return new Date('29 Dec 2015 15:40:55'); } });
         });
 
@@ -50,6 +54,27 @@ describe('SplitService', function () {
 
         it('should call saveToStorage on the repository', function () {
             expect(splitRepositorySpy.saveToStorage).toHaveBeenCalled();
+        });
+    });
+
+    describe('addContact with email', function () {
+        var contactEmail = 'john@user.com';
+        beforeEach(function () {
+            splitService.addContact(contactEmail);
+        });
+
+        it('should call the repository to check if user exists', function () {
+            expect(contactRepositorySpy.get).toHaveBeenCalledWith({ email: contactEmail });
+        });
+
+        describe('when the contact doesn\'t already exist', function () {
+            it('should call the repository to create a new contact', function () {
+                expect(contactRepositorySpy.insert).toHaveBeenCalled();
+            });
+        });
+
+        it('should call the repository to check if user exists', function () {
+            expect(contactRepositorySpy.get).toHaveBeenCalledWith({ email: contactEmail });
         });
     });
 });
