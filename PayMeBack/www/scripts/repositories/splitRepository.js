@@ -18,7 +18,7 @@
             return matchingSplits.length > 0 ? matchingSplits[0] : null;
         },
         insert: function (name) {
-            var split = { name: name, id: getLastestId() + 1 };
+            var split = new Split(getLastestId() + 1, name);
 
             _splits.push(split);
 
