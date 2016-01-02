@@ -15,6 +15,7 @@ describe('SplitService', function () {
         contactRepositorySpy = {
             get: jasmine.createSpy(),
             insert: jasmine.createSpy(),
+            saveToStorage: jasmine.createSpy(),
         };
         module(function ($provide) {
             $provide.value('splitRepository', splitRepositorySpy);
@@ -57,10 +58,12 @@ describe('SplitService', function () {
         });
     });
 
-    describe('addContact with email', function () {
+    describe('addContactToSplit with email', function () {
         var contactEmail = 'john@user.com';
+        var split;
         beforeEach(function () {
-            splitService.addContact(contactEmail);
+            split = new Split(1, 'My Split 1');
+            splitService.addContactToSplit(split, contactEmail);
         });
 
         it('should call the repository to check if user exists', function () {
@@ -73,8 +76,14 @@ describe('SplitService', function () {
             });
         });
 
-        it('should call the repository to check if user exists', function () {
-            expect(contactRepositorySpy.get).toHaveBeenCalledWith({ email: contactEmail });
+        it('should add the contact to the split', function () {
+            expect(split.contacts.length).toEqual(1);
+            expect(split.contacts[0].email).toEqual(contactEmail);
+        });
+
+        it('should call the repository to save splits and contacts to storage', function () {
+            expect(splitRepositorySpy.saveToStorage).toHaveBeenCalled();
+            expect(contactRepositorySpy.saveToStorage).toHaveBeenCalled();
         });
     });
 });

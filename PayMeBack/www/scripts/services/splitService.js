@@ -18,12 +18,17 @@
 
             return split;
         },
-        addContact: function (contactEmail) {
+        addContactToSplit: function (split, contactEmail) {
             var splitContact = contactRepository.get({ email: contactEmail });
             if (splitContact == null) {
                 splitContact = new SplitContact(0, contactEmail);
                 splitContact.id = contactRepository.insert(splitContact);
             }
+
+            split.addContact(splitContact);
+
+            splitRepository.saveToStorage();
+            contactRepository.saveToStorage();
         },
     };
 }]);
