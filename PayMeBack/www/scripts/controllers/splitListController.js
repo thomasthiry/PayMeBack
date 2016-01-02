@@ -1,4 +1,4 @@
-﻿angular.module('PayMeBack').controller('splitList', ['$scope', '$state', 'splitService', function ($scope, $state, splitService) {
+﻿angular.module('PayMeBack').controller('SplitListController', ['$scope', '$state', 'splitService', function ($scope, $state, splitService) {
     $scope.splits = splitService.list();
 
     $scope.add_click = function () {

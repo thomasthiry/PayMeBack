@@ -7,12 +7,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('splitList', {
             url: '/splits',
             templateUrl: 'views/splitList.html',
-            controller: 'splitList'
+            controller: 'SplitListController'
         })
         .state('splitView', {
             url: '/splits/:splitId',
             templateUrl: 'views/splitView.html',
-            controller: 'splitView'
+            controller: 'SplitViewController'
         });
 
     $urlRouterProvider.otherwise('/splits');
