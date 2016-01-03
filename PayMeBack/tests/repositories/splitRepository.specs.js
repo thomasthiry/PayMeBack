@@ -54,7 +54,7 @@ describe('SplitRepository', function () {
         beforeEach(function () {
             initialSplits = splitRepository.list();
             
-            spyOn(localStorage, 'getItem').and.returnValue('[{"id":1,"name":"Sat 25 Dec 2015 14:48","date":"2015-12-30T16:34:41.433Z"},{"id":2,"name":"Sun 26 Dec 2015 10:18","date":"2015-12-30T16:34:41.433Z"}]');;
+            spyOn(localStorage, 'getItem').and.returnValue('[{"id":1,"name":"Sat 25 Dec 2015 14:48","date":"2015-12-30T16:34:41.433Z"},{"id":2,"name":"Sun 26 Dec 2015 10:18","date":"2015-12-30T16:34:41.433Z"}]');
             splitRepository.loadFromStorage();
 
             finalSplits = splitRepository.list();
@@ -67,6 +67,10 @@ describe('SplitRepository', function () {
         it('should contain more splits than before', function () {
             expect(initialSplits.length).toEqual(0);
             expect(finalSplits.length).toEqual(2);
+        });
+
+        it('should contain actual Split objects, not just objects with similar fields', function () {
+            expect(finalSplits[0] instanceof Split).toBeTruthy();
         });
     });
 

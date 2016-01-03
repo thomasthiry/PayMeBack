@@ -13,7 +13,7 @@ describe('SplitService', function () {
             saveToStorage: jasmine.createSpy(),
         };
         contactRepositorySpy = {
-            get: jasmine.createSpy(),
+            get: jasmine.createSpy().and.returnValue(null),
             insert: jasmine.createSpy(),
             saveToStorage: jasmine.createSpy(),
         };
@@ -76,9 +76,8 @@ describe('SplitService', function () {
             });
         });
 
-        it('should add the contact to the split', function () {
-            expect(split.contacts.length).toEqual(1);
-            expect(split.contacts[0].email).toEqual(contactEmail);
+        it('should add a new contact to the split', function () {
+            expect(split.contactIds.length).toEqual(1);
         });
 
         it('should call the repository to save splits and contacts to storage', function () {

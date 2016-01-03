@@ -6,7 +6,7 @@
     </ion-nav-buttons>
     <ion-content class="padding">
         <ion-list>
-            <ion-item ng-repeat="split in splits" ui-sref="splitView({splitId: {{ split.id }} })">
+            <ion-item ng-repeat="split in splits track by split.id" ui-sref="splitView({splitId: {{ split.id }} })">
                 {{ split.name }}
             </ion-item>
         </ion-list>

@@ -9,6 +9,16 @@
         return maxId > 0 ? maxId : 0;
     }
 
+    function createSplit(fields) {
+        var split = new Split();
+        for (var key in fields) {
+            //copy all the fields
+            split[key] = fields[key];
+        }
+
+        return split;
+    }
+
     return {
         list: function () {
             return _splits;
@@ -25,13 +35,17 @@
             return split;
         },
         loadFromStorage: function () {
+            _splits = [];
             var storageString = localStorage.getItem(StorageKeySplits);
             if (storageString != null) {
-                _splits = JSON.parse(storageString);
+                var splitFieldsArray = angular.fromJson(storageString);
+                for (splitFields of splitFieldsArray) {
+                    _splits.push(createSplit(splitFields));
+                }
             }
         },
         saveToStorage: function () {
-            localStorage.setItem(StorageKeySplits, JSON.stringify(_splits));
+            localStorage.setItem(StorageKeySplits, angular.toJson(_splits));
         }
     };
 });

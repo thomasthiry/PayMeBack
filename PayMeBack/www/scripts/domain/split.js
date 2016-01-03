@@ -2,9 +2,9 @@
     this.id = id
     this.name = name;
     this.date = new Date();
-    this.contacts = [];
+    this.contactIds = [];
 
-    this.addContact = function (splitContact) {
-        this.contacts.push(splitContact);
+    this.addContact = function (contactId) {
+        this.contactIds.push(contactId);
     }
 }

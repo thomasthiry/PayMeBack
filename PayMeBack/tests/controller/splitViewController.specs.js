@@ -2,7 +2,9 @@
     var $controller;
     var $scope = {};
     var splitViewController;
-    var split = new Split(1, 'john@user.com');
+    var split = new Split(5, 'Saturday');
+    split.contactIds = [1, 2];
+    var contacts = [new SplitContact(1, 'john@user.com'), new SplitContact(2, 'mark@user.com')];
 
     beforeEach(function () {
         module('PayMeBack');
@@ -11,9 +13,13 @@
             get: jasmine.createSpy().and.returnValue(split),
             addContactToSplit: jasmine.createSpy(),
         };
+        contactServiceSpy = {
+            list: jasmine.createSpy().and.returnValue(contacts),
+        };
 
         module(function ($provide) {
             $provide.value('splitService', splitServiceSpy);
+            $provide.value('contactService', contactServiceSpy);
             $provide.value('$stateParams', { splitId: 5 });
         });
 
@@ -28,13 +34,25 @@
         it('should fetch the split', function () {
             expect(splitServiceSpy.get).toHaveBeenCalledWith(5);
         });
+        it('should fetch the contacts of the split and store it in scope', function () {
+            expect(contactServiceSpy.list).toHaveBeenCalledWith({ ids: split.contactIds });
+            expect($scope.contacts).toEqual(contacts);
+        });
     });
 
     describe('add contact to split', function () {
+        var emailToAdd = 'sue@user.com'
+        beforeEach(function () {
+            $scope.form.contactEmailToAdd = emailToAdd;
+            $scope.addContactClick();
+        });
+
         it('should call the split service', function () {
-            $scope.contactEmailToAdd = split.email;
-            splitViewController.addContactClick();
-            expect(splitServiceSpy.addContactToSplit).toHaveBeenCalledWith(split, $scope.contactEmailToAdd);
+            expect(splitServiceSpy.addContactToSplit).toHaveBeenCalledWith(split, emailToAdd);
+        });
+
+        it('should empty the textbox', function () {
+            expect($scope.form.contactEmailToAdd).toEqual('');
         });
     });
 });

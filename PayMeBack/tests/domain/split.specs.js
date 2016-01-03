@@ -20,13 +20,13 @@
         });
     });
     describe('addContact', function () {
-        var splitContact = new SplitContact(1, 'john@contact.be');
+        var contactId = 5;
         beforeEach(function () {
-            split.addContact(splitContact);
+            split.addContact(contactId);
         });
 
-        it('the contact should be in the list of contacts of the split', function () {
-            expect(split.contacts).toContain(splitContact);
+        it('the contact id should be in the list of contact ids of the split', function () {
+            expect(split.contactIds).toContain(contactId);
         });
     });
 });

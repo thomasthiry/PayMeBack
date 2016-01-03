@@ -5,7 +5,7 @@
 
     return {
         list: function () {
-            return splitRepository.list()
+            return splitRepository.list();
         },
         get: function (splitId) {
             return splitRepository.get(splitId);
@@ -22,10 +22,9 @@
             var splitContact = contactRepository.get({ email: contactEmail });
             if (splitContact == null) {
                 splitContact = new SplitContact(0, contactEmail);
-                splitContact.id = contactRepository.insert(splitContact);
+                contactRepository.insert(splitContact);
             }
-
-            split.addContact(splitContact);
+            split.addContact(splitContact.id);
 
             splitRepository.saveToStorage();
             contactRepository.saveToStorage();
