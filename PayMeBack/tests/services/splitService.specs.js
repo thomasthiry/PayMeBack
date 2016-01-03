@@ -34,11 +34,11 @@ describe('SplitService', function () {
             expect(splitRepositorySpy.list).toHaveBeenCalled();
         });
     });
-    // todo: pass Id
+
     describe('get', function () {
-        it('should call the repository', function () {
-            var splits = splitService.get();
-            expect(splitRepositorySpy.get).toHaveBeenCalled();
+        it('should call the repository with the provided id', function () {
+            var splits = splitService.get(1);
+            expect(splitRepositorySpy.get).toHaveBeenCalledWith(1);
         });
     });
 

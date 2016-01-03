@@ -1,7 +1,7 @@
-﻿angular.module('PayMeBack').factory('contactService', ['contactRepository', function (contactRepository) {
-    return {
-        list: function (query) {
-            return contactRepository.list(query);
-        },
+﻿angular.module('PayMeBack').service('contactService', ['contactRepository', contactService]);
+
+function contactService(contactRepository) {
+    this.list = function (query) {
+        return contactRepository.list(query);
     };
-}]);
+}
