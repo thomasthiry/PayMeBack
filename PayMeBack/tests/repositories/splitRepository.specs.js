@@ -1,11 +1,24 @@
-﻿var splitRepository;
+﻿describe('SplitRepository', function () {
+    var splitRepository;
+    var $httpBackend;
 
-describe('SplitRepository', function () {
     beforeEach(function () {
         module('PayMeBack');
 
         inject(function ($injector) {
+            $httpBackend = $injector.get('$httpBackend');
             splitRepository = $injector.get('splitRepository');
+        });
+    });
+
+    describe('list', function () {
+        it('should call backend and return split objects', function () {
+            //$httpBackend.when('Get', '/:userId/splits').respond(200, '[{"id":1,"name":"Sat 25 Dec 2015 14:48","date":"2015-12-30T16:34:41.433Z"},{"id":2,"name":"Sun 26 Dec 2015 10:18","date":"2015-12-30T16:34:41.433Z"}]');
+
+            //var splits = splitRepository.list();
+
+            //expect(splits.length).toEqual(2);
+            //expect(splits[1].id).toEqual(2);
         });
     });
 
@@ -35,17 +48,6 @@ describe('SplitRepository', function () {
 
             expect(fetchedSplit.id).toEqual(insertedSplit.id);
             expect(fetchedSplit.name).toEqual(splitName);
-        });
-    });
-
-    describe('list', function () {
-        it('should return all splits that were inserted', function () {
-            var insertedSplit = splitRepository.insert('mysplit1');
-            var insertedSplit2 = splitRepository.insert('myothersplit');
-
-            var splits = splitRepository.list();
-
-            expect(splits.length).toEqual(2);
         });
     });
 

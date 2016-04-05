@@ -2,11 +2,11 @@
 
 function splitService(dateTimeProvider, splitRepository, contactRepository) {
     this.list = function () {
-        return splitRepository.list();
+        return splitRepository.query();
     };
 
     this.get = function (splitId) {
-        return splitRepository.get(splitId);
+        return splitRepository.get({ splitId: splitId });
     };
 
     this.create = function() {

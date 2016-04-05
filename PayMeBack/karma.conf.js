@@ -17,8 +17,9 @@ module.exports = function(config) {
     files: [
       'bower_components/ionic/release/js/ionic.bundle.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-resource/angular-resource.js',
       'www/scripts/**/*.js',
-      'tests/**/*.specs.js'
+      'tests/**/splitService.specs.js'
     ],
 
 

@@ -1,53 +1,58 @@
-﻿angular.module('PayMeBack').service('splitRepository', splitRepository);
+﻿angular.module('PayMeBack').factory('splitRepository', function ($resource) {
+    return $resource('/splits/:splitId');
+});
 
-function splitRepository() {
-    var _splits = [];
-    var _storageKeySplits = 'splits';
+//angular.module('PayMeBack').service('splitRepository', ['$http', splitRepository]);
 
-    this.list = function () {
-        return _splits;
-    };
+//function splitRepository($http) {
+//    var _splits = [];
+//    var _storageKeySplits = 'splits';
 
-    this.get = function (splitId) {
-        var matchingSplits = _splits.filter(function (value, index, ar) { return value.id == splitId });
-        return matchingSplits.length > 0 ? matchingSplits[0] : null;
-    };
+//    this.list = function () {
+//        $http.get('http://localhost/api/1/splits').then(function () { });
+//        return _splits;
+//    };
 
-    this.insert = function (name) {
-        var split = new Split(_getLastestId() + 1, name);
+//    this.get = function (splitId) {
+//        var matchingSplits = _splits.filter(function (value, index, ar) { return value.id == splitId });
+//        return matchingSplits.length > 0 ? matchingSplits[0] : null;
+//    };
 
-        _splits.push(split);
+//    this.insert = function (name) {
+//        var split = new Split(_getLastestId() + 1, name);
 
-        return split;
-    };
+//        _splits.push(split);
 
-    this.loadFromStorage = function () {
-        _splits = [];
-        var storageString = localStorage.getItem(_storageKeySplits);
-        if (storageString != null) {
-            var splitFieldsArray = angular.fromJson(storageString);
-            for (splitFields of splitFieldsArray) {
-                _splits.push(_createSplit(splitFields));
-            }
-        }
-    };
+//        return split;
+//    };
 
-    this.saveToStorage = function () {
-        localStorage.setItem(_storageKeySplits, angular.toJson(_splits));
-    };
+//    this.loadFromStorage = function () {
+//        _splits = [];
+//        var storageString = localStorage.getItem(_storageKeySplits);
+//        if (storageString != null) {
+//            var splitFieldsArray = angular.fromJson(storageString);
+//            for (splitFields of splitFieldsArray) {
+//                _splits.push(_createSplit(splitFields));
+//            }
+//        }
+//    };
 
-    function _getLastestId() {
-        var ids = _splits.map(function (currentValue, index, array) { return currentValue.id });
-        var maxId = Math.max.apply(Math, ids);
+//    this.saveToStorage = function () {
+//        localStorage.setItem(_storageKeySplits, angular.toJson(_splits));
+//    };
 
-        return maxId > 0 ? maxId : 0;
-    }
+//    function _getLastestId() {
+//        var ids = _splits.map(function (currentValue, index, array) { return currentValue.id });
+//        var maxId = Math.max.apply(Math, ids);
 
-    function _createSplit(fields) {
-        var split = new Split();
-        for (var key in fields) {
-            split[key] = fields[key]; //copy all the fields
-        }
-        return split;
-    }
-}
+//        return maxId > 0 ? maxId : 0;
+//    }
+
+//    function _createSplit(fields) {
+//        var split = new Split();
+//        for (var key in fields) {
+//            split[key] = fields[key]; //copy all the fields
+//        }
+//        return split;
+//    }
+//}
