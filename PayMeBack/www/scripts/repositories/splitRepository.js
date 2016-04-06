@@ -1,5 +1,5 @@
 ﻿angular.module('PayMeBack').factory('splitRepository', function ($resource) {
-    return $resource('/splits/:splitId');
+    return $resource('http://localhost:62487/splits/:splitId');
 });
 
 //angular.module('PayMeBack').service('splitRepository', ['$http', splitRepository]);
