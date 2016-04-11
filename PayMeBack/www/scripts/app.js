@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('PayMeBack', ['ionic', 'ngResource']);
+var app = angular.module('PayMeBack', ['ionic']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider

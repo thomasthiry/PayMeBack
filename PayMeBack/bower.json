@@ -1,7 +1,6 @@
 {
   "name": "PayMeBack",
   "dependencies": {
-    "angular-route": "1.5.3"
   },
   "devDependencies": {
     "angular-mocks": "1.4.8"
