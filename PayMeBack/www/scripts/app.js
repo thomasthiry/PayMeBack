@@ -18,4 +18,5 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/splits');
 });
 
+app.value('backendHostUrl', 'http://localhost:62487');
 app.value('dateTimeProvider', { now: function () { return new Date(); } });

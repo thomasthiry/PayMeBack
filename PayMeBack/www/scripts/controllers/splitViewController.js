@@ -1,18 +1,20 @@
-﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $stateParams, splitService, contactService) {
+﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$stateParams', 'splitService', function SplitViewController($scope, $stateParams, splitService) {
     $scope.form = { contactEmailToAdd: '' };
     
-    $scope.split = splitService.get($stateParams.splitId);
+    splitService.get($stateParams.splitId).then(function (split) {
+        $scope.split = split;
+    });
     
-    function refreshListOfContacts() {
-        $scope.contacts = contactService.list({ ids: $scope.split.contactIds });
-    }
-    refreshListOfContacts();
+    //function refreshListOfContacts() {
+    //    $scope.contacts = contactService.list({ ids: $scope.split.contactIds });
+    //}
+    //refreshListOfContacts();
 
-    $scope.addContactClick = function () {
-        splitService.addContactToSplit($scope.split, $scope.form.contactEmailToAdd);
+    //$scope.addContactClick = function () {
+    //    splitService.addContactToSplit($scope.split, $scope.form.contactEmailToAdd);
 
-        $scope.form.contactEmailToAdd = '';
+    //    $scope.form.contactEmailToAdd = '';
 
-        refreshListOfContacts();
-    }
+    //    refreshListOfContacts();
+    //}
 }]);
