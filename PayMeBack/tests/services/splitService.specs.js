@@ -1,9 +1,13 @@
 ﻿var splitService, splitRepositorySpy, contactRepositorySpy, $httpBackend, backendHostUrl;
+var nowText = "Tue Dec 29 2015 15:40";
+var nowDate = "2015-12-29T15:40:00.000Z";
 
 describe('SplitService', function () {
     beforeEach(function () {
         module('PayMeBack');
-
+        module(function ($provide) {
+            $provide.value('dateTimeProvider', { now: function () { return new Date(nowText); } });
+        });
         inject(function ($injector) {
             splitService = $injector.get('splitService');
             $httpBackend = $injector.get('$httpBackend');
@@ -39,21 +43,25 @@ describe('SplitService', function () {
         });
     });
 
-    //describe('create', function () {
-    //    var expectedSplitName = 'Tue Dec 29 2015 15:40';
-    //    var splits;
-    //    beforeEach(function () {
-    //        splits = splitService.create();
-    //    });
+    describe('create', function () {
+        var expectedSplitName = nowText;
+        var returnedSplit;
+        beforeEach(function () {
+            $httpBackend.when('POST', backendHostUrl + '/splits').respond({ "id": 2, "name": nowText, "date": nowDate });
+            splitService.create().then(function (split) {
+                returnedSplit = split;
+            });
+            $httpBackend.flush();
+        });
 
-    //    it('should call the repository with name ' + expectedSplitName, function () {
-    //        expect(splitRepositorySpy.insert).toHaveBeenCalledWith(expectedSplitName);
-    //    });
+        it('should return the created split with the provided id', function () {
+            expect(returnedSplit.id).toEqual(2);
+        });
 
-    //    it('should call saveToStorage on the repository', function () {
-    //        expect(splitRepositorySpy.saveToStorage).toHaveBeenCalled();
-    //    });
-    //});
+        it('the name of the split should be: ' + expectedSplitName, function () {
+            expect(returnedSplit.name).toEqual(expectedSplitName);
+        });
+    });
 
     //describe('addContactToSplit with email', function () {
     //    var contactEmail = 'john@user.com';

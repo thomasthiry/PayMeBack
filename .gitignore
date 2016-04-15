@@ -2,6 +2,7 @@
 *.suo
 *.user
 *.docstates
+*/.vs/*
 .vs/*
 
 # Build working directories

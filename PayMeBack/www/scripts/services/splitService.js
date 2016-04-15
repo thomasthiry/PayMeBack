@@ -21,14 +21,18 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
             });
     };
 
-    //this.create = function() {
-    //    var name = _formatDateTime(dateTimeProvider.now());
-    //    var split = new Split(null, name);
+    this.create = function () {
+        var name = _formatDateTime(dateTimeProvider.now());
+        var splitToCreate = { name: name, date: dateTimeProvider.now() };
 
-    //    splitRepository.saveToStorage();
-
-    //    return split;
-    //};
+        return $http.post(backendHostUrl + '/splits', JSON.stringify(splitToCreate)).then(
+            function successCallback(response) {
+                return response.data;
+            },
+            function errorCallback(response) {
+                console.log('failure');
+            });
+    };
 
     //this.addContactToSplit = function (split, contactEmail) {
     //    var splitContact = contactRepository.get({ email: contactEmail });
@@ -42,7 +46,7 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
     //    contactRepository.saveToStorage();
     //};
 
-    //function _formatDateTime(date) {
-    //    return date.toString().slice(0, 21);
-    //}
+    function _formatDateTime(date) {
+        return date.toString().slice(0, 21);
+    }
 }
