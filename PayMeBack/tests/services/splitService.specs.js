@@ -18,7 +18,7 @@ describe('SplitService', function () {
 
     describe('list', function () {
         it('should return a list of splits', function () {
-            $httpBackend.when('GET', backendHostUrl + '/splits').respond([{ "id": 1, "name": "Sat 25 Dec 2015 14:48", "date": "2015-12-30T16:34:41.433Z" }, { "id": 2, "name": "Sun 26 Dec 2015 10:18", "date": "2015-12-30T16:34:41.433Z" }]);
+            $httpBackend.when('GET', backendHostUrl + '/splits').respond([{ "id": 1, "name": "Sat 25 Dec 2015 14:48", "created": "2015-12-30T16:34:41.433Z" }, { "id": 2, "name": "Sun 26 Dec 2015 10:18", "created": "2015-12-30T16:34:41.433Z" }]);
             var _splits;
             splitService.list().then(function (splits) {
                 _splits = splits;
@@ -31,7 +31,7 @@ describe('SplitService', function () {
 
     describe('get', function () {
         it('should return a split with the provided id', function () {
-            $httpBackend.when('GET', backendHostUrl + '/splits/2').respond({ "id": 2, "name": "Sun 26 Dec 2015 10:18", "date": "2015-12-30T16:34:41.433Z" });
+            $httpBackend.when('GET', backendHostUrl + '/splits/2').respond({ "id": 2, "name": "Sun 26 Dec 2015 10:18", "created": "2015-12-30T16:34:41.433Z" });
 
             var _split;
             splitService.get(2).then(function (split) {
@@ -47,7 +47,7 @@ describe('SplitService', function () {
         var expectedSplitName = nowText;
         var returnedSplit;
         beforeEach(function () {
-            $httpBackend.when('POST', backendHostUrl + '/splits').respond({ "id": 2, "name": nowText, "date": nowDate });
+            $httpBackend.when('POST', backendHostUrl + '/splits').respond({ "id": 2, "name": nowText, "created": nowDate });
             splitService.create().then(function (split) {
                 returnedSplit = split;
             });

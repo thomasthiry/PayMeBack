@@ -18,32 +18,43 @@ namespace PayMeBack.Backend.Web.Controllers
             return _splits;
         }
 
-        // GET api/values/5
+        // GET api/splits/5
         [HttpGet("{id}")]
         public SplitDto Get(int id)
         {
             return _splits.SingleOrDefault(s => s.Id == id);
         }
 
-        // POST api/values
+        // POST api/splits
         [HttpPost]
-        public void Post([FromBody]SplitDto split)
+        public SplitDto Create([FromBody]SplitCreationDto splitCreationDto)
         {
-            _splits.Add(split);
+            var splitDto = new SplitDto { Name = splitCreationDto.Name, Created = splitCreationDto.Created };
+            splitDto.Id = GetNextSplitId();
+
+            _splits.Add(splitDto);
+
+            return splitDto;
+        }
+        private int GetNextSplitId()
+        {
+            return _splits.Max(s => s.Id) + 1;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-            throw new NotImplementedException();
-        }
+        //// PUT api/values/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //// DELETE api/values/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
     }
 }

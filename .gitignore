@@ -32,3 +32,6 @@ Thumbs.db
 
 # Windows folder config
 Desktop.ini
+
+# Nuget Packages
+packages/

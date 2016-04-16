@@ -23,7 +23,7 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
 
     this.create = function () {
         var name = _formatDateTime(dateTimeProvider.now());
-        var splitToCreate = { name: name, date: dateTimeProvider.now() };
+        var splitToCreate = { name: name, created: dateTimeProvider.now() };
 
         return $http.post(backendHostUrl + '/splits', JSON.stringify(splitToCreate)).then(
             function successCallback(response) {
