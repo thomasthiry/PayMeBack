@@ -1,0 +1,20 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "PayMeBack.Backend.Services Class Library",
+    "authors": [ "Thomas" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+    "frameworks": {
+        "dnxcore50": {
+            "dependencies": {
+                "System.Runtime": "4.0.21-beta-23516"
+            }
+        }
+    },
+    "dependencies": {
+        "PayMeBack.Backend.Contracts": "",
+        "PayMeBack.Backend.Models": "",
+        "System.Runtime.InteropServices": "4.0.21-beta-23516"
+    }
+}

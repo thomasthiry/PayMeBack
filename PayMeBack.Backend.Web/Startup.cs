@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using PayMeBack.Backend.Contracts;
+using PayMeBack.Backend.Contracts.Repositories;
+using PayMeBack.Backend.Contracts.Services;
+using PayMeBack.Backend.Models;
+using PayMeBack.Backend.Repository;
+using PayMeBack.Backend.Services;
+using PayMeBack.Backend.Web.Configurations;
+using PayMeBack.Backend.Web.Models;
 
 namespace PayMeBack.Backend.Web
 {
@@ -16,6 +25,8 @@ namespace PayMeBack.Backend.Web
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -30,6 +41,12 @@ namespace PayMeBack.Backend.Web
                 });
 
             services.AddCors();
+
+            services.AddSingleton<ISplitService, SplitService>();
+            services.AddSingleton<ISplitRepository, SplitRepository>();
+
+            var mapper = MapperConfig.CreateMapper();
+            services.AddInstance<IMapper>(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +67,7 @@ namespace PayMeBack.Backend.Web
             });
 
             app.UseMvc();
+
         }
 
         // Entry point for the application.

@@ -1,59 +1,70 @@
-﻿using PayMeBack.Backend.Web.Controllers;
+﻿using Moq;
+using PayMeBack.Backend.Contracts.Services;
+using PayMeBack.Backend.Models;
+using PayMeBack.Backend.Web.Configurations;
+using PayMeBack.Backend.Web.Controllers;
 using PayMeBack.Backend.Web.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace PayMeBack.Backend.Web.Tests
 {
     public class SplitControllerTests
     {
-        private SplitsController _controller = new SplitsController();
+        private SplitsController _controller;
+        private Mock<ISplitService> _splitServiceMock;
+
+        public SplitControllerTests()
+        {
+            _splitServiceMock = new Mock<ISplitService>();
+
+            var mapper = MapperConfig.CreateMapper();
+            _controller = new SplitsController(mapper, _splitServiceMock.Object);
+        }
 
         [Fact]
-        public void GetSplits_ReturnsSplits()
+        public void GetSplits_ReturnsSplitDtos()
         {
-            var controller = new SplitsController();
+            var splitsStub = new List<Split>
+            {
+                new Split { Name = "Tomorrow" },
+                new Split { Name = "Yesterday" },
+            };
+            _splitServiceMock.Setup(r => r.List()).Returns(splitsStub);
 
-            var splits = controller.Get();
+            var splits = _controller.Get();
 
             Assert.NotEmpty(splits);
+            Assert.IsAssignableFrom<SplitDto>(splits.First());
         }
 
         [Fact]
         public void GetSplit_GetOneById_ReturnsSplit()
         {
-            var controller = new SplitsController();
+            var splitStub = new Split { Id = 1, Name = "Tomorrow" };
+            _splitServiceMock.Setup(s => s.Get(1)).Returns(splitStub);
 
-            var split = controller.Get(1);
+            var split = _controller.Get(1);
 
-            Assert.Equal(1, split.Id);
+            Assert.Equal(splitStub.Name, split.Name);
         }
 
         [Fact]
         public void CreateSplit_ReturnsTheCreatedSplit()
         {
-            var splitCreationDto = CreateSplit();
+            var splitCreationDto = new SplitCreationDto { Name = "Created Split", Created = new DateTime(2016, 12, 05, 12, 30, 58) };
 
-            Assert.InRange(splitCreationDto.Id, 2, 1000);
+            var splitStub = new Split { Id = 3, Name = splitCreationDto.Name, Created = splitCreationDto.Created };
+            _splitServiceMock.Setup(s => s.Create(It.Is<string>(n => n == splitCreationDto.Name), It.Is<DateTime>(c => c == splitCreationDto.Created))).Returns(splitStub);
 
-            Assert.Equal(splitCreationDto.Name, splitCreationDto.Name);
-        }
+            var splitDto = _controller.Create(splitCreationDto);
 
-        [Fact]
-        public void CreateSplit_AddsTheSplitInCollection()
-        {
-            var splitCreationDto = CreateSplit();
-
-            var splitDto = _controller.Get(splitCreationDto.Id);
+            Assert.Equal(3, splitDto.Id);
 
             Assert.Equal(splitCreationDto.Name, splitDto.Name);
-        }
-
-        private SplitDto CreateSplit()
-        {
-            var splitCreationDto = new SplitCreationDto { Name = "Tomorrow", Created = new DateTime(2016, 12, 05, 12, 30, 58) };
-
-            return _controller.Create(splitCreationDto);
+            Assert.Equal(splitCreationDto.Created, splitDto.Created);
         }
     }
 }
