@@ -59,7 +59,7 @@ namespace PayMeBack.Backend.Web.Tests
             var splitStub = new Split { Id = 3, Name = splitCreationDto.Name, Created = splitCreationDto.Created };
             _splitServiceMock.Setup(s => s.Create(It.Is<string>(n => n == splitCreationDto.Name), It.Is<DateTime>(c => c == splitCreationDto.Created))).Returns(splitStub);
 
-            var splitDto = _controller.Create(splitCreationDto);
+            var splitDto = _controller.Post(splitCreationDto);
 
             Assert.Equal(3, splitDto.Id);
 

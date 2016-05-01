@@ -5,14 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using PayMeBack.Backend.Contracts;
-using PayMeBack.Backend.Contracts.Repositories;
 using PayMeBack.Backend.Contracts.Services;
-using PayMeBack.Backend.Models;
-using PayMeBack.Backend.Repository;
+using PayMeBack.Backend.Contracts;
 using PayMeBack.Backend.Services;
 using PayMeBack.Backend.Web.Configurations;
-using PayMeBack.Backend.Web.Models;
+using Microsoft.Data.Entity;
+using PayMeBack.Backend.Models;
+using PayMeBack.Backend.Repository;
 
 namespace PayMeBack.Backend.Web
 {
@@ -25,8 +24,6 @@ namespace PayMeBack.Backend.Web
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
-
-
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -43,10 +40,17 @@ namespace PayMeBack.Backend.Web
             services.AddCors();
 
             services.AddSingleton<ISplitService, SplitService>();
-            services.AddSingleton<ISplitRepository, SplitRepository>();
+            services.AddSingleton<IGenericRepository<Split>, GenericRepository<Split>>();
 
             var mapper = MapperConfig.CreateMapper();
             services.AddInstance<IMapper>(mapper);
+
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True;";
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<PayMeBackContext>(options => options.UseSqlServer(connection)
+                .MigrationsAssembly("PayMeBack.Backend.Repository"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

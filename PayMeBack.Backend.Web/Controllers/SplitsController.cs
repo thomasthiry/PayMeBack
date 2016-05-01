@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.Mvc;
 using PayMeBack.Backend.Web.Models;
-using System.Linq;
 using PayMeBack.Backend.Contracts.Services;
 using AutoMapper;
 
@@ -38,9 +36,10 @@ namespace PayMeBack.Backend.Web.Controllers
 
         // POST api/splits
         [HttpPost]
-        public SplitDto Create([FromBody]SplitCreationDto splitCreationDto)
+        public SplitDto Post([FromBody]SplitCreationDto splitCreationDto)
         {
-            return _mapper.Map<SplitDto>(_splitService.Create(splitCreationDto.Name, splitCreationDto.Created));
+            var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created);
+            return _mapper.Map<SplitDto>(createdSplit);
         }
 
         //// PUT api/values/5

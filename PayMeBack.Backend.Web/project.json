@@ -18,12 +18,15 @@
         "PayMeBack.Backend.Contracts": "",
         "PayMeBack.Backend.Models": "",
         "PayMeBack.Backend.Repository": "1.0.0-*",
-        "PayMeBack.Backend.Services": ""
+        "PayMeBack.Backend.Services": "",
+        "EntityFramework.Commands": "7.0.0-rc1-final",
+        "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final"
     },
 
-  "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
-  },
+    "commands": {
+        "web": "Microsoft.AspNet.Server.Kestrel",
+        "ef": "EntityFramework.Commands"
+    },
 
   "frameworks": {
     "dnxcore50": {
