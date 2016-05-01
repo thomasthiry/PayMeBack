@@ -32,7 +32,6 @@
 
     describe('click on add', function () {
         beforeEach(function () {
-
             splitServiceSpy.create.and.returnValue({ then: function (callback) { return callback(splitReturnedInCallback); } });
             $scope.add_click();
         });

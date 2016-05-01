@@ -1,6 +1,7 @@
 ﻿describe('SplitViewController', function () {
-    var $controller, splitViewController, $scope = {};
+    var $controller, splitViewController, splitServiceSpy, contactServiceSpy, $scope = {};
     var splitReturnedInCallback = { id: 2, name: 'Tomorrow' };
+    var contactsReturnedInCallback = [{ id: 1, name: 'Olivier' }, { id: 2, name: 'John' }];
 
     beforeEach(function () {
         module('PayMeBack');
@@ -8,8 +9,12 @@
         splitServiceSpy = jasmine.createSpyObj('splitServiceSpy', ['get']);
         splitServiceSpy.get.and.returnValue({ then: function (callback) { return callback(splitReturnedInCallback); } });
 
+        contactServiceSpy = jasmine.createSpyObj('contactServiceSpy', ['getBySplitId']);
+        contactServiceSpy.getBySplitId.and.returnValue({ then: function (callback) { return callback(contactsReturnedInCallback); } });
+
         module(function ($provide) {
             $provide.value('splitService', splitServiceSpy);
+            $provide.value('contactService', contactServiceSpy);
             $provide.value('$stateParams', { splitId: 2 });
         });
 
@@ -22,8 +27,12 @@
 
     describe('controller initialization', function () {
         it('should fetch the split', function () {
-            expect(splitServiceSpy.get).toHaveBeenCalledWith(2);
+            expect(splitServiceSpy.get).toHaveBeenCalledWith(splitReturnedInCallback.id);
             expect($scope.split.name).toEqual('Tomorrow');
+        });
+        it('should fetch the split contacts', function () {
+            expect(contactServiceSpy.getBySplitId).toHaveBeenCalledWith(splitReturnedInCallback.id);
+            expect($scope.splitContacts.length).toBeGreaterThan(1);
         });
     });
 

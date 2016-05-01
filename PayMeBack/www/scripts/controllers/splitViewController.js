@@ -1,8 +1,12 @@
-﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$stateParams', 'splitService', function SplitViewController($scope, $stateParams, splitService) {
+﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $stateParams, splitService, contactService) {
     $scope.form = { contactEmailToAdd: '' };
-    
+
     splitService.get($stateParams.splitId).then(function (split) {
         $scope.split = split;
+    });
+
+    contactService.getBySplitId($stateParams.splitId).then(function (contacts) {
+        $scope.splitContacts = contacts;
     });
     
     //function refreshListOfContacts() {

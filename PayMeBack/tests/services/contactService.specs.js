@@ -1,27 +1,28 @@
-﻿//var contactService;
-//var contactRepositorySpy;
+﻿var contactService;
+var contactRepositorySpy;
 
-//describe('ContactService', function () {
-//    beforeEach(function () {
-//        module('PayMeBack');
+describe('ContactService', function () {
+    beforeEach(function () {
+        module('PayMeBack');
 
-//        contactRepositorySpy = {
-//            list: jasmine.createSpy(),
-//        };
-//        module(function ($provide) {
-//            $provide.value('contactRepository', contactRepositorySpy);
-//        });
+        inject(function ($injector) {
+            contactService = $injector.get('contactService');
+            $httpBackend = $injector.get('$httpBackend');
+            backendHostUrl = $injector.get('backendHostUrl');
+            $httpBackend.when('GET', /^views\//).respond(null); // For some reason a call to a view is in the queue of the $httpBackend... this is a 'temporary' workaround
+        });
+    });
 
-//        inject(function ($injector) {
-//            contactService = $injector.get('contactService');
-//        });
-//    });
+    describe('getBySplitId', function () {
+        it('should return the list of contact splits', function () {
+            $httpBackend.when('GET', backendHostUrl + '/splits/1/contacts').respond([{ id: 1, name: 'Olivier' }, { id: 2, name: 'John' }]);
+            var _contacts;
+            contactService.getBySplitId(1).then(function (contacts) {
+                _contacts = contacts;
+            });
+            $httpBackend.flush();
 
-//    describe('list', function () {
-//        it('should call the repository with the same parameter', function () {
-//            var query = { ids: [1, 3] };
-//            contactService.list(query);
-//            expect(contactRepositorySpy.list).toHaveBeenCalledWith(query);
-//        });
-//    });
-//});
+            expect(_contacts[0].name).toEqual('Olivier');
+        });
+    });
+});

@@ -12,7 +12,7 @@ describe('SplitService', function () {
             splitService = $injector.get('splitService');
             $httpBackend = $injector.get('$httpBackend');
             backendHostUrl = $injector.get('backendHostUrl');
-            $httpBackend.when('GET', /^views\//).respond(null); // For some reason a call to a view is in the queue of the $httpBackend... this is a temporary workaround
+            $httpBackend.when('GET', /^views\//).respond(null); // For some reason a call to a view is in the queue of the $httpBackend... this is a 'temporary' workaround
         });
     });
 
