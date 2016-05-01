@@ -7,7 +7,7 @@
         var newSplit;
         splitService.create().then(function (split) {
             newSplit = split;
+            $state.go('splitView', { splitId: newSplit.id });
         });
-        $state.go('splitView', {splitId: newSplit.id});
     };
 }]);
