@@ -32,15 +32,18 @@ namespace PayMeBack.Backend.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc().
-                AddJsonOptions(options => {
+            services.AddMvc()
+            .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
             services.AddCors();
 
             services.AddSingleton<ISplitService, SplitService>();
+            services.AddSingleton<IContactService, ContactService>();
+
             services.AddSingleton<IGenericRepository<Split>, GenericRepository<Split>>();
+            services.AddSingleton<IGenericRepository<Contact>, GenericRepository<Contact>>();
 
             var mapper = MapperConfig.CreateMapper();
             services.AddInstance<IMapper>(mapper);
@@ -70,8 +73,15 @@ namespace PayMeBack.Backend.Web
                 builder.AllowAnyMethod();
             });
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "SplitsList", template: "splits", defaults: new { controller = "Split", action = "List" });
+                routes.MapRoute(name: "SplitGet", template: "splits/{id:int}", defaults: new { controller = "Split", action = "Get" });
+                routes.MapRoute(name: "SplitCreate", template: "splits", defaults: new { controller = "Split", action = "Create" });
 
+                routes.MapRoute(name: "SplitContactsList", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "ListBySplit" });
+                //routes.MapRoute(name: "SplitContactsGet", template: "contacts/{id:int}", defaults: new { controller = "Contact", action = "Get" });
+            });
         }
 
         // Entry point for the application.

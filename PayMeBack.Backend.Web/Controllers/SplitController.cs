@@ -6,37 +6,34 @@ using AutoMapper;
 
 namespace PayMeBack.Backend.Web.Controllers
 {
-    [Route("[controller]")]
-    public class SplitsController : Controller
+    public class SplitController : Controller
     {
-        private IList<SplitDto> _splits = new List<SplitDto> { new SplitDto { Id = 1, Name = "Today" }, new SplitDto { Id = 2, Name = "Tomorrow" } };
-
         private IMapper _mapper;
         private ISplitService _splitService;
 
-        public SplitsController(IMapper mapper, ISplitService splitService)
+        public SplitController(IMapper mapper, ISplitService splitService)
         {
             _mapper = mapper;
             _splitService = splitService;
         }
 
-        // GET: api/splits
+        // GET: splits
         [HttpGet]
-        public IEnumerable<SplitDto> Get()
+        public IEnumerable<SplitDto> List()
         {
             return _mapper.Map<IEnumerable<SplitDto>>(_splitService.List());
         }
 
-        // GET api/splits/5
-        [HttpGet("{id}")]
+        // GET splits/5
+        [HttpGet]
         public SplitDto Get(int id)
         {
             return _mapper.Map<SplitDto>(_splitService.Get(id));
         }
 
-        // POST api/splits
+        // POST splits
         [HttpPost]
-        public SplitDto Post([FromBody]SplitCreationDto splitCreationDto)
+        public SplitDto Create([FromBody]SplitCreationDto splitCreationDto)
         {
             var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created);
             return _mapper.Map<SplitDto>(createdSplit);

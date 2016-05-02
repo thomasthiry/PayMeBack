@@ -13,7 +13,7 @@ namespace PayMeBack.Backend.Web.Tests
 {
     public class SplitControllerTests
     {
-        private SplitsController _controller;
+        private SplitController _controller;
         private Mock<ISplitService> _splitServiceMock;
 
         public SplitControllerTests()
@@ -21,7 +21,7 @@ namespace PayMeBack.Backend.Web.Tests
             _splitServiceMock = new Mock<ISplitService>();
 
             var mapper = MapperConfig.CreateMapper();
-            _controller = new SplitsController(mapper, _splitServiceMock.Object);
+            _controller = new SplitController(mapper, _splitServiceMock.Object);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace PayMeBack.Backend.Web.Tests
             };
             _splitServiceMock.Setup(r => r.List()).Returns(splitsStub);
 
-            var splits = _controller.Get();
+            var splits = _controller.List();
 
             Assert.NotEmpty(splits);
             Assert.IsAssignableFrom<SplitDto>(splits.First());
@@ -59,7 +59,7 @@ namespace PayMeBack.Backend.Web.Tests
             var splitStub = new Split { Id = 3, Name = splitCreationDto.Name, Created = splitCreationDto.Created };
             _splitServiceMock.Setup(s => s.Create(It.Is<string>(n => n == splitCreationDto.Name), It.Is<DateTime>(c => c == splitCreationDto.Created))).Returns(splitStub);
 
-            var splitDto = _controller.Post(splitCreationDto);
+            var splitDto = _controller.Create(splitCreationDto);
 
             Assert.Equal(3, splitDto.Id);
 

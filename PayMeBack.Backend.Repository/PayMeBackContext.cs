@@ -6,6 +6,7 @@ namespace PayMeBack.Backend.Contracts
     public class PayMeBackContext : DbContext
     {
         public DbSet<Split> Splits { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 
 }

@@ -8,9 +8,10 @@ using PayMeBack.Backend.Contracts;
 namespace PayMeBack.Backend.Repository.Migrations
 {
     [DbContext(typeof(PayMeBackContext))]
-    partial class PayMeBackContextModelSnapshot : ModelSnapshot
+    [Migration("20160501193514_Contact")]
+    partial class Contact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
