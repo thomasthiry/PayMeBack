@@ -19,17 +19,17 @@ namespace PayMeBack.Backend.Repository
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(/*
-            Expression<Func<TEntity, bool>> filter = null,
+        public virtual IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null/*,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = ""*/)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            //if (filter != null)
-            //{
-            //    query = query.Where(filter);
-            //}
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
 
             //foreach (var includeProperty in includeProperties.Split
             //    (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -43,7 +43,7 @@ namespace PayMeBack.Backend.Repository
             //}
             //else
             //{
-                return query.ToList();
+            return query.ToList();
             //}
         }
 

@@ -26,11 +26,11 @@
     });
 
     describe('controller initialization', function () {
-        it('should fetch the split', function () {
+        it('should fetch and set the split', function () {
             expect(splitServiceSpy.get).toHaveBeenCalledWith(splitReturnedInCallback.id);
             expect($scope.split.name).toEqual('Tomorrow');
         });
-        it('should fetch the split contacts', function () {
+        it('should fetch and set the split contacts', function () {
             expect(contactServiceSpy.getBySplitId).toHaveBeenCalledWith(splitReturnedInCallback.id);
             expect($scope.splitContacts.length).toBeGreaterThan(1);
         });

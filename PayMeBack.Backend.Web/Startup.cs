@@ -39,11 +39,12 @@ namespace PayMeBack.Backend.Web
 
             services.AddCors();
 
-            services.AddSingleton<ISplitService, SplitService>();
-            services.AddSingleton<IContactService, ContactService>();
+            // Scoped lifetime (per request) is used to prevent concurrence issues with EF: "There is already an open DataReader associated with this Command which must be closed first."
+            services.AddScoped<ISplitService, SplitService>();
+            services.AddScoped<IContactService, ContactService>();
 
-            services.AddSingleton<IGenericRepository<Split>, GenericRepository<Split>>();
-            services.AddSingleton<IGenericRepository<Contact>, GenericRepository<Contact>>();
+            services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
+            services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
 
             var mapper = MapperConfig.CreateMapper();
             services.AddInstance<IMapper>(mapper);

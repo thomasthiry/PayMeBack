@@ -10,7 +10,7 @@
             <!--<button class="button icon ion-plus-round" ng-click="addContactClick()"></button>-->
         </div>
         <ion-list>
-            <ion-item ng-repeat="contact in contacts track by contact.id">
+            <ion-item ng-repeat="contact in splitContacts track by contact.id">
                 {{contact.name}}
             </ion-item>
         </ion-list>

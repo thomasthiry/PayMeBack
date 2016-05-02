@@ -1,5 +1,7 @@
 ﻿using PayMeBack.Backend.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace PayMeBack.Backend.Contracts
 {
@@ -7,7 +9,7 @@ namespace PayMeBack.Backend.Contracts
     {
         void Delete(int id);
         void Delete(TEntity entityToDelete);
-        IEnumerable<TEntity> Get();
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null);
         TEntity GetByID(int id);
         TEntity Insert(TEntity entity);
         void Update(TEntity entityToUpdate);

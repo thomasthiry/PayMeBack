@@ -16,7 +16,7 @@ namespace PayMeBack.Backend.Services
 
         public IEnumerable<Contact> ListBySplitId(int splitId)
         {
-            return _contactRepository.Get();
+            return _contactRepository.Get(s => s.SplitId == splitId);
         }
     }
 }
