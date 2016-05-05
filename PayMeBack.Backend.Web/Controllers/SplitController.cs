@@ -26,7 +26,7 @@ namespace PayMeBack.Backend.Web.Controllers
 
         // GET splits/5
         [HttpGet]
-        public SplitDto Get(int id)
+        public SplitDto Get([FromRoute]int id)
         {
             return _mapper.Map<SplitDto>(_splitService.Get(id));
         }

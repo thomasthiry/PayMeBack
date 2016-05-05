@@ -10,4 +10,15 @@ function contactService(backendHostUrl, $http) {
                 console.log('failure');
             });
     };
+
+    this.createIfNeededAndAddToSplit = function (splitId, contactEmailToAdd) {
+        var contactToCreate = { email: contactEmailToAdd, splitId: splitId };
+        return $http.post(backendHostUrl + '/splits/' + splitId + '/contacts', contactToCreate).then(
+            function successCallback(response) {
+                return response.data;
+            },
+            function errorCallback(response) {
+                console.log('failure');
+            });
+    };
 }

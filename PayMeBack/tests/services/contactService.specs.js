@@ -15,14 +15,23 @@ describe('ContactService', function () {
 
     describe('getBySplitId', function () {
         it('should return the list of contact splits', function () {
-            $httpBackend.when('GET', backendHostUrl + '/splits/1/contacts').respond([{ id: 1, name: 'Olivier' }, { id: 2, name: 'John' }]);
+            $httpBackend.when('GET', backendHostUrl + '/splits/1/contacts').respond([{ id: 1, email: 'Olivier' }, { id: 2, email: 'John' }]);
             var _contacts;
             contactService.getBySplitId(1).then(function (contacts) {
                 _contacts = contacts;
             });
             $httpBackend.flush();
 
-            expect(_contacts[0].name).toEqual('Olivier');
+            expect(_contacts[0].email).toEqual('Olivier');
+        });
+    });
+
+    describe('createIfNeededAndAddToSplit', function () {
+        it('should call the web service', function () {
+            var expectedContact = { email: 'john@facebook.com', splitId: 1 };
+            $httpBackend.expect('POST', backendHostUrl + '/splits/1/contacts', expectedContact).respond(201, '');
+            contactService.createIfNeededAndAddToSplit(expectedContact.splitId, expectedContact.email);
+            $httpBackend.flush();
         });
     });
 });

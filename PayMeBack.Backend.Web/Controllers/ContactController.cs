@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc;
 using PayMeBack.Backend.Web.Models;
 using PayMeBack.Backend.Contracts.Services;
 using AutoMapper;
+using System;
 
 namespace PayMeBack.Backend.Web.Controllers
 {
@@ -18,9 +19,15 @@ namespace PayMeBack.Backend.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ContactDto> ListBySplit(int splitId)
+        public IEnumerable<ContactDto> ListBySplit([FromRoute]int splitId)
         {
             return _mapper.Map<IEnumerable<ContactDto>>(_contactService.ListBySplitId(splitId));
+        }
+
+        [HttpPost]
+        public ContactDto CreateIfNeededAndAddToSplit([FromRoute]int splitId, [FromBody]ContactCreationDto contactCreationDto)
+        {
+            return _mapper.Map<ContactDto>(_contactService.CreateIfNeededAndAddToSplit(splitId, contactCreationDto.Email));
         }
 
         //// GET api/splits/5
@@ -30,9 +37,9 @@ namespace PayMeBack.Backend.Web.Controllers
         //    return null;
         //}
 
-        //// POST api/splits
+        // POST api/splits
         //[HttpPost]
-        //public SplitDto Post([FromBody]SplitCreationDto splitCreationDto)
+        //public SplitDto CreateIfNeededAndAddToSplit([FromBody]SplitCreationDto splitCreationDto)
         //{
         //    var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created);
         //    return _mapper.Map<SplitDto>(createdSplit);

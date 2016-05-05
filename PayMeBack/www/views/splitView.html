@@ -1,13 +1,13 @@
 ﻿
 <ion-view>
-    <ion-nav-title>Split: {{ split.name }}</ion-nav-title>
+    <ion-nav-title>{{ split.name }}</ion-nav-title>
     <ion-content class="padding">
         <div class="item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-person placeholder-icon"></i>
                 <input type="text" placeholder="Add someone by email" ng-model="form.contactEmailToAdd">
             </label>
-            <!--<button class="button icon ion-plus-round" ng-click="addContactClick()"></button>-->
+            <button class="button icon ion-plus-round" ng-click="addContact()"></button>
         </div>
         <ion-list>
             <ion-item ng-repeat="contact in splitContacts track by contact.id">

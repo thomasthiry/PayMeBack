@@ -39,7 +39,7 @@ namespace PayMeBack.Backend.Services.Tests
                 new Split { Name = "Tomorrow" },
                 new Split { Name = "Yesterday" },
             };
-            _splitRepositoryMock.Setup(r => r.Get()).Returns(splitsStub);
+            _splitRepositoryMock.Setup(r => r.Get(null)).Returns(splitsStub);
 
             var splits = _splitService.List();
 

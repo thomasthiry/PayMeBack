@@ -29,15 +29,26 @@ namespace PayMeBack.Backend.Web.Tests
         {
             var contactsStub = new List<Contact>
             {
-                new Contact { Name = "Olivier" },
-                new Contact { Name = "John" },
+                new Contact { Email = "Olivier" },
+                new Contact { Email = "John" },
             };
-            _contactServiceMock.Setup(r => r.ListBySplitId(1)).Returns(contactsStub);
+            _contactServiceMock.Setup(s => s.ListBySplitId(1)).Returns(contactsStub);
 
             var contacts = _controller.ListBySplit(1);
 
             Assert.NotEmpty(contacts);
             Assert.IsAssignableFrom<ContactDto>(contacts.First());
+        }
+
+        [Fact]
+        public void CreateIfNeededAndAddToSplit_ReturnsNewContactDto()
+        {
+            var contactStub = new Contact { Email = "Olivier" };
+            _contactServiceMock.Setup(s => s.CreateIfNeededAndAddToSplit(1, contactStub.Email)).Returns(contactStub);
+
+            var contact = _controller.CreateIfNeededAndAddToSplit(1, new ContactCreationDto { Email = contactStub.Email });
+
+            Assert.Equal(contactStub.Email, contact.Email);
         }
 
         //[Fact]

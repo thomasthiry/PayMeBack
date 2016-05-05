@@ -5,20 +5,19 @@
         $scope.split = split;
     });
 
-    contactService.getBySplitId($stateParams.splitId).then(function (contacts) {
-        $scope.splitContacts = contacts;
-    });
-    
-    //function refreshListOfContacts() {
-    //    $scope.contacts = contactService.list({ ids: $scope.split.contactIds });
-    //}
-    //refreshListOfContacts();
+    refreshListOfContacts();
 
-    //$scope.addContactClick = function () {
-    //    splitService.addContactToSplit($scope.split, $scope.form.contactEmailToAdd);
+    function refreshListOfContacts() {
+        contactService.getBySplitId($stateParams.splitId).then(function (contacts) {
+            $scope.splitContacts = contacts;
+        });
+    }
 
-    //    $scope.form.contactEmailToAdd = '';
+    $scope.addContact = function () {
+        contactService.createIfNeededAndAddToSplit($scope.split.id, $scope.form.contactEmailToAdd).then(function () {
+            $scope.form.contactEmailToAdd = '';
 
-    //    refreshListOfContacts();
-    //}
+            refreshListOfContacts();
+        });
+    }
 }]);

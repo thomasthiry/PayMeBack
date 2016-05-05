@@ -7,5 +7,7 @@ namespace PayMeBack.Backend.Contracts.Services
     public interface IContactService
     {
         IEnumerable<Contact> ListBySplitId(int splitId);
+
+        Contact CreateIfNeededAndAddToSplit(int splitId, string email);
     }
 }
