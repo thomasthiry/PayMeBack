@@ -1412,6 +1412,7 @@
         "dependencies": {
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
+          "System.Linq": "4.0.1-beta-23516",
           "System.Runtime": "4.0.21-beta-23516",
           "System.Runtime.InteropServices": "4.0.21-beta-23516"
         }
@@ -3818,6 +3819,7 @@
         "dependencies": {
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
+          "System.Linq": "4.0.1-beta-23516",
           "System.Runtime": "4.0.21-beta-23516",
           "System.Runtime.InteropServices": "4.0.21-beta-23516"
         }
@@ -6693,6 +6695,7 @@
         "dependencies": {
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
+          "System.Linq": "4.0.1-beta-23516",
           "System.Runtime": "4.0.21-beta-23516",
           "System.Runtime.InteropServices": "4.0.21-beta-23516"
         }

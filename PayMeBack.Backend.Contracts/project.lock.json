@@ -1760,12 +1760,12 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "PayMeBack.Backend.Models ",
-      "System.Linq.Expressions >= 4.0.11-beta-23516"
+      "PayMeBack.Backend.Models "
     ],
     "DNXCore,Version=v5.0": [
       "System.Runtime >= 4.0.21-beta-23516",
-      "System.Runtime.InteropServices >= 4.0.21-beta-23516"
+      "System.Runtime.InteropServices >= 4.0.21-beta-23516",
+      "System.Linq.Expressions >= 4.0.11-beta-23516"
     ]
   }
 }

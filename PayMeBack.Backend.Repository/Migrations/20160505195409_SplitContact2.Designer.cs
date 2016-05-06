@@ -8,9 +8,10 @@ using PayMeBack.Backend.Contracts;
 namespace PayMeBack.Backend.Repository.Migrations
 {
     [DbContext(typeof(PayMeBackContext))]
-    partial class PayMeBackContextModelSnapshot : ModelSnapshot
+    [Migration("20160505195409_SplitContact2")]
+    partial class SplitContact2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -24,6 +25,8 @@ namespace PayMeBack.Backend.Repository.Migrations
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("SplitId");
 
                     b.HasKey("Id");
                 });
@@ -45,11 +48,20 @@ namespace PayMeBack.Backend.Repository.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ContactId");
+                    b.Property<int?>("ContactId");
+
+                    b.Property<int>("ContacttId");
 
                     b.Property<int>("SplitId");
 
                     b.HasKey("Id");
+                });
+
+            modelBuilder.Entity("PayMeBack.Backend.Models.Contact", b =>
+                {
+                    b.HasOne("PayMeBack.Backend.Models.Split")
+                        .WithMany()
+                        .HasForeignKey("SplitId");
                 });
 
             modelBuilder.Entity("PayMeBack.Backend.Models.SplitContact", b =>

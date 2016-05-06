@@ -3,27 +3,42 @@ using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Contracts.Services;
 using PayMeBack.Backend.Contracts;
 using System;
+using System.Linq;
 
 namespace PayMeBack.Backend.Services
 {
     public class ContactService : IContactService
     {
         private IGenericRepository<Contact> _contactRepository;
+        private IGenericRepository<SplitContact> _splitContactRepository;
 
-        public ContactService(IGenericRepository<Contact> contactRepository)
+        public ContactService(IGenericRepository<Contact> contactRepository, IGenericRepository<SplitContact> splitContactRepository)
         {
             _contactRepository = contactRepository;
+            _splitContactRepository = splitContactRepository;
         }
 
         public IEnumerable<Contact> ListBySplitId(int splitId)
         {
-            return _contactRepository.Get(s => s.SplitId == splitId);
+            var splitContacts = _splitContactRepository.Get(sc => sc.SplitId == splitId);
+            var contactsIds = splitContacts.Select(sc => sc.ContactId);
+
+            return _contactRepository.Get(c => contactsIds.Contains(c.Id));
         }
 
         public Contact CreateIfNeededAndAddToSplit(int splitId, string email)
         {
-            var contact = new Contact { Name = email, Email = email, SplitId = splitId };
-            return _contactRepository.Insert(contact);
+            var contact = _contactRepository.Get(c => c.Email == email).FirstOrDefault();
+
+            if (contact == null)
+            {
+                contact = new Contact { Name = email, Email = email };
+                _contactRepository.Insert(contact);
+            }
+
+            _splitContactRepository.Insert(new SplitContact { SplitId = splitId, ContactId = contact.Id });
+            
+            return contact;
         }
     }
 }
