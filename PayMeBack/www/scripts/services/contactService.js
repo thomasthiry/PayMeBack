@@ -21,4 +21,14 @@ function contactService(backendHostUrl, $http) {
                 console.log('failure');
             });
     };
+
+    this.getSplitContactById = function (splitId, splitContactId) {
+        return $http.get(backendHostUrl + '/splits/' + splitId + '/contacts/' + splitContactId).then(
+            function successCallback(response) {
+                return response.data;
+            },
+            function errorCallback(response) {
+                console.log('failure');
+            });
+    };
 }

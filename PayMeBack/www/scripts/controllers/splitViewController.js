@@ -8,8 +8,8 @@
     refreshListOfContacts();
 
     function refreshListOfContacts() {
-        contactService.getBySplitId($stateParams.splitId).then(function (contacts) {
-            $scope.splitContacts = contacts;
+        contactService.getBySplitId($stateParams.splitId).then(function (splitContacts) {
+            $scope.splitContacts = splitContacts;
         });
     }
 

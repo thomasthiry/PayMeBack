@@ -34,4 +34,13 @@ describe('ContactService', function () {
             $httpBackend.flush();
         });
     });
+
+    describe('getSplitContactById', function () {
+        it('should call the web service', function () {
+            var expectedSplitContact = { id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com' };
+            $httpBackend.expect('GET', backendHostUrl + '/splits/3/contacts/2').respond({ id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com' });
+            contactService.getSplitContactById(expectedSplitContact.splitId, expectedSplitContact.id);
+            $httpBackend.flush();
+        });
+    });
 });

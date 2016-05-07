@@ -13,6 +13,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/splits/:splitId',
             templateUrl: 'views/splitView.html',
             controller: 'SplitViewController'
+        })
+        .state('splitContactView', {
+            url: '/splits/:splitId/contact/:splitContactId',
+            templateUrl: 'views/splitContactView.html',
+            controller: 'SplitContactViewController'
         });
 
     $urlRouterProvider.otherwise('/splits');
