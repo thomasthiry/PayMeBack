@@ -31,4 +31,15 @@ function contactService(backendHostUrl, $http) {
                 console.log('failure');
             });
     };
+
+    this.updateSplitContact = function (splitId, splitContactId, owes, paid, comments) {
+        var data = { owes: owes, paid: paid, comments: comments };
+        return $http.put(backendHostUrl + '/splits/' + splitId + '/contacts/' + splitContactId, data).then(
+            function successCallback(response) {
+                return response.data;
+            },
+            function errorCallback(response) {
+                console.log('failure');
+            });
+    };
 }

@@ -43,4 +43,13 @@ describe('ContactService', function () {
             $httpBackend.flush();
         });
     });
+
+    describe('updateSplitContact', function () {
+        it('should call the web service', function () {
+            var splitContactToUpdate = { id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com', owes: 111, paid:222, comments: 'more' };
+            $httpBackend.expect('PUT', backendHostUrl + '/splits/3/contacts/2').respond(200, '');
+            contactService.updateSplitContact(splitContactToUpdate.splitId, splitContactToUpdate.id, splitContactToUpdate.owes, splitContactToUpdate.paid, splitContactToUpdate.comments);
+            $httpBackend.flush();
+        });
+    });
 });
