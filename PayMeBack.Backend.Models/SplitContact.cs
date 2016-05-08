@@ -11,5 +11,11 @@ namespace PayMeBack.Backend.Models
 
         public int ContactId { get; set; }
         public Contact Contact { get; set; }
+
+        public decimal Owes { get; set; }
+
+        public decimal Paid { get; set; }
+
+        public string Comments { get; set; }
     }
 }

@@ -39,7 +39,10 @@ namespace PayMeBack.Backend.Web.Controllers
 
             return new SplitContactDto {
                 Email = contact.Email,
-                Name = contact.Name
+                Name = contact.Name,
+                Owes = splitContact.Owes,
+                Paid = splitContact.Paid,
+                Comments = splitContact.Comments
             };
         }
 

@@ -22,7 +22,7 @@
     });
 
     describe('controller initialization', function () {
-        it('should fetch and set the splitContact', function () {
+        it('should fetch and set the splitContact and form details', function () {
             expect(contactServiceSpy.getSplitContactById).toHaveBeenCalledWith(splitContactIdInState);
             expect($scope.splitContact.name).toEqual('Olivier');
         });

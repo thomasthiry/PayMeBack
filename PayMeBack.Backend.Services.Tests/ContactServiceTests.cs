@@ -82,12 +82,15 @@ namespace PayMeBack.Backend.Services.Tests
         [Fact]
         public void GetSplitContactById_ReturnsSplitContact()
         {
-            var splitContactStub = new SplitContact { Id = 5, ContactId = 30 };
+            var splitContactStub = new SplitContact { Id = 5, ContactId = 30, Owes = 25m, Paid = 50m, Comments = "my comment" };
             _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(new List<SplitContact> { splitContactStub });
 
             var splitContact = _contactService.GetSplitContactById(splitContactStub.Id);
 
             Assert.Equal(splitContactStub.ContactId, splitContact.ContactId);
+            Assert.Equal(splitContactStub.Owes, splitContact.Owes);
+            Assert.Equal(splitContactStub.Paid, splitContact.Paid);
+            Assert.Equal(splitContactStub.Comments, splitContact.Comments);
         }
     }
 }
