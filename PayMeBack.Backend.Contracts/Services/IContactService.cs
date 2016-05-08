@@ -13,5 +13,7 @@ namespace PayMeBack.Backend.Contracts.Services
         Contact CreateIfNeededAndAddToSplit(int splitId, string email);
 
         SplitContact GetSplitContactById(int id);
+
+        void UpdateSplitContact(int splitContactId, decimal owes, decimal paid, string comments);
     }
 }

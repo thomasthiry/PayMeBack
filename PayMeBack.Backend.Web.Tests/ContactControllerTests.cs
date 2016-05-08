@@ -68,6 +68,18 @@ namespace PayMeBack.Backend.Web.Tests
             Assert.Equal(splitContactStub.Comments, splitContactDto.Comments);
         }
 
+        [Fact]
+        public void UpdateSplitContact_ReturnsOk()
+        {
+            var splitId = 1;
+            var splitContactId = 2;
+            var splitContactUpdateDto = new SplitContactUpdateDto { Owes = 25m, Paid = 50m, Comments = "me devait déjà 5 euros" };
+
+            _controller.UpdateSplitContact(splitId, splitContactId, splitContactUpdateDto);
+
+            _contactServiceMock.Verify(s => s.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Comments), Times.Once());
+        }
+
         //[Fact]
         //public void GetSplit_GetOneById_ReturnsSplit()
         //{

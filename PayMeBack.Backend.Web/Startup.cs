@@ -84,6 +84,7 @@ namespace PayMeBack.Backend.Web
                 routes.MapRoute(name: "SplitContactsList", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "ListBySplit" });
                 routes.MapRoute(name: "ContactCreate", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "CreateIfNeededAndAddToSplit" });
                 routes.MapRoute(name: "SplitContactGet", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "GetSplitContact" });
+                routes.MapRoute(name: "SplitContactUpdate", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "UpdateSplitContact" });
             });
         }
 

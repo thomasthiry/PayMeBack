@@ -92,5 +92,22 @@ namespace PayMeBack.Backend.Services.Tests
             Assert.Equal(splitContactStub.Paid, splitContact.Paid);
             Assert.Equal(splitContactStub.Comments, splitContact.Comments);
         }
+
+        [Fact]
+        public void UpdateSplitContact_CallsRepository()
+        {
+            var splitContactStub = new SplitContact { Id = 5, ContactId = 30, Owes = 25m, Paid = 50m, Comments = "my comment" };
+            _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(new List<SplitContact> { splitContactStub });
+
+            var splitContactWithNewValues = new SplitContact { Id = 5, ContactId = 30, Owes = 99m, Paid = 22m, Comments = "updated values" };
+            _contactService.UpdateSplitContact(splitContactStub.Id, splitContactWithNewValues.Owes, splitContactWithNewValues.Paid, splitContactWithNewValues.Comments);
+
+            _splitContactRepositoryMock.Verify(r => r.Update(It.Is<SplitContact>(sc => sc.Owes == splitContactWithNewValues.Owes && sc.Paid == splitContactWithNewValues.Paid && sc.Comments == splitContactWithNewValues.Comments)));
+
+            //Assert.Equal(splitContactStub.ContactId, splitContact.ContactId);
+            //Assert.Equal(splitContactStub.Owes, splitContact.Owes);
+            //Assert.Equal(splitContactStub.Paid, splitContact.Paid);
+            //Assert.Equal(splitContactStub.Comments, splitContact.Comments);
+        }
     }
 }

@@ -5,19 +5,18 @@
         <div class="list">
             <label class="item item-input">
                 <span class="input-label">Owes</span>
-                <input type="number" value="{{ splitContact.owes }}">
+                <input type="number" ng-model="splitContact.owes">
             </label>
             <label class="item item-input">
                 <span class="input-label">Paid</span>
-                <input type="number" value="{{ splitContact.paid }}">
+                <input type="number" ng-model="splitContact.paid">
             </label>
             <label class="item">
                 <span class="input-label">Comments</span>
-                <textarea style="width:100%;height:100px;">{{ splitContact.comments }}</textarea>
+                <textarea style="width:100%;height:100px;" ng-model="splitContact.comments"></textarea>
             </label>
             <div style="text-align: center; margin-top: 20px;">
-                <button class="button button-balanced">Save</button>
-                <button class="button button-assertive">Remove</button>
+                <button class="button button-balanced" ng-click="save_click()">Save</button>
             </div>
     </ion-content>
 </ion-view>

@@ -50,5 +50,16 @@ namespace PayMeBack.Backend.Services
         {
             return _splitContactRepository.Get(sc => sc.Id == splitContactId).FirstOrDefault();
         }
+
+        public void UpdateSplitContact(int splitContactId, decimal owes, decimal paid, string comments)
+        {
+            var splitContact = _splitContactRepository.Get(sc => sc.Id == splitContactId).FirstOrDefault();
+
+            splitContact.Owes = owes;
+            splitContact.Paid = paid;
+            splitContact.Comments = comments;
+
+            _splitContactRepository.Update(splitContact);
+        }
     }
 }

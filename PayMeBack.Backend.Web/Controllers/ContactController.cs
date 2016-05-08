@@ -46,6 +46,11 @@ namespace PayMeBack.Backend.Web.Controllers
             };
         }
 
+        public void UpdateSplitContact(int splitId, int splitContactId, [FromBody]SplitContactUpdateDto splitContactUpdateDto)
+        {
+            _contactService.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Comments);
+        }
+
         // POST api/splits
         //[HttpPost]
         //public SplitDto CreateIfNeededAndAddToSplit([FromBody]SplitCreationDto splitCreationDto)
