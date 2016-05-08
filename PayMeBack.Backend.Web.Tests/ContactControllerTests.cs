@@ -51,6 +51,20 @@ namespace PayMeBack.Backend.Web.Tests
             Assert.Equal(contactStub.Email, contact.Email);
         }
 
+        [Fact]
+        public void GetSplitContact_ReturnsSplitContactDto()
+        {
+            var splitContactStub = new SplitContact { Id = 1, ContactId = 2, SplitId = 5 };
+            _contactServiceMock.Setup(s => s.GetSplitContactById(splitContactStub.Id)).Returns(splitContactStub);
+
+            var contactStub = new Contact { Id = 2, Email = "olivier@test.com" };
+            _contactServiceMock.Setup(s => s.GetContactById(contactStub.Id)).Returns(contactStub);
+
+            var splitContactDto = _controller.GetSplitContact(splitContactStub.SplitId, splitContactStub.Id);
+
+            Assert.Equal(contactStub.Email, splitContactDto.Email);
+        }
+
         //[Fact]
         //public void GetSplit_GetOneById_ReturnsSplit()
         //{

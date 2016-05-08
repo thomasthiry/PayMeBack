@@ -40,5 +40,15 @@ namespace PayMeBack.Backend.Services
             
             return contact;
         }
+
+        public Contact GetContactById(int contactId)
+        {
+            return _contactRepository.Get(c => c.Id == contactId).FirstOrDefault();
+        }
+
+        public SplitContact GetSplitContactById(int splitContactId)
+        {
+            return _splitContactRepository.Get(sc => sc.Id == splitContactId).FirstOrDefault();
+        }
     }
 }

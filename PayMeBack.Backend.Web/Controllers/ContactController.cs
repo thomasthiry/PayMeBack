@@ -30,12 +30,18 @@ namespace PayMeBack.Backend.Web.Controllers
             return _mapper.Map<ContactDto>(_contactService.CreateIfNeededAndAddToSplit(splitId, contactCreationDto.Email));
         }
 
-        //// GET api/splits/5
-        //[HttpGet]
-        //public SplitDto Get(int id)
-        //{
-        //    return null;
-        //}
+        [HttpGet]
+        public SplitContactDto GetSplitContact(int splitId, int splitContactId)
+        {
+            var splitContact = _contactService.GetSplitContactById(splitContactId);
+
+            var contact = _contactService.GetContactById(splitContact.ContactId);
+
+            return new SplitContactDto {
+                Email = contact.Email,
+                Name = contact.Name
+            };
+        }
 
         // POST api/splits
         //[HttpPost]
