@@ -1,4 +1,4 @@
-﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $stateParams, splitService, contactService) {
+﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$state', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $state, $stateParams, splitService, contactService) {
     $scope.form = { contactEmailToAdd: '' };
 
     splitService.get($stateParams.splitId).then(function (split) {
@@ -20,4 +20,8 @@
             refreshListOfContacts();
         });
     }
+
+    $scope.goToSettle = function () {
+        $state.go('settleView', { splitId: $scope.split.id });
+    };
 }]);

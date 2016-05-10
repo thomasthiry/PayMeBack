@@ -63,31 +63,18 @@ describe('SplitService', function () {
         });
     });
 
-    //describe('addContactToSplit with email', function () {
-    //    var contactEmail = 'john@user.com';
-    //    var split;
-    //    beforeEach(function () {
-    //        split = new Split(1, 'My Split 1');
-    //        splitService.addContactToSplit(split, contactEmail);
-    //    });
+    describe('getSettlement', function () {
+        it('should call the web service', function () {
+            var settlementsReturnedInCallBack = { transfers: [{ fromContactId: 1, fromContactName: 'Olivier', toContactId: 2, toContactName: 'Thomas', amount: 55.34 }, { fromContactId: 3, fromContactName: 'John', toContactId: 2, toContactName: 'Thomas', amount: 18 }] };
+            $httpBackend.when('GET', backendHostUrl + '/splits/2/settle').respond(settlementsReturnedInCallBack);
 
-    //    it('should call the repository to check if user exists', function () {
-    //        expect(contactRepositorySpy.get).toHaveBeenCalledWith({ email: contactEmail });
-    //    });
+            var _settlement;
+            splitService.getSettlement(2).then(function (settlement) {
+                _settlement = settlement;
+            });
+            $httpBackend.flush();
 
-    //    describe('when the contact doesn\'t already exist', function () {
-    //        it('should call the repository to create a new contact', function () {
-    //            expect(contactRepositorySpy.insert).toHaveBeenCalled();
-    //        });
-    //    });
-
-    //    it('should add a new contact to the split', function () {
-    //        expect(split.contactIds.length).toEqual(1);
-    //    });
-
-    //    it('should call the repository to save splits and contacts to storage', function () {
-    //        expect(splitRepositorySpy.saveToStorage).toHaveBeenCalled();
-    //        expect(contactRepositorySpy.saveToStorage).toHaveBeenCalled();
-    //    });
-    //});
+            expect(_settlement.transfers.length).toBeGreaterThan(1);
+        });
+    });
 });

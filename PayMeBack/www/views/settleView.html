@@ -1,0 +1,11 @@
+﻿
+<ion-view>
+    <ion-nav-title>{{ settlement.splitName }}</ion-nav-title>
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item ng-repeat="transfer in settlement.transfers">
+                {{ settlement.fromName }} owes {{ settlement.toName }} {{ settlement.amount }} EUR
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

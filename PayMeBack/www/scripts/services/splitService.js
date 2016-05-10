@@ -34,17 +34,15 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
             });
     };
 
-    //this.addContactToSplit = function (split, contactEmail) {
-    //    var splitContact = contactRepository.get({ email: contactEmail });
-    //    if (splitContact == null) {
-    //        splitContact = new SplitContact(0, contactEmail);
-    //        contactRepository.insert(splitContact);
-    //    }
-    //    split.addContact(splitContact.id);
-
-    //    splitRepository.saveToStorage();
-    //    contactRepository.saveToStorage();
-    //};
+    this.getSettlement = function (splitId) {
+        return $http.get(backendHostUrl + '/splits/' + splitId + '/settle').then(
+            function successCallback(response) {
+                return response.data;
+            },
+            function errorCallback(response) {
+                console.log('failure');
+            });
+    };
 
     function _formatDateTime(date) {
         return date.toString().slice(0, 21);
