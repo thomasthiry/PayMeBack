@@ -67,15 +67,13 @@ namespace PayMeBack.Backend.Services.Tests
         private static Contact contact1 = new Contact { Id = 1 };
         private static Contact contact2 = new Contact { Id = 2 };
         private static Contact contact3 = new Contact { Id = 3 };
+        private static Contact contact4 = new Contact { Id = 4 };
 
         [Theory]
         [MemberData(nameof(GetSettleTestCases))]
         public void Settle(IList<SplitContact> splitContactsStub, IList<SettlementTransfer> expectedTransfers)
         {
             _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(splitContactsStub);
-            _contactRepositoryMock.Setup(r => r.GetById(1)).Returns(contact1);
-            _contactRepositoryMock.Setup(r => r.GetById(2)).Returns(contact2);
-            _contactRepositoryMock.Setup(r => r.GetById(3)).Returns(contact3);
 
             var settlement = _splitService.Settle(1);
 
@@ -91,26 +89,37 @@ namespace PayMeBack.Backend.Services.Tests
             {
                 new SplitContact { Contact = contact1, Paid = 25m },
                 new SplitContact { Contact = contact2, Owes = 25m }
-            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = new Contact { Id = 2 }, ToContact = new Contact { Id = 1 }, Amount = 25m } } };
+            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = contact2, ToContact = contact1, Amount = 25m } } };
             yield return new object[] { new List<SplitContact>
             {
                 new SplitContact { Contact = contact1, Paid = 25m },
                 new SplitContact { Contact = contact2, Owes = 10m }
-            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = new Contact { Id = 2 }, ToContact = new Contact { Id = 1 }, Amount = 10m } } };
+            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = contact2, ToContact = contact1, Amount = 10m } } };
             yield return new object[] { new List<SplitContact>
             {
                 new SplitContact { Contact = contact1, Owes = 25m },
                 new SplitContact { Contact = contact2, Paid = 10m }
-            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = new Contact { Id = 1 }, ToContact = new Contact { Id = 2 }, Amount = 10m } } };
-            //yield return new object[] { new List<SplitContact>
-            //{
-            //    new SplitContact { Contact = contact1, Owes = 25m },
-            //    new SplitContact { Contact = contact2, Paid = 10m },
-            //    new SplitContact { Contact = contact3, Paid = 15m }
-            //}, new List<SettlementTransfer>() {
-            //    new SettlementTransfer { FromContact = new Contact { Id = 1 }, ToContact = new Contact { Id = 2 }, Amount = 10m },
-            //    new SettlementTransfer { FromContact = new Contact { Id = 1 }, ToContact = new Contact { Id = 3 }, Amount = 15m }
-            //} };
+            }, new List<SettlementTransfer>() { new SettlementTransfer { FromContact = contact1, ToContact = contact2, Amount = 10m } } };
+            yield return new object[] { new List<SplitContact>
+            {
+                new SplitContact { Contact = contact1, Owes = 25m },
+                new SplitContact { Contact = contact2, Paid = 10m },
+                new SplitContact { Contact = contact3, Paid = 15m }
+            }, new List<SettlementTransfer>() {
+                new SettlementTransfer { FromContact = contact1, ToContact = contact2, Amount = 10m },
+                new SettlementTransfer { FromContact = contact1, ToContact = contact3, Amount = 15m }
+            } };
+            yield return new object[] { new List<SplitContact>
+            {
+                new SplitContact { Contact = contact1, Owes = 25m },
+                new SplitContact { Contact = contact2, Paid = 20m },
+                new SplitContact { Contact = contact3, Paid = 15m },
+                new SplitContact { Contact = contact4, Owes = 10m }
+            }, new List<SettlementTransfer>() {
+                new SettlementTransfer { FromContact = contact1, ToContact = contact2, Amount = 20m },
+                new SettlementTransfer { FromContact = contact1, ToContact = contact3, Amount = 5m },
+                new SettlementTransfer { FromContact = contact4, ToContact = contact3, Amount = 10m }
+            } };
         }
     }
 }

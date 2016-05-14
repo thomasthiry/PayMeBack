@@ -33,8 +33,10 @@ namespace PayMeBack.Backend.Services
         {
             var owerBalance = _contactBalances.FirstOrDefault(balance => balance.Value < 0m);
             var owerContact = _splitContacts.Select(sc => sc.Contact).Where(c => c.Id == owerBalance.Key).First();
+
             var payerBalance = _contactBalances.FirstOrDefault(balance => balance.Value > 0m);
             var payerContact = _splitContacts.Select(sc => sc.Contact).Where(c => c.Id == payerBalance.Key).First();
+
             var amount = Math.Min(Math.Abs(owerBalance.Value), Math.Abs(payerBalance.Value));
 
             _contactBalances[owerBalance.Key] += amount;

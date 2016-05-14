@@ -50,11 +50,11 @@ namespace PayMeBack.Backend.Services
             {
                 var transferFactory = new TransferFactory(splitContacts);
 
-                //while (transferFactory.CanStillCreateTransfer())
-                //{
+                while (transferFactory.CanStillCreateTransfer())
+                {
                     var transfer = transferFactory.CreateTransfer();
                     settlement.Transfers.Add(transfer);
-                //}
+                }
             }
 
             return settlement;
