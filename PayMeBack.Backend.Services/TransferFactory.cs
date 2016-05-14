@@ -13,9 +13,9 @@ namespace PayMeBack.Backend.Services
         private Dictionary<int, decimal> _contactBalances = new Dictionary<int, decimal>();
 
 
-        public TransferFactory(List<SplitContact> splitContacts)
+        public TransferFactory(IList<SplitContact> splitContacts)
         {
-            _splitContacts = splitContacts;
+            _splitContacts = (List<SplitContact>)splitContacts;
 
             _splitContacts.ForEach(sc => _contactBalances.Add(sc.Contact.Id, 0m));
             _splitContacts.ForEach(sc => _contactBalances[sc.Contact.Id] += sc.PaidBalance);
@@ -23,7 +23,10 @@ namespace PayMeBack.Backend.Services
 
         public bool CanStillCreateTransfer()
         {
-            throw new NotImplementedException();
+            var ThereIsStillAnOwer = _contactBalances.Where(balance => balance.Value < 0).Any();
+            var ThereIsStillAPayer = _contactBalances.Where(balance => balance.Value > 0).Any();
+
+            return ThereIsStillAnOwer && ThereIsStillAPayer;
         }
 
         public SettlementTransfer CreateTransfer()
