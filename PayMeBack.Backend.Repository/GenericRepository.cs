@@ -19,7 +19,7 @@ namespace PayMeBack.Backend.Repository
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IList<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null/*,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = ""*/)
@@ -47,7 +47,7 @@ namespace PayMeBack.Backend.Repository
             //}
         }
 
-        public virtual TEntity GetByID(int id)
+        public virtual TEntity GetById(int id)
         {
             return _dbSet.SingleOrDefault(e => e.Id == id);
         }
@@ -61,7 +61,7 @@ namespace PayMeBack.Backend.Repository
 
         public virtual void Delete(int id)
         {
-            TEntity entityToDelete = GetByID(id);
+            TEntity entityToDelete = GetById(id);
             Delete(entityToDelete);
         }
 

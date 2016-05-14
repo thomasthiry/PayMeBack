@@ -9,7 +9,8 @@
         "dnxcore50": {
             "dependencies": {
                 "System.Runtime": "4.0.21-beta-23516",
-                "System.Runtime.InteropServices": "4.0.21-beta-23516"
+                "System.Runtime.InteropServices": "4.0.21-beta-23516",
+                "System.Collections": "4.0.10"
             }
         }
     }

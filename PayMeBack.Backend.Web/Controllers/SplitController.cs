@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc;
 using PayMeBack.Backend.Web.Models;
 using PayMeBack.Backend.Contracts.Services;
 using AutoMapper;
+using System;
 
 namespace PayMeBack.Backend.Web.Controllers
 {
@@ -39,20 +40,11 @@ namespace PayMeBack.Backend.Web.Controllers
             return _mapper.Map<SplitDto>(createdSplit);
         }
 
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
+        // GET splits/5/settle
+        [HttpGet]
+        public SettlementDto Settle([FromRoute]int id)
+        {
+            return _mapper.Map<SettlementDto>(_splitService.Settle(id));
+        }
     }
 }

@@ -103,11 +103,6 @@ namespace PayMeBack.Backend.Services.Tests
             _contactService.UpdateSplitContact(splitContactStub.Id, splitContactWithNewValues.Owes, splitContactWithNewValues.Paid, splitContactWithNewValues.Comments);
 
             _splitContactRepositoryMock.Verify(r => r.Update(It.Is<SplitContact>(sc => sc.Owes == splitContactWithNewValues.Owes && sc.Paid == splitContactWithNewValues.Paid && sc.Comments == splitContactWithNewValues.Comments)));
-
-            //Assert.Equal(splitContactStub.ContactId, splitContact.ContactId);
-            //Assert.Equal(splitContactStub.Owes, splitContact.Owes);
-            //Assert.Equal(splitContactStub.Paid, splitContact.Paid);
-            //Assert.Equal(splitContactStub.Comments, splitContact.Comments);
         }
     }
 }

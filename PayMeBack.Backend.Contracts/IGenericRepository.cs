@@ -9,8 +9,8 @@ namespace PayMeBack.Backend.Contracts
     {
         void Delete(int id);
         void Delete(TEntity entityToDelete);
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null);
-        TEntity GetByID(int id);
+        IList<TEntity> Get(Expression<Func<TEntity, bool>> filter = null);
+        TEntity GetById(int id);
         TEntity Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
     }

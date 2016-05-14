@@ -66,5 +66,16 @@ namespace PayMeBack.Backend.Web.Tests
             Assert.Equal(splitCreationDto.Name, splitDto.Name);
             Assert.Equal(splitCreationDto.Created, splitDto.Created);
         }
+
+        [Fact]
+        public void Settle_ReturnsSettlement()
+        {
+            var settlementStub = new Settlement { Split = new Split { Id = 1 }, Transfers = new List<SettlementTransfer> { new SettlementTransfer() } };
+            _splitServiceMock.Setup(s => s.Settle(settlementStub.Split.Id)).Returns(settlementStub);
+
+            var settlementDto = _controller.Settle(settlementStub.Split.Id);
+
+            Assert.Equal(1, settlementDto.Transfers.Count);
+        }
     }
 }

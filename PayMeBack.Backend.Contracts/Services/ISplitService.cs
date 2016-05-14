@@ -13,5 +13,7 @@ namespace PayMeBack.Backend.Contracts.Services
         Split Get(int id);
 
         Split Create(string name, DateTime created);
+
+        Settlement Settle(int id);
     }
 }

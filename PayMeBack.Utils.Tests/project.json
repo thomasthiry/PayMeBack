@@ -1,6 +1,6 @@
-{
+﻿{
     "version": "1.0.0-*",
-    "description": "PayMeBack.Backend.Repository.Tests Class Library",
+    "description": "PayMeBack.Utils.Tests Class Library",
     "authors": [ "Thomas" ],
     "tags": [ "" ],
     "projectUrl": "",
@@ -8,13 +8,16 @@
     "frameworks": {
         "dnxcore50": {
             "dependencies": {
-                "System.Runtime": "4.0.21-beta-23516",
-                "moq.netcore": "4.4.0-beta8"
+                "System.Runtime": "4.0.21-beta-23516"
             }
         }
     },
     "dependencies": {
+        "PayMeBack.Utils": "1.0.0-*",
         "xunit": "2.1.0",
         "xunit.runner.dnx": "2.1.0-rc1-build204"
+    },
+    "commands": {
+        "test": "xunit.runner.dnx"
     }
 }
