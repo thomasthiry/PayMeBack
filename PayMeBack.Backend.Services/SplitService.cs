@@ -39,6 +39,9 @@ namespace PayMeBack.Backend.Services
         public Settlement Settle(int splitId)
         {
             var settlement = new Settlement { Transfers = new List<SettlementTransfer>() };
+
+            settlement.Split = _splitRepository.GetById(splitId);
+
             var splitContacts = (List<SplitContact>)_splitContactRepository.GetWithIncludedProperties(sc => sc.Contact, sc => sc.SplitId == splitId);
 
             if (splitContacts.Count == 1)

@@ -64,6 +64,19 @@ namespace PayMeBack.Backend.Services.Tests
             Assert.Equal(splitStub.Created, split.Created);
         }
 
+        [Fact]
+        public void Settle_ReturnsRelatedSplit()
+        {
+            var splitStub = new Split { Id = 3, Name = "split to settle" };
+            _splitRepositoryMock.Setup(r => r.GetById(3)).Returns(splitStub);
+
+            _splitContactRepositoryMock.Setup(r => r.GetWithIncludedProperties(It.IsAny<Expression<Func<SplitContact, IEntity>>>(), It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(new List<SplitContact>());
+
+            var settlement = _splitService.Settle(3);
+
+            Assert.Equal(splitStub.Name, settlement.Split.Name);
+        }
+
         private static Contact contact1 = new Contact { Id = 1 };
         private static Contact contact2 = new Contact { Id = 2 };
         private static Contact contact3 = new Contact { Id = 3 };

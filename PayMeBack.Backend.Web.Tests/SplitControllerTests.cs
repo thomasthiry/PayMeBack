@@ -77,6 +77,7 @@ namespace PayMeBack.Backend.Web.Tests
 
             Assert.Equal(1, settlementDto.Transfers.Count);
             Assert.Equal(settlementStub.Transfers[0].Amount, settlementDto.Transfers[0].Amount);
+            Assert.Equal(settlementStub.Split.Id, settlementDto.Split.Id);
         }
     }
 }
