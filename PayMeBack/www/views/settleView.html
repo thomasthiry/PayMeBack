@@ -1,11 +1,11 @@
 ﻿
-<ion-view>
+<ion-view class="settle-view">
     <ion-nav-title>{{ settlement.split.name }}</ion-nav-title>
     <ion-content class="padding">
         <p>To settle this split, these transfers must be made:</p>
         <ion-list>
             <ion-item ng-repeat="transfer in settlement.transfers">
-                {{ transfer.fromContact.name }} <i class="icon ion-arrow-right-a"></i> {{ transfer.toContact.name }}  <br/>{{ transfer.amount }} €
+                {{ transfer.fromContact.name }} <i class="settle-arrow icon ion-arrow-right-a"></i> {{ transfer.toContact.name }}  <br/>{{ transfer.amount }} €
             </ion-item>
         </ion-list>
     </ion-content>

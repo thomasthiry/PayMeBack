@@ -1,2 +1,15 @@
 ﻿body {
 }
+
+/* Split View */
+
+.split-view .item-content {
+    padding: 10px 10px 0 10px !important;
+}
+
+/* Settle View*/
+
+.settle-view .settle-arrow {
+    margin-left: 10px;
+    margin-right: 10px;
+}

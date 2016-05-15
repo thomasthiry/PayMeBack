@@ -1,5 +1,5 @@
 ﻿
-<ion-view>
+<ion-view class="split-view">
     <ion-nav-title>{{ split.name }}</ion-nav-title>
     <ion-content class="padding">
         <div class="item-input-inset">
@@ -11,7 +11,11 @@
         </div>
         <ion-list>
             <ion-item ng-repeat="splitContact in splitContacts track by splitContact.id" ui-sref="splitContactView({splitId: {{ split.id }}, splitContactId: {{ splitContact.id }} })">
-                {{splitContact.name}}
+                <p>{{splitContact.name}}</p>
+                <div class="row">
+                    <div class="col">{{ splitContact.paid }}</div>
+                    <div class="col">{{ splitContact.owes }}</div>
+                </div>
             </ion-item>
         </ion-list>
         <div style="text-align: center; margin-top: 20px;">
