@@ -73,7 +73,7 @@ namespace PayMeBack.Backend.Services.Tests
         [MemberData(nameof(GetSettleTestCases))]
         public void Settle(IList<SplitContact> splitContactsStub, IList<SettlementTransfer> expectedTransfers)
         {
-            _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(splitContactsStub);
+            _splitContactRepositoryMock.Setup(r => r.GetWithIncludedProperties(It.IsAny<Expression<Func<SplitContact, IEntity>>>(), It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(splitContactsStub);
 
             var settlement = _splitService.Settle(1);
 

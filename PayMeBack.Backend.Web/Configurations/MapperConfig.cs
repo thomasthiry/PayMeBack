@@ -11,6 +11,9 @@ namespace PayMeBack.Backend.Web.Configurations
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Split, SplitDto>();
                 cfg.CreateMap<Contact, ContactDto>();
+                cfg.CreateMap<SplitContact, SplitContactDto>()
+                    .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Contact.Email))
+                    .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Contact.Name));
                 cfg.CreateMap<Settlement, SettlementDto>();
                 cfg.CreateMap<SettlementTransfer, SettlementTransferDto>();
             });

@@ -18,12 +18,11 @@ namespace PayMeBack.Backend.Services
             _splitContactRepository = splitContactRepository;
         }
 
-        public IEnumerable<Contact> ListBySplitId(int splitId)
+        public IEnumerable<SplitContact> ListSplitContactsBySplitId(int splitId)
         {
-            var splitContacts = _splitContactRepository.Get(sc => sc.SplitId == splitId);
-            var contactsIds = splitContacts.Select(sc => sc.ContactId);
+            var splitContacts = _splitContactRepository.GetWithIncludedProperties(sc => sc.Contact, sc => sc.SplitId == splitId);
 
-            return _contactRepository.Get(c => contactsIds.Contains(c.Id));
+            return splitContacts;
         }
 
         public Contact CreateIfNeededAndAddToSplit(int splitId, string email)

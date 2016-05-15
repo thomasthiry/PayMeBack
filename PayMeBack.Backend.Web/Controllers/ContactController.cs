@@ -19,9 +19,9 @@ namespace PayMeBack.Backend.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ContactDto> ListBySplit([FromRoute]int splitId)
+        public IEnumerable<SplitContactDto> ListSplitContactsBySplit([FromRoute]int splitId)
         {
-            return _mapper.Map<IEnumerable<ContactDto>>(_contactService.ListBySplitId(splitId));
+            return _mapper.Map<IEnumerable<SplitContactDto>>(_contactService.ListSplitContactsBySplitId(splitId));
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace PayMeBack.Backend.Web.Controllers
 
             var contact = _contactService.GetContactById(splitContact.ContactId);
 
-            return new SplitContactDto {
+            return new SplitContactDto { // TODO MAP WITH AUTOMAPPER
                 Email = contact.Email,
                 Name = contact.Name,
                 Owes = splitContact.Owes,

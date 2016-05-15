@@ -70,12 +70,13 @@ namespace PayMeBack.Backend.Web.Tests
         [Fact]
         public void Settle_ReturnsSettlement()
         {
-            var settlementStub = new Settlement { Split = new Split { Id = 1 }, Transfers = new List<SettlementTransfer> { new SettlementTransfer() } };
+            var settlementStub = new Settlement { Split = new Split { Id = 1 }, Transfers = new List<SettlementTransfer> { new SettlementTransfer { FromContact = new Contact { Name = "John" }, ToContact = new Contact { Name = "Mark" }, Amount = 25m } } };
             _splitServiceMock.Setup(s => s.Settle(settlementStub.Split.Id)).Returns(settlementStub);
 
             var settlementDto = _controller.Settle(settlementStub.Split.Id);
 
             Assert.Equal(1, settlementDto.Transfers.Count);
+            Assert.Equal(settlementStub.Transfers[0].Amount, settlementDto.Transfers[0].Amount);
         }
     }
 }

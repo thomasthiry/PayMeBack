@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PayMeBack.Backend.Models
 {
@@ -17,6 +18,7 @@ namespace PayMeBack.Backend.Models
 
         public decimal Paid { get; set; }
 
+        [NotMapped]
         public decimal PaidBalance => Paid - Owes;
 
         public string Comments { get; set; }

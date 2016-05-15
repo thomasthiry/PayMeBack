@@ -54,8 +54,10 @@ namespace PayMeBack.Backend.Web
 
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<PayMeBackContext>(options => options.UseSqlServer(connection)
-                .MigrationsAssembly("PayMeBack.Backend.Repository"));
+                .AddDbContext<PayMeBackContext>(options => options
+                    .UseSqlServer(connection)
+                    .MigrationsAssembly("PayMeBack.Backend.Repository")
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,10 +83,12 @@ namespace PayMeBack.Backend.Web
                 routes.MapRoute(name: "SplitGet", template: "splits/{id:int}", defaults: new { controller = "Split", action = "Get" });
                 routes.MapRoute(name: "SplitCreate", template: "splits", defaults: new { controller = "Split", action = "Create" });
 
-                routes.MapRoute(name: "SplitContactsList", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "ListBySplit" });
+                routes.MapRoute(name: "SplitContactsList", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "ListSplitContactsBySplit" });
                 routes.MapRoute(name: "ContactCreate", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "CreateIfNeededAndAddToSplit" });
                 routes.MapRoute(name: "SplitContactGet", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "GetSplitContact" });
                 routes.MapRoute(name: "SplitContactUpdate", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "UpdateSplitContact" });
+
+                routes.MapRoute(name: "SplitSettle", template: "splits/{id:int}/settle", defaults: new { controller = "Split", action = "Settle" });
             });
         }
 

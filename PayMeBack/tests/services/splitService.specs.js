@@ -65,7 +65,7 @@ describe('SplitService', function () {
 
     describe('getSettlement', function () {
         it('should call the web service', function () {
-            var settlementsReturnedInCallBack = { transfers: [{ fromContactId: 1, fromContactName: 'Olivier', toContactId: 2, toContactName: 'Thomas', amount: 55.34 }, { fromContactId: 3, fromContactName: 'John', toContactId: 2, toContactName: 'Thomas', amount: 18 }] };
+            var settlementsReturnedInCallBack = { transfers: [{ fromContact: { id: 1, name: 'Olivier' }, toContact: { id: 2, name: 'Thomas' }, amount: 55.34 }, { fromContact: { id: 2, name: 'Olivier' }, toContact: { id: 3, name: 'Eric' }, amount: 15 }] };
             $httpBackend.when('GET', backendHostUrl + '/splits/2/settle').respond(settlementsReturnedInCallBack);
 
             var _settlement;

@@ -22,7 +22,7 @@ namespace PayMeBack.Backend.Repository
         public virtual IList<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null/*,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = ""*/)
+            Expression<Func<TEntity, IEntity>> includeProperties = null*/)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -30,12 +30,6 @@ namespace PayMeBack.Backend.Repository
             {
                 query = query.Where(filter);
             }
-
-            //foreach (var includeProperty in includeProperties.Split
-            //    (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            //{
-            //    query = query.Include(includeProperty);
-            //}
 
             //if (orderBy != null)
             //{
@@ -45,6 +39,23 @@ namespace PayMeBack.Backend.Repository
             //{
             return query.ToList();
             //}
+        }
+
+        public virtual IList<TEntity> GetWithIncludedProperties(Expression<Func<TEntity, IEntity>> includeProperties, Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                query = query.Include(includeProperties);
+            }
+
+            return query.ToList();
         }
 
         public virtual TEntity GetById(int id)

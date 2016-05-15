@@ -25,19 +25,20 @@ namespace PayMeBack.Backend.Web.Tests
         }
 
         [Fact]
-        public void GetContacts_ReturnsContactDtos()
+        public void ListSplitContactsBySplit_ReturnsContactDtos()
         {
-            var contactsStub = new List<Contact>
+            var splitContactStubs = new List<SplitContact>
             {
-                new Contact { Email = "Olivier" },
-                new Contact { Email = "John" },
+                new SplitContact { Id = 1, Contact = new Contact { Email = "john@msn.com" } },
+                new SplitContact { Id = 2, Contact = new Contact { Email = "mark@msn.com" } },
             };
-            _contactServiceMock.Setup(s => s.ListBySplitId(1)).Returns(contactsStub);
+            _contactServiceMock.Setup(s => s.ListSplitContactsBySplitId(1)).Returns(splitContactStubs);
 
-            var contacts = _controller.ListBySplit(1);
+            var splitContacts = _controller.ListSplitContactsBySplit(1);
 
-            Assert.NotEmpty(contacts);
-            Assert.IsAssignableFrom<ContactDto>(contacts.First());
+            Assert.Equal(splitContactStubs.First().Id, splitContacts.First().Id);
+            Assert.Equal(splitContactStubs.First().Contact.Email, splitContacts.First().Email);
+            Assert.IsAssignableFrom<SplitContactDto>(splitContacts.First());
         }
 
         [Fact]

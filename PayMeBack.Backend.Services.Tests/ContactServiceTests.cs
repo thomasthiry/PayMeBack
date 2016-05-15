@@ -23,15 +23,12 @@ namespace PayMeBack.Backend.Services.Tests
         }
 
         [Fact]
-        public void ListBySplitId_ReturnsContacts()
+        public void ListSplitContactsBySplitId_ReturnsContacts()
         {
             var splitContactsStub = new List<SplitContact> { new SplitContact { ContactId = 1, SplitId = 1 }, new SplitContact { ContactId = 2, SplitId = 1 } };
-            _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(splitContactsStub);
+            _splitContactRepositoryMock.Setup(r => r.GetWithIncludedProperties(It.IsAny<Expression<Func<SplitContact, IEntity>>>(), It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(splitContactsStub);
 
-            var contactsStub = new List<Contact> { new Contact { Id = 1, Name = "Olivier" }, new Contact { Id = 2, Name = "John" } };
-            _contactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(contactsStub);
-
-            var contacts = (List<Contact>)_contactService.ListBySplitId(1);
+            var contacts = (List<SplitContact>)_contactService.ListSplitContactsBySplitId(1);
 
             Assert.InRange(contacts.Count, 2, 2);
         }
