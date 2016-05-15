@@ -7,6 +7,14 @@
     padding: 10px 10px 0 10px !important;
 }
 
+.split-view .owes {
+    color: red;
+}
+
+.split-view .paid {
+    color: green;
+}
+
 /* Settle View*/
 
 .settle-view .settle-arrow {

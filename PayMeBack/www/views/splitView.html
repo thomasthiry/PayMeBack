@@ -13,8 +13,8 @@
             <ion-item ng-repeat="splitContact in splitContacts track by splitContact.id" ui-sref="splitContactView({splitId: {{ split.id }}, splitContactId: {{ splitContact.id }} })">
                 <p>{{splitContact.name}}</p>
                 <div class="row">
-                    <div class="col">{{ splitContact.paid }}</div>
-                    <div class="col">{{ splitContact.owes }}</div>
+                    <div class="col paid">+ {{ splitContact.paid }}</div>
+                    <div class="col owes">- {{ splitContact.owes }}</div>
                 </div>
             </ion-item>
         </ion-list>
