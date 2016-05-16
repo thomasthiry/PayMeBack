@@ -14,6 +14,6 @@ namespace PayMeBack.Backend.Contracts.Services
 
         SplitContact GetSplitContactById(int id);
 
-        void UpdateSplitContact(int splitContactId, decimal owes, decimal paid, string comments);
+        void UpdateSplitContact(int splitContactId, decimal owes, decimal paid, string iban, string address, string comments);
     }
 }

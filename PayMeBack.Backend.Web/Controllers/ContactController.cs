@@ -42,37 +42,15 @@ namespace PayMeBack.Backend.Web.Controllers
                 Name = contact.Name,
                 Owes = splitContact.Owes,
                 Paid = splitContact.Paid,
+                Iban = splitContact.Contact.Iban,
+                Address = splitContact.Contact.Address,
                 Comments = splitContact.Comments
             };
         }
 
         public void UpdateSplitContact(int splitId, int splitContactId, [FromBody]SplitContactUpdateDto splitContactUpdateDto)
         {
-            _contactService.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Comments);
+            _contactService.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Iban, splitContactUpdateDto.Address, splitContactUpdateDto.Comments);
         }
-
-        // POST api/splits
-        //[HttpPost]
-        //public SplitDto CreateIfNeededAndAddToSplit([FromBody]SplitCreationDto splitCreationDto)
-        //{
-        //    var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created);
-        //    return _mapper.Map<SplitDto>(createdSplit);
-        //}
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
     }
 }

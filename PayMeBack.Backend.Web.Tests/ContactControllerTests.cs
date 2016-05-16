@@ -55,7 +55,7 @@ namespace PayMeBack.Backend.Web.Tests
         [Fact]
         public void GetSplitContact_ReturnsSplitContactDto()
         {
-            var splitContactStub = new SplitContact { Id = 1, ContactId = 2, SplitId = 5, Owes = 25m, Paid = 50m, Comments = "me devait déjà 5 euros" };
+            var splitContactStub = new SplitContact { Id = 1, ContactId = 2, Contact = new Contact { Iban = "BE68 5390 0754 7034", Address = "Rue des longiers, 45" }, SplitId = 5, Owes = 25m, Paid = 50m, Comments = "me devait déjà 5 euros" };
             _contactServiceMock.Setup(s => s.GetSplitContactById(splitContactStub.Id)).Returns(splitContactStub);
 
             var contactStub = new Contact { Id = 2, Email = "olivier@test.com" };
@@ -66,6 +66,8 @@ namespace PayMeBack.Backend.Web.Tests
             Assert.Equal(contactStub.Email, splitContactDto.Email);
             Assert.Equal(splitContactStub.Owes, splitContactDto.Owes);
             Assert.Equal(splitContactStub.Paid, splitContactDto.Paid);
+            Assert.Equal(splitContactStub.Contact.Iban, splitContactDto.Iban);
+            Assert.Equal(splitContactStub.Contact.Address, splitContactDto.Address);
             Assert.Equal(splitContactStub.Comments, splitContactDto.Comments);
         }
 
@@ -74,11 +76,11 @@ namespace PayMeBack.Backend.Web.Tests
         {
             var splitId = 1;
             var splitContactId = 2;
-            var splitContactUpdateDto = new SplitContactUpdateDto { Owes = 25m, Paid = 50m, Comments = "me devait déjà 5 euros" };
+            var splitContactUpdateDto = new SplitContactUpdateDto { Owes = 25m, Paid = 50m, Iban = "BE68 5390 0754 7034", Address = "Rue des longiers, 45", Comments = "me devait déjà 5 euros" };
 
             _controller.UpdateSplitContact(splitId, splitContactId, splitContactUpdateDto);
 
-            _contactServiceMock.Verify(s => s.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Comments), Times.Once());
+            _contactServiceMock.Verify(s => s.UpdateSplitContact(splitContactId, splitContactUpdateDto.Owes, splitContactUpdateDto.Paid, splitContactUpdateDto.Iban, splitContactUpdateDto.Address, splitContactUpdateDto.Comments), Times.Once());
         }
 
         //[Fact]

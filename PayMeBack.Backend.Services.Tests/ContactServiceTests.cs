@@ -93,13 +93,13 @@ namespace PayMeBack.Backend.Services.Tests
         [Fact]
         public void UpdateSplitContact_CallsRepository()
         {
-            var splitContactStub = new SplitContact { Id = 5, ContactId = 30, Owes = 25m, Paid = 50m, Comments = "my comment" };
-            _splitContactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(new List<SplitContact> { splitContactStub });
+            var splitContactStub = new SplitContact { Id = 5, ContactId = 30, Contact = new Contact(), Owes = 25m, Paid = 50m, Comments = "my comment" };
+            _splitContactRepositoryMock.Setup(r => r.GetWithIncludedProperties(It.IsAny<Expression<Func<SplitContact, IEntity>>>(), It.IsAny<Expression<Func<SplitContact, bool>>>())).Returns(new List<SplitContact> { splitContactStub });
+            
+            var splitContactWithNewValues = new SplitContact { Id = 5, ContactId = 30, Owes = 99m, Paid = 22m, Contact = new Contact { Iban = "BE68 5390 0754 7034", Address = "Rue des longiers, 45" }, Comments = "updated values" };
+            _contactService.UpdateSplitContact(splitContactStub.Id, splitContactWithNewValues.Owes, splitContactWithNewValues.Paid, splitContactWithNewValues.Contact.Iban, splitContactWithNewValues.Contact.Address, splitContactWithNewValues.Comments);
 
-            var splitContactWithNewValues = new SplitContact { Id = 5, ContactId = 30, Owes = 99m, Paid = 22m, Comments = "updated values" };
-            _contactService.UpdateSplitContact(splitContactStub.Id, splitContactWithNewValues.Owes, splitContactWithNewValues.Paid, splitContactWithNewValues.Comments);
-
-            _splitContactRepositoryMock.Verify(r => r.Update(It.Is<SplitContact>(sc => sc.Owes == splitContactWithNewValues.Owes && sc.Paid == splitContactWithNewValues.Paid && sc.Comments == splitContactWithNewValues.Comments)));
+            _splitContactRepositoryMock.Verify(r => r.Update(It.Is<SplitContact>(sc => sc.Owes == splitContactWithNewValues.Owes && sc.Paid == splitContactWithNewValues.Paid && sc.Contact.Iban == splitContactWithNewValues.Contact.Iban && sc.Contact.Address == splitContactWithNewValues.Contact.Address && sc.Comments == splitContactWithNewValues.Comments)));
         }
     }
 }

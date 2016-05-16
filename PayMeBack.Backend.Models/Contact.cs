@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PayMeBack.Backend.Models
 {
@@ -9,5 +10,9 @@ namespace PayMeBack.Backend.Models
         public string Name { get; set; }
 
         public string Email { get; set; }
+
+        public string Iban { get; set; }
+
+        public string Address { get; set; }
     }
 }

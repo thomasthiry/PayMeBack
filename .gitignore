@@ -6,26 +6,26 @@
 .vs/*
 
 # Build working directories
-PayMeBack/bin
-PayMeBack/bld
-PayMeBack/platforms
+PayMeBack.Frontend/bin
+PayMeBack.Frontend/bld
+PayMeBack.Frontend/platforms
 
 # Include plugin sub-directories, but not top level files (except for fetch.json)
-PayMeBack/plugins/*
-!PayMeBack/plugins/*/
-!PayMeBack/plugins/fetch.json
+PayMeBack.Frontend/plugins/*
+!PayMeBack.Frontend/plugins/*/
+!PayMeBack.Frontend/plugins/fetch.json
 
 # Local nu-get packages
-PayMeBack/packages/*/
+PayMeBack.Frontend/packages/*/
 
 # NodeJS dependencies
-PayMeBack/node_modules
+PayMeBack.Frontend/node_modules
 
 # Bower dependencies
-PayMeBack/bower_components
+PayMeBack.Frontend/bower_components
 
 # Build-time variables
-PayMeBack/www/scripts/BuildVars.js
+PayMeBack.Frontend/www/scripts/BuildVars.js
 
 # Windows thumbnail cache
 Thumbs.db

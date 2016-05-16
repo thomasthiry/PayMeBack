@@ -1,0 +1,11 @@
+{
+    "name": "PayMeBack.Frontend",
+    "dependencies": {
+    },
+    "devDependencies": {
+        "angular-mocks": "1.4.8"
+    },
+    "resolutions": {
+        "angular": "1.5.3"
+    }
+}

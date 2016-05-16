@@ -5,20 +5,14 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
         return $http.get(backendHostUrl + '/splits').then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     this.get = function (splitId) {
         return $http.get(backendHostUrl + '/splits/' + splitId).then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     this.create = function () {
@@ -28,23 +22,21 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
         return $http.post(backendHostUrl + '/splits', JSON.stringify(splitToCreate)).then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     this.getSettlement = function (splitId) {
         return $http.get(backendHostUrl + '/splits/' + splitId + '/settle').then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     function _formatDateTime(date) {
         return date.toString().slice(0, 21);
+    }
+
+    function _errorCallback(response) {
+        alert('Error connecting. Details: ' + response.status + ' - ' + response.statusText);
     }
 }

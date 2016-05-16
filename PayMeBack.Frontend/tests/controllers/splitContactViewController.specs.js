@@ -32,11 +32,11 @@
 
     describe('click on save', function () {
         beforeEach(function () {
-            $scope.splitContact = { id: splitContactIdInState, splitId: 5, owes: 111, paid: 222, comments: 'much more' };
+            $scope.splitContact = { id: splitContactIdInState, splitId: 5, owes: 111, paid: 222, iban: 'BE012345678910', address: 'Rue des longiers, 45', comments: 'long due man' };
             $scope.save_click();
         });
         it('should call the contact service', function () {
-            expect(contactServiceSpy.updateSplitContact).toHaveBeenCalledWith($scope.splitContact.splitId, $scope.splitContact.id, $scope.splitContact.owes, $scope.splitContact.paid, $scope.splitContact.comments);
+            expect(contactServiceSpy.updateSplitContact).toHaveBeenCalledWith($scope.splitContact);
         });
     });
 });

@@ -45,6 +45,8 @@ namespace PayMeBack.Backend.IntegrationTests
             var splitContactDto = contactController.Controller.GetSplitContact(1, 1);
 
             Assert.Equal(50m, splitContactDto.Owes);
+            Assert.Equal("BE68 5390 0754 7034", splitContactDto.Iban);
+            Assert.Equal("Rue des longiers, 45", splitContactDto.Address);
         }
 
         [Fact]
@@ -52,11 +54,15 @@ namespace PayMeBack.Backend.IntegrationTests
         {
             var contactController = CreateController();
 
-            var splitContactUpdateDto = new SplitContactUpdateDto { Owes = 33, Paid = 33, Comments = "comment" };
+            var splitContactUpdateDto = new SplitContactUpdateDto { Owes = 33, Paid = 33, Iban = "BE68 5390 0754 7034", Address = "Rue des longiers, 45", Comments = "comment" };
             var splitContactId = 1;
             contactController.Controller.UpdateSplitContact(1, splitContactId, splitContactUpdateDto);
 
-            Assert.Equal(splitContactUpdateDto.Comments, contactController.Context.SplitContacts.Single(sc => sc.Id == splitContactId).Comments);
+            var splitContact = contactController.Context.SplitContacts.Single(sc => sc.Id == splitContactId);
+            Assert.Equal(splitContactUpdateDto.Comments, splitContact.Comments);
+            var contact = contactController.Context.Contacts.Single(c => c.Id == splitContact.ContactId);
+            Assert.Equal(splitContactUpdateDto.Iban, contact.Iban);
+            Assert.Equal(splitContactUpdateDto.Address, contact.Address);
         }
 
         private ControllerWithContext<ContactController> CreateController()
@@ -90,7 +96,7 @@ namespace PayMeBack.Backend.IntegrationTests
             context.Splits.Add(new Split { Name = "Today" });
             context.Splits.Add(new Split { Name = "Yesterday" });
 
-            context.Contacts.Add(new Contact { Name = "John" });
+            context.Contacts.Add(new Contact { Name = "John", Iban = "BE68 5390 0754 7034", Address = "Rue des longiers, 45" });
             context.Contacts.Add(new Contact { Name = "Mark" });
 
             context.SplitContacts.Add(new SplitContact { SplitId = 1, ContactId = 1, Owes = 50m });

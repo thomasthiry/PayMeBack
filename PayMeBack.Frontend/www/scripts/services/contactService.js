@@ -5,10 +5,7 @@ function contactService(backendHostUrl, $http) {
         return $http.get(backendHostUrl + '/splits/' + splitId + '/contacts').then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     this.createIfNeededAndAddToSplit = function (splitId, contactEmailToAdd) {
@@ -16,30 +13,25 @@ function contactService(backendHostUrl, $http) {
         return $http.post(backendHostUrl + '/splits/' + splitId + '/contacts', contactToCreate).then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
     this.getSplitContactById = function (splitId, splitContactId) {
         return $http.get(backendHostUrl + '/splits/' + splitId + '/contacts/' + splitContactId).then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
 
-    this.updateSplitContact = function (splitId, splitContactId, owes, paid, comments) {
-        var data = { owes: owes, paid: paid, comments: comments };
-        return $http.put(backendHostUrl + '/splits/' + splitId + '/contacts/' + splitContactId, data).then(
+    this.updateSplitContact = function (splitContact) {
+        var data = { owes: splitContact.owes, paid: splitContact.paid, iban: splitContact.iban, address: splitContact.address, comments: splitContact.comments };
+        return $http.put(backendHostUrl + '/splits/' + splitContact.splitId + '/contacts/' + splitContact.id, data).then(
             function successCallback(response) {
                 return response.data;
-            },
-            function errorCallback(response) {
-                console.log('failure');
-            });
+            }, _errorCallback);
     };
+
+    function _errorCallback(response) {
+        alert('Error connecting. Details: ' + response.status + ' - ' + response.statusText);
+    }
 }
