@@ -39,16 +39,7 @@ namespace PayMeBack.Backend.Web
 
             services.AddCors();
 
-            // Scoped lifetime (per request) is used to prevent concurrence issues with EF: "There is already an open DataReader associated with this Command which must be closed first."
-            services.AddScoped<ISplitService, SplitService>();
-            services.AddScoped<IContactService, ContactService>();
-
-            services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
-            services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
-            services.AddScoped<IGenericRepository<SplitContact>, GenericRepository<SplitContact>>();
-
-            var mapper = MapperConfig.CreateMapper();
-            services.AddInstance<IMapper>(mapper);
+            InjectionConfig.ConfigureCustomServices(services);
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True;";
 
@@ -59,7 +50,7 @@ namespace PayMeBack.Backend.Web
                     .MigrationsAssembly("PayMeBack.Backend.Repository")
                 );
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -82,13 +73,13 @@ namespace PayMeBack.Backend.Web
                 routes.MapRoute(name: "SplitsList", template: "splits", defaults: new { controller = "Split", action = "List" });
                 routes.MapRoute(name: "SplitGet", template: "splits/{id:int}", defaults: new { controller = "Split", action = "Get" });
                 routes.MapRoute(name: "SplitCreate", template: "splits", defaults: new { controller = "Split", action = "Create" });
+                routes.MapRoute(name: "SplitSettle", template: "splits/{id:int}/settle", defaults: new { controller = "Split", action = "Settle" });
 
                 routes.MapRoute(name: "SplitContactsList", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "ListSplitContactsBySplit" });
                 routes.MapRoute(name: "ContactCreate", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "CreateIfNeededAndAddToSplit" });
                 routes.MapRoute(name: "SplitContactGet", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "GetSplitContact" });
                 routes.MapRoute(name: "SplitContactUpdate", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "UpdateSplitContact" });
 
-                routes.MapRoute(name: "SplitSettle", template: "splits/{id:int}/settle", defaults: new { controller = "Split", action = "Settle" });
             });
         }
 
