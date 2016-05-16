@@ -1,0 +1,27 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "PayMeBack.Backend.IntegrationTests Class Library",
+    "authors": [ "Thomas" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "frameworks": {
+        "dnxcore50": {
+            "dependencies": {
+                "System.Runtime": "4.0.21-beta-23516"
+            }
+        }
+    },
+    "dependencies": {
+        "PayMeBack.Utils": "",
+        "PayMeBack.Backend.Web": "",
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-rc1-build204",
+        "moq.netcore": "4.4.0-beta8",
+        "EntityFramework.InMemory": "7.0.0-rc1-final"
+    },
+    "commands": {
+        "test": "xunit.runner.dnx"
+    }
+}
