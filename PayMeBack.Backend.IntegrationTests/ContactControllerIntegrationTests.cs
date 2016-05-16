@@ -82,6 +82,7 @@ namespace PayMeBack.Backend.IntegrationTests
 
             return new ControllerWithContext<ContactController> { Controller = contactController, Context = context };
         }
+
         private PayMeBackContext CreateContext(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<PayMeBackContext>();
