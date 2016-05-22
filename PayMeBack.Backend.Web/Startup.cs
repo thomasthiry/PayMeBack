@@ -70,6 +70,8 @@ namespace PayMeBack.Backend.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "Login", template: "login", defaults: new { controller = "User", action = "Login" });
+
                 routes.MapRoute(name: "SplitsList", template: "splits", defaults: new { controller = "Split", action = "List" });
                 routes.MapRoute(name: "SplitGet", template: "splits/{id:int}", defaults: new { controller = "Split", action = "Get" });
                 routes.MapRoute(name: "SplitCreate", template: "splits", defaults: new { controller = "Split", action = "Create" });

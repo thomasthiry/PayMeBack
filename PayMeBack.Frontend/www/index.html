@@ -13,7 +13,7 @@
     <link href="css/index.css" rel="stylesheet" />
     <link href="css/ionic.css" rel="stylesheet" />
 </head>
-<body>
+<body ng-controller="AppController">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
     </ion-nav-bar>
@@ -28,13 +28,18 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/excludedFromTests.js"></script>
 
+    <script src="scripts/controllers/appController.js"></script>
+    <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/splitListController.js"></script>
     <script src="scripts/controllers/splitViewController.js"></script>
     <script src="scripts/controllers/splitContactViewController.js"></script>
     <script src="scripts/controllers/settleViewController.js"></script>
 
+    <script src="scripts/services/authService.js"></script>
     <script src="scripts/services/splitService.js"></script>
     <script src="scripts/services/contactService.js"></script>
+
+    <script src="scripts/interceptor/authInterceptor.js"></script>
 
     <!-- Cordova reference, this is added to your app when it's built. Must be the last script -->
     <script src="cordova.js"></script>
