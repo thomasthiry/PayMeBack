@@ -16,10 +16,12 @@ namespace PayMeBack.Backend.Web.Configurations
             // Scoped lifetime (per request) is used to prevent concurrence issues with EF: "There is already an open DataReader associated with this Command which must be closed first."
             services.AddScoped<ISplitService, SplitService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
             services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
             services.AddScoped<IGenericRepository<SplitContact>, GenericRepository<SplitContact>>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var mapper = MapperConfig.CreateMapper();
             services.AddInstance<IMapper>(mapper);

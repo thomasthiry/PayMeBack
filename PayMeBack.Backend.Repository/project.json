@@ -9,13 +9,13 @@
         "dnxcore50": {
             "dependencies": {
                 "System.Runtime": "4.0.21-beta-23516",
-                "System.Runtime.InteropServices": "4.0.21-beta-23516"
+                "System.Runtime.InteropServices": "4.0.21-beta-23516",
+                "EntityFramework.Commands": "7.0.0-rc1-final",
+                "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
             }
         }
     },
     "dependencies": {
-        "EntityFramework.Commands": "7.0.0-rc1-final",
-        "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
         "PayMeBack.Backend.Contracts": "1.0.0-*",
         "PayMeBack.Backend.Models": "1.0.0-*"
     }

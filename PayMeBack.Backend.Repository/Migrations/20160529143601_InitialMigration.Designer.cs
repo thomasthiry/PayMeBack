@@ -3,13 +3,13 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using PayMeBack.Backend.Contracts;
+using PayMeBack.Backend.Repository;
 
 namespace PayMeBack.Backend.Repository.Migrations
 {
     [DbContext(typeof(PayMeBackContext))]
-    [Migration("20160506201652_ContactRemoveSplitId")]
-    partial class ContactRemoveSplitId
+    [Migration("20160529143601_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,12 +17,34 @@ namespace PayMeBack.Backend.Repository.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PayMeBack.Backend.Models.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Creation");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PasswordSalt");
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("PayMeBack.Backend.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("Email");
+
+                    b.Property<string>("Iban");
 
                     b.Property<string>("Name");
 
@@ -46,7 +68,13 @@ namespace PayMeBack.Backend.Repository.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Comments");
+
                     b.Property<int>("ContactId");
+
+                    b.Property<decimal>("Owes");
+
+                    b.Property<decimal>("Paid");
 
                     b.Property<int>("SplitId");
 

@@ -1,16 +1,11 @@
-﻿using AutoMapper;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using PayMeBack.Backend.Contracts.Services;
-using PayMeBack.Backend.Contracts;
-using PayMeBack.Backend.Services;
 using PayMeBack.Backend.Web.Configurations;
 using Microsoft.Data.Entity;
-using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Repository;
 
 namespace PayMeBack.Backend.Web
@@ -71,6 +66,7 @@ namespace PayMeBack.Backend.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "Login", template: "login", defaults: new { controller = "User", action = "Login" });
+                routes.MapRoute(name: "UserCreate", template: "users", defaults: new { controller = "User", action = "UserCreate" });
 
                 routes.MapRoute(name: "SplitsList", template: "splits", defaults: new { controller = "Split", action = "List" });
                 routes.MapRoute(name: "SplitGet", template: "splits/{id:int}", defaults: new { controller = "Split", action = "Get" });

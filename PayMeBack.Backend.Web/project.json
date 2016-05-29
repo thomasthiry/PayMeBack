@@ -20,7 +20,8 @@
         "PayMeBack.Backend.Repository": "1.0.0-*",
         "PayMeBack.Backend.Services": "",
         "EntityFramework.Commands": "7.0.0-rc1-final",
-        "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final"
+        "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+        "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
     },
 
     "commands": {
