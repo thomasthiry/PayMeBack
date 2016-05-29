@@ -18,9 +18,9 @@ namespace PayMeBack.Backend.Web.Controllers
         }
 
         [HttpPost]
-        public TokenDto Login([FromBody]LoginRequestDto loginRequest)
+        public UserAndTokenDto Login([FromBody]LoginRequestDto loginRequest)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserAndTokenDto>(_userService.Login(loginRequest.Email, loginRequest.Password));
         }
 
         [HttpPost]

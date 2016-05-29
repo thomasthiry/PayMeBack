@@ -21,7 +21,7 @@ namespace PayMeBack.Backend.Web.Configurations
             services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
             services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
             services.AddScoped<IGenericRepository<SplitContact>, GenericRepository<SplitContact>>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGenericRepository<AppUser>, GenericRepository<AppUser>>();
 
             var mapper = MapperConfig.CreateMapper();
             services.AddInstance<IMapper>(mapper);

@@ -9,9 +9,9 @@ namespace PayMeBack.Backend.Services
 {
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
+        private IGenericRepository<AppUser> _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IGenericRepository<AppUser> userRepository)
         {
             _userRepository = userRepository;
         }
@@ -28,14 +28,13 @@ namespace PayMeBack.Backend.Services
                 PasswordSalt = Convert.ToBase64String(salt),
                 Creation = DateTime.Now
             };
-            var result = _userRepository.Create(user);
+            var result = _userRepository.Insert(user);
 
             return user;
         }
 
         private byte[] GenerateSalt()
         {
-            // generate a 128-bit salt using a secure PRNG
             byte[] salt = new byte[128 / 8];
             using (var randomNumberGenerator = RandomNumberGenerator.Create())
             {
@@ -46,15 +45,28 @@ namespace PayMeBack.Backend.Services
 
         private byte[] GeneratePasswordHash(string password, byte[] salt)
         {
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
             var passwordHashBytes = KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
+                prf: KeyDerivationPrf.HMACSHA256,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8);
 
             return passwordHashBytes;
+        }
+
+        public UserAndToken Login(string email, string password)
+        {
+            var user = _userRepository.GetFirst(u => u.Email == email);
+
+            var requestPasswordHash = Convert.ToBase64String(GeneratePasswordHash(password, Convert.FromBase64String(user.PasswordSalt)));
+
+            if (requestPasswordHash != user.PasswordHash)
+            {
+                throw new SecurityException("The password does not match.");
+            }
+
+            return new UserAndToken { User = user, Token = "ERE4F8ZER65FS4D6F8ERZF68HODM1VT" };
         }
     }
 }

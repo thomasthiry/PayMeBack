@@ -25,6 +25,18 @@ namespace PayMeBack.Backend.IntegrationTests
             Assert.Equal(2, createdUserDto.Id);
         }
 
+        [Fact]
+        public void UserLogin()
+        {
+            var controller = CreateController();
+
+            var loginRequestDto = new LoginRequestDto { Email = "john@gmail.com", Password = "MyPass1" };
+
+            var userAndTokenDto = controller.Controller.Login(loginRequestDto);
+
+            Assert.Equal(loginRequestDto.Email, userAndTokenDto.User.Email);
+        }
+
         private ControllerWithContext<UserController> CreateController()
         {
             var services = new ServiceCollection();
@@ -38,7 +50,7 @@ namespace PayMeBack.Backend.IntegrationTests
             var serviceProvider = services.BuildServiceProvider();
             var context = CreateContext(serviceProvider);
 
-            services.AddTransient<IUserRepository, UserRepository>(provider => new UserRepository(context));
+            services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>(provider => new GenericRepository<AppUser>(context));
 
             var mapper = serviceProvider.GetService<IMapper>();
             var userService = serviceProvider.GetService<IUserService>();
@@ -51,7 +63,7 @@ namespace PayMeBack.Backend.IntegrationTests
         {
             var context = serviceProvider.GetService<PayMeBackContext>();
 
-            context.AppUsers.Add(new AppUser { Email = "john@gmail.com", Name = "John Smith" });
+            context.AppUsers.Add(new AppUser { Email = "john@gmail.com", Name = "John Smith", PasswordHash = "YkxknXOgltAnhEhO6yjm6EOwIVMO7NIF02x1Zcj99kA=", PasswordSalt = "JjsV9YytLSuZcQIsrIk6cg==" });
             context.SaveChanges();
 
             return context;

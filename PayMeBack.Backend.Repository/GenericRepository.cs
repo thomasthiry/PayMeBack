@@ -41,6 +41,11 @@ namespace PayMeBack.Backend.Repository
             //}
         }
 
+        public virtual TEntity GetFirst(Expression<Func<TEntity, bool>> filter = null)
+        {
+            return Get(filter).FirstOrDefault();
+        }
+
         public virtual IList<TEntity> GetWithIncludedProperties(Expression<Func<TEntity, IEntity>> includeProperties, Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = _dbSet;

@@ -10,6 +10,7 @@ namespace PayMeBack.Backend.Web.Configurations
         {
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<AppUser, UserDto>();
+                cfg.CreateMap<UserAndToken, UserAndTokenDto>();
                 cfg.CreateMap<Split, SplitDto>();
                 cfg.CreateMap<Contact, ContactDto>();
                 cfg.CreateMap<SplitContact, SplitContactDto>()

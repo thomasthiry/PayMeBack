@@ -4,6 +4,7 @@ using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Web.Configurations;
 using PayMeBack.Backend.Web.Controllers;
 using PayMeBack.Backend.Web.Models;
+using System;
 using Xunit;
 
 namespace PayMeBack.Backend.Web.Tests
@@ -21,14 +22,6 @@ namespace PayMeBack.Backend.Web.Tests
             _controller = new UserController(mapper, _userServiceMock.Object);
         }
 
-        //[Fact]
-        //public void Login_ReturnsToken()
-        //{
-        //    var tokenDto = _controller.Login(new LoginRequestDto { Username = "thomas@user.com", Password = "Password1" });
-
-        //    Assert.Equal("IJ9RJZR908JIZ", tokenDto.Token);
-        //}
-
         [Fact]
         public void CreateUser_ReturnsCreatedUser()
         {
@@ -43,6 +36,20 @@ namespace PayMeBack.Backend.Web.Tests
 
             Assert.Equal(userCreationDto.Name, userDto.Name);
             Assert.Equal(userCreationDto.Email, userDto.Email);
+        }
+
+        [Fact]
+        public void Login_ReturnsUserAndToken()
+        {
+            var loginRequestDto = new LoginRequestDto { Email = "john@gmail.com", Password = "MyPass1" };
+
+            var userAndTokenStub = new UserAndToken { User = new AppUser { Id = 3, Email = loginRequestDto.Email }, Token = "EZR546EZ4R8ZE4RA8DS5FDSFEZ" };
+            _userServiceMock.Setup(s => s.Login(It.Is<string>(e => e == loginRequestDto.Email), It.Is<string>(n => n == loginRequestDto.Password))).Returns(userAndTokenStub);
+
+            var userAndTokenDto = _controller.Login(loginRequestDto);
+
+            Assert.Equal(userAndTokenStub.User.Id, userAndTokenDto.User.Id);
+            Assert.Equal(userAndTokenStub.Token, userAndTokenDto.Token);
         }
     }
 }
