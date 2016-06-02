@@ -149,6 +149,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Authentication/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -866,6 +892,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -2119,6 +2147,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Authentication/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -2836,6 +2890,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -4661,6 +4717,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Authentication/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -5378,6 +5460,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -7210,6 +7294,32 @@
         "lib/net45/System.Interactive.Async.XML",
         "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll",
         "lib/portable-windows8+net45+wp8/System.Interactive.Async.XML"
+      ]
+    },
+    "JWT.DNX/1.0.0.1": {
+      "type": "package",
+      "sha512": "8p6mYVedQEyGrnoB4YWZcBfWpyJ9hB3EGkAbzXwi49BUglvB9u3C24LTjea3I0sTwvUb+Ayc5ug9QjZ9EJGAqA==",
+      "files": [
+        "JWT.DNX.1.0.0.1.nupkg",
+        "JWT.DNX.1.0.0.1.nupkg.sha512",
+        "JWT.DNX.nuspec",
+        "lib/dotnet5.4/JWT.DNX.dll",
+        "lib/dotnet5.4/JWT.DNX.xml",
+        "lib/net451/JWT.DNX.dll",
+        "lib/net451/JWT.DNX.xml"
+      ]
+    },
+    "JWT.DNX.Json.Net/1.0.0.1": {
+      "type": "package",
+      "sha512": "JpiaMgb2qKE/4CYHFUL81Q6AJJQyWBYDGNAzyjNBPwE665L7JLORLA+NGhMiBrNPGMozwacv98B34Op8xwG6ig==",
+      "files": [
+        "JWT.DNX.Json.Net.1.0.0.1.nupkg",
+        "JWT.DNX.Json.Net.1.0.0.1.nupkg.sha512",
+        "JWT.DNX.Json.Net.nuspec",
+        "lib/dotnet5.4/JWT.DNX.Json.Net.dll",
+        "lib/dotnet5.4/JWT.DNX.Json.Net.xml",
+        "lib/net451/JWT.DNX.Json.Net.dll",
+        "lib/net451/JWT.DNX.Json.Net.xml"
       ]
     },
     "Microsoft.AspNet.Authentication/1.0.0-rc1-final": {

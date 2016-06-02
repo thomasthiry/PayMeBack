@@ -10,11 +10,19 @@ using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Web.Configurations;
 using PayMeBack.Backend.Web.Models;
 using AutoMapper;
+using JWT;
+using JWT.DNX.Json.Net;
+using Moq;
 
 namespace PayMeBack.Backend.IntegrationTests
 {
     public class UserControllerIntegrationTests
     {
+        public UserControllerIntegrationTests()
+        {
+            JsonWebToken.JsonSerializer = new JsonNetJWTSerializer();
+        }
+
         [Fact]
         public void UserCreate()
         {
@@ -50,6 +58,10 @@ namespace PayMeBack.Backend.IntegrationTests
             var serviceProvider = services.BuildServiceProvider();
             var context = CreateContext(serviceProvider);
 
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            dateTimeProviderMock.Setup(d => d.Now()).Returns(new DateTime(2020, 6, 1, 12, 0, 0, DateTimeKind.Utc));
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>(provider => (DateTimeProvider)dateTimeProviderMock.Object);
+
             services.AddTransient<IGenericRepository<AppUser>, GenericRepository<AppUser>>(provider => new GenericRepository<AppUser>(context));
 
             var mapper = serviceProvider.GetService<IMapper>();
@@ -59,6 +71,7 @@ namespace PayMeBack.Backend.IntegrationTests
 
             return new ControllerWithContext<UserController> { Controller = userController, Context = context };
         }
+
         private PayMeBackContext CreateContext(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<PayMeBackContext>();

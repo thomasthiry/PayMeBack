@@ -26,7 +26,7 @@ namespace PayMeBack.Backend.Web.Controllers
         [HttpPost]
         public UserDto UserCreate([FromBody]UserCreationRequestDto userCreationRequest)
         {
-            return _mapper.Map<UserDto>(_userService.Create(userCreationRequest.Email, userCreationRequest.Name, userCreationRequest.Password));
+            return _mapper.Map<UserDto>(_userService.Create(userCreationRequest.Name, userCreationRequest.Email, userCreationRequest.Password));
         }
     }
 }

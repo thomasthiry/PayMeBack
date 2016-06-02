@@ -4,15 +4,19 @@ using PayMeBack.Backend.Contracts;
 using System;
 using System.Security.Cryptography;
 using Microsoft.AspNet.Cryptography.KeyDerivation;
+using System.Collections.Generic;
+using JWT;
 
 namespace PayMeBack.Backend.Services
 {
     public class UserService : IUserService
     {
         private IGenericRepository<AppUser> _userRepository;
+        private IDateTimeProvider _dateTimeProvider;
 
-        public UserService(IGenericRepository<AppUser> userRepository)
+        public UserService(IGenericRepository<AppUser> userRepository, IDateTimeProvider dateTimeProvider)
         {
+            _dateTimeProvider = dateTimeProvider;
             _userRepository = userRepository;
         }
 
@@ -55,18 +59,43 @@ namespace PayMeBack.Backend.Services
             return passwordHashBytes;
         }
 
+        private const string loginFailedMessage = "The email / password provided does not match any user.";
+        private const string secretJwtKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
         public UserAndToken Login(string email, string password)
         {
             var user = _userRepository.GetFirst(u => u.Email == email);
-
-            var requestPasswordHash = Convert.ToBase64String(GeneratePasswordHash(password, Convert.FromBase64String(user.PasswordSalt)));
-
-            if (requestPasswordHash != user.PasswordHash)
+            if (user == null)
             {
-                throw new SecurityException("The password does not match.");
+                throw new SecurityException(loginFailedMessage);
             }
 
-            return new UserAndToken { User = user, Token = "ERE4F8ZER65FS4D6F8ERZF68HODM1VT" };
+            var requestPasswordHash = Convert.ToBase64String(GeneratePasswordHash(password, Convert.FromBase64String(user.PasswordSalt)));
+            if (requestPasswordHash != user.PasswordHash)
+            {
+                throw new SecurityException(loginFailedMessage);
+            }
+
+            var payload = new Dictionary<string, object>() {
+                { "userId", user.Id },
+                { "exp", ConvertToSecondsSinceEpoch(_dateTimeProvider.Now().AddDays(30)) }
+            };
+
+            var token = JsonWebToken.Encode(payload, secretJwtKey, JwtHashAlgorithm.HS256);
+
+            return new UserAndToken { User = user, Token = token };
         }
+
+        public int ConvertToSecondsSinceEpoch(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return (int)Math.Floor(diff.TotalSeconds);
+        }
+
+        public AppUser GetUserForToken(string token)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

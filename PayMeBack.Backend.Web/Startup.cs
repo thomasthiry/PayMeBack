@@ -7,6 +7,9 @@ using Newtonsoft.Json.Serialization;
 using PayMeBack.Backend.Web.Configurations;
 using Microsoft.Data.Entity;
 using PayMeBack.Backend.Repository;
+using JWT;
+using JWT.DNX.Json.Net;
+using PayMeBack.Backend.Web.Middleware;
 
 namespace PayMeBack.Backend.Web
 {
@@ -54,6 +57,8 @@ namespace PayMeBack.Backend.Web
 
             app.UseIISPlatformHandler();
 
+            app.UseApiKeyAuthenticationMiddleware();
+
             app.UseStaticFiles();
 
             app.UseCors(builder =>
@@ -79,6 +84,8 @@ namespace PayMeBack.Backend.Web
                 routes.MapRoute(name: "SplitContactUpdate", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "UpdateSplitContact" });
 
             });
+
+            JsonWebToken.JsonSerializer = new JsonNetJWTSerializer();
         }
 
         // Entry point for the application.

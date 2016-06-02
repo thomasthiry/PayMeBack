@@ -183,6 +183,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Antiforgery/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -935,6 +961,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
         }
       },
+      "Microsoft.AspNet.TestHost/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Hosting": "1.0.0-rc1-final",
+          "System.Diagnostics.Contracts": "4.0.1-beta-23516",
+          "System.Net.Http": "4.0.1-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1623,6 +1663,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -3061,6 +3103,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Antiforgery/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3816,6 +3884,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
         }
       },
+      "Microsoft.AspNet.TestHost/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Hosting": "1.0.0-rc1-final",
+          "System.Diagnostics.Contracts": "4.0.1-beta-23516",
+          "System.Net.Http": "4.0.1-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -4504,6 +4586,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -4542,6 +4626,34 @@
         },
         "runtime": {
           "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll": {}
+        }
+      },
+      "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Emit.Lightweight": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/_._": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Linq.Expressions.dll": {}
         }
       },
       "runtime.win.System.Text.Encoding.CodePages/4.0.1-beta-23516": {
@@ -6494,6 +6606,32 @@
           "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
         }
       },
+      "JWT.DNX/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.dll": {}
+        }
+      },
+      "JWT.DNX.Json.Net/1.0.0.1": {
+        "type": "package",
+        "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "Newtonsoft.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/JWT.DNX.Json.Net.dll": {}
+        }
+      },
       "Microsoft.AspNet.Antiforgery/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -7249,6 +7387,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.StaticFiles.dll": {}
         }
       },
+      "Microsoft.AspNet.TestHost/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Hosting": "1.0.0-rc1-final",
+          "System.Diagnostics.Contracts": "4.0.1-beta-23516",
+          "System.Net.Http": "4.0.1-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -7937,6 +8089,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "JWT.DNX": "1.0.0.1",
+          "JWT.DNX.Json.Net": "1.0.0.1",
           "PayMeBack.Backend.Contracts": null,
           "PayMeBack.Backend.Models": null,
           "System.Linq": "4.0.1-beta-23516",
@@ -7975,6 +8129,34 @@
         },
         "runtime": {
           "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll": {}
+        }
+      },
+      "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.IO": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Emit.Lightweight": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/_._": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Linq.Expressions.dll": {}
         }
       },
       "runtime.win.System.Text.Encoding.CodePages/4.0.1-beta-23516": {
@@ -9921,6 +10103,32 @@
         "lib/portable-windows8+net45+wp8/System.Interactive.Async.XML"
       ]
     },
+    "JWT.DNX/1.0.0.1": {
+      "type": "package",
+      "sha512": "8p6mYVedQEyGrnoB4YWZcBfWpyJ9hB3EGkAbzXwi49BUglvB9u3C24LTjea3I0sTwvUb+Ayc5ug9QjZ9EJGAqA==",
+      "files": [
+        "JWT.DNX.1.0.0.1.nupkg",
+        "JWT.DNX.1.0.0.1.nupkg.sha512",
+        "JWT.DNX.nuspec",
+        "lib/dotnet5.4/JWT.DNX.dll",
+        "lib/dotnet5.4/JWT.DNX.xml",
+        "lib/net451/JWT.DNX.dll",
+        "lib/net451/JWT.DNX.xml"
+      ]
+    },
+    "JWT.DNX.Json.Net/1.0.0.1": {
+      "type": "package",
+      "sha512": "JpiaMgb2qKE/4CYHFUL81Q6AJJQyWBYDGNAzyjNBPwE665L7JLORLA+NGhMiBrNPGMozwacv98B34Op8xwG6ig==",
+      "files": [
+        "JWT.DNX.Json.Net.1.0.0.1.nupkg",
+        "JWT.DNX.Json.Net.1.0.0.1.nupkg.sha512",
+        "JWT.DNX.Json.Net.nuspec",
+        "lib/dotnet5.4/JWT.DNX.Json.Net.dll",
+        "lib/dotnet5.4/JWT.DNX.Json.Net.xml",
+        "lib/net451/JWT.DNX.Json.Net.dll",
+        "lib/net451/JWT.DNX.Json.Net.xml"
+      ]
+    },
     "Microsoft.AspNet.Antiforgery/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
@@ -10533,6 +10741,20 @@
         "Microsoft.AspNet.StaticFiles.1.0.0-rc1-final.nupkg",
         "Microsoft.AspNet.StaticFiles.1.0.0-rc1-final.nupkg.sha512",
         "Microsoft.AspNet.StaticFiles.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.TestHost/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "IuOh9iR7jgpaQo6nsJodaav7EcFsgPbr35m9suApN60KSYvM9BBgictmGCrQlcrc3d08kE8Ol4x1oKE5q/zceg==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.TestHost.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.TestHost.xml",
+        "lib/net451/Microsoft.AspNet.TestHost.dll",
+        "lib/net451/Microsoft.AspNet.TestHost.xml",
+        "Microsoft.AspNet.TestHost.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.TestHost.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.TestHost.nuspec"
       ]
     },
     "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -11226,6 +11448,28 @@
         "Remotion.Linq.2.0.1.nupkg",
         "Remotion.Linq.2.0.1.nupkg.sha512",
         "Remotion.Linq.nuspec"
+      ]
+    },
+    "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "P5nzo1Ye0GxB4BYdWian6Y427eTrhn1JS3jLWZq5bMWVn8hS/OIfyylASN0A/qqeLn4rGA0fOzmJSYqFSKvxgQ==",
+      "files": [
+        "lib/DNXCore50/System.Linq.Expressions.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Linq.Expressions.dll",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/_._",
+        "runtime.any.System.Linq.Expressions.4.0.11-beta-23516.nupkg",
+        "runtime.any.System.Linq.Expressions.4.0.11-beta-23516.nupkg.sha512",
+        "runtime.any.System.Linq.Expressions.nuspec",
+        "runtimes/aot/lib/netcore50/_._"
       ]
     },
     "runtime.win.System.Text.Encoding.CodePages/4.0.1-beta-23516": {
@@ -14995,13 +15239,15 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "Microsoft.AspNet.Http >= 1.0.0-rc1-final",
       "PayMeBack.Backend.Web >= 1.0.0-*",
       "xunit >= 2.1.0",
       "xunit.runner.dnx >= 2.1.0-rc1-build204"
     ],
     "DNXCore,Version=v5.0": [
       "System.Runtime >= 4.0.21-beta-23516",
-      "moq.netcore >= 4.4.0-beta8"
+      "moq.netcore >= 4.4.0-beta8",
+      "Microsoft.AspNet.TestHost >= 1.0.0-rc1-final"
     ]
   }
 }

@@ -28,7 +28,7 @@ namespace PayMeBack.Backend.Web.Tests
             var userCreationDto = new UserCreationRequestDto { Email = "john@gmail.com", Name = "John Smith", Password = "MyPass1" };
 
             var userStub = new AppUser { Id = 3, Email = userCreationDto.Email, Name = userCreationDto.Name };
-            _userServiceMock.Setup(s => s.Create(It.Is<string>(e => e == userCreationDto.Email), It.Is<string>(n => n == userCreationDto.Name), It.Is<string>(p => p == userCreationDto.Password))).Returns(userStub);
+            _userServiceMock.Setup(s => s.Create(It.Is<string>(n => n == userCreationDto.Name), It.Is<string>(e => e == userCreationDto.Email), It.Is<string>(p => p == userCreationDto.Password))).Returns(userStub);
 
             var userDto = _controller.UserCreate(userCreationDto);
 

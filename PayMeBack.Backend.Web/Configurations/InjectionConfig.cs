@@ -18,6 +18,8 @@ namespace PayMeBack.Backend.Web.Configurations
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
             services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
             services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
             services.AddScoped<IGenericRepository<SplitContact>, GenericRepository<SplitContact>>();

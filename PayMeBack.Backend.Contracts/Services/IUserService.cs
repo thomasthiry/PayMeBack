@@ -9,5 +9,7 @@ namespace PayMeBack.Backend.Contracts.Services
         AppUser Create(string email, string name, string password);
 
         UserAndToken Login(string email, string password);
+
+        AppUser GetUserForToken(string token);
     }
 }

@@ -14,6 +14,8 @@
         }
     },
     "dependencies": {
+        "JWT.DNX": "1.0.0.1",
+        "JWT.DNX.Json.Net": "1.0.0.1",
         "PayMeBack.Backend.Contracts": "",
         "PayMeBack.Backend.Models": "",
         "System.Runtime.InteropServices": "4.0.21-beta-23516"
