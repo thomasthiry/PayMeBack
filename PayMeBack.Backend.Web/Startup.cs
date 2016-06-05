@@ -66,6 +66,7 @@ namespace PayMeBack.Backend.Web
                 builder.AllowAnyMethod();
             });
 
+            app.UseErrorHandlerMiddleware();
             app.UseApiKeyAuthenticationMiddleware();
 
             app.UseMvc(routes =>

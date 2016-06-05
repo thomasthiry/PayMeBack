@@ -8,5 +8,9 @@ namespace PayMeBack.Backend.Web.Middleware
         {
             return builder.UseMiddleware<ApiKeyAuthenticationMiddleware>();
         }
+        public static IApplicationBuilder UseErrorHandlerMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ErrorHandlerMiddleware>();
+        }
     }
 }
