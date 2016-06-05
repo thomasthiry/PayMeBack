@@ -7,9 +7,10 @@
     });
 
     $scope.save_click = function () {
-        contactService.updateSplitContact($scope.splitContact);
-        //$state.go('splitView', { splitId: $stateParams.splitId });
+        contactService.updateSplitContact($scope.splitContact).then(function() {
+            $state.go('splitView', { splitId: $stateParams.splitId });
+        });
 
-        $state.transitionTo('splitView', { splitId: $stateParams.splitId }, { reload: true, inherit: true, notify: true });
+        //$state.transitionTo('splitView', { splitId: $stateParams.splitId }, { reload: true, inherit: true, notify: true });
     };
 }]);
