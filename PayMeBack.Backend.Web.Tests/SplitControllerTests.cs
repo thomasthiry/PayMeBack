@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNet.Http.Internal;
+using Moq;
 using PayMeBack.Backend.Contracts.Services;
 using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Web.Configurations;
@@ -7,6 +8,7 @@ using PayMeBack.Backend.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Xunit;
 
 namespace PayMeBack.Backend.Web.Tests
@@ -22,6 +24,11 @@ namespace PayMeBack.Backend.Web.Tests
 
             var mapper = MapperConfig.CreateMapper();
             _controller = new SplitController(mapper, _splitServiceMock.Object);
+
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "1") };
+            var httpContext = new DefaultHttpContext();
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(claims));
+            _controller.ActionContext.HttpContext = httpContext;
         }
 
         [Fact]
@@ -32,7 +39,7 @@ namespace PayMeBack.Backend.Web.Tests
                 new Split { Name = "Tomorrow" },
                 new Split { Name = "Yesterday" },
             };
-            _splitServiceMock.Setup(r => r.List()).Returns(splitsStub);
+            _splitServiceMock.Setup(s => s.List(1)).Returns(splitsStub);
 
             var splits = _controller.List();
 

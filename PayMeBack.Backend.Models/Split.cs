@@ -9,5 +9,8 @@ namespace PayMeBack.Backend.Models
         public string Name { get; set; }
 
         public DateTime Created { get; set; }
+
+        public int UserId { get; set; }
+        public AppUser User { get; set; }
     }
 }

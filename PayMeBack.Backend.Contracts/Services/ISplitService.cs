@@ -8,7 +8,7 @@ namespace PayMeBack.Backend.Contracts.Services
     // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public interface ISplitService
     {
-        IEnumerable<Split> List();
+        IEnumerable<Split> List(int userId);
 
         Split Get(int id);
 

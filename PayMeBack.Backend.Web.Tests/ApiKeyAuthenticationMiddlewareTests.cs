@@ -24,13 +24,13 @@ namespace PayMeBack.Backend.Web.Tests
         {
             _userServiceMock = new Mock<IUserService>();
             _context = new DefaultHttpContext();
-            _middleware = new ApiKeyAuthenticationMiddleware(new RequestDelegate(c => Task.CompletedTask), _userServiceMock.Object);
+            _middleware = new ApiKeyAuthenticationMiddleware(new RequestDelegate(c => Task.CompletedTask));
         }
 
         [Fact]
         public async Task Authentication_NoAuthenticationHeader_ShouldReturn401()
         {
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(401, _context.Response.StatusCode);
         }
@@ -39,7 +39,7 @@ namespace PayMeBack.Backend.Web.Tests
         public async Task Authentication_MethodOptions_ShouldReturn200()
         {
             _context.Request.Method = "OPTIONS";
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(200, _context.Response.StatusCode);
         }
@@ -48,7 +48,7 @@ namespace PayMeBack.Backend.Web.Tests
         public async Task Authentication_PathLogin_ShouldProceed()
         {
             _context.Request.Path = "/login";
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(200, _context.Response.StatusCode);
         }
@@ -58,7 +58,7 @@ namespace PayMeBack.Backend.Web.Tests
         {
             _context.Request.Headers.Add("Authentication", "Does not start with bearer");
 
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(401, _context.Response.StatusCode);
         }
@@ -73,7 +73,7 @@ namespace PayMeBack.Backend.Web.Tests
 
             _context.Request.Headers.Add(authentication, $"{bearer} eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             _userServiceMock.VerifyAll();
         }
@@ -86,7 +86,7 @@ namespace PayMeBack.Backend.Web.Tests
 
             _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(200, _context.Response.StatusCode);
         }
@@ -99,7 +99,7 @@ namespace PayMeBack.Backend.Web.Tests
 
             _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(userStub.Id.ToString(), _context.User.GetUserId());
         }
@@ -112,7 +112,7 @@ namespace PayMeBack.Backend.Web.Tests
 
             _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
-            await _middleware.Invoke(_context);
+            await _middleware.Invoke(_context, _userServiceMock.Object);
 
             Assert.Equal(401, _context.Response.StatusCode);
         }

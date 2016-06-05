@@ -3,6 +3,8 @@ using Microsoft.AspNet.Mvc;
 using PayMeBack.Backend.Web.Models;
 using PayMeBack.Backend.Contracts.Services;
 using AutoMapper;
+using System.Security.Claims;
+using System;
 
 namespace PayMeBack.Backend.Web.Controllers
 {
@@ -21,7 +23,8 @@ namespace PayMeBack.Backend.Web.Controllers
         [HttpGet]
         public IEnumerable<SplitDto> List()
         {
-            return _mapper.Map<IEnumerable<SplitDto>>(_splitService.List());
+            var userId = Convert.ToInt32(HttpContext.User.GetUserId());
+            return _mapper.Map<IEnumerable<SplitDto>>(_splitService.List(userId));
         }
 
         // GET splits/5

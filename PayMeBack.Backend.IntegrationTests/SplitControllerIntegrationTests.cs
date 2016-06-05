@@ -11,6 +11,9 @@ using PayMeBack.Backend.Contracts;
 using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Web.Configurations;
 using PayMeBack.Backend.Web.Models;
+using System.Security.Claims;
+using System.Collections.Generic;
+using Microsoft.AspNet.Http.Internal;
 
 namespace PayMeBack.Backend.IntegrationTests
 {
@@ -24,6 +27,16 @@ namespace PayMeBack.Backend.IntegrationTests
             var splitDtos = splitController.Controller.List();
 
             Assert.InRange(splitDtos.Count(), 1, int.MaxValue);
+        }
+
+        [Fact]
+        public void SplitsList_ReturnsOnlyTheSplitsOfTheUser()
+        {
+            var splitController = CreateController();
+
+            var splitDtos = splitController.Controller.List();
+
+            Assert.DoesNotContain(splitDtos, s => s.Name == "Split Of Another User");
         }
 
         [Fact]
@@ -79,14 +92,23 @@ namespace PayMeBack.Backend.IntegrationTests
 
             var splitController = new SplitController(mapper, splitService);
 
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, "1") };
+            var httpContext = new DefaultHttpContext();
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(claims));
+            splitController.ActionContext.HttpContext = httpContext;
+
             return new ControllerWithContext<SplitController> { Controller = splitController, Context = context };
         }
         private PayMeBackContext CreateContext(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<PayMeBackContext>();
 
-            context.Splits.Add(new Split { Name = "Today" });
-            context.Splits.Add(new Split { Name = "Yesterday" });
+            context.AppUsers.Add(new AppUser { Id = 1, Email = "mark@gmail.com" });
+            context.AppUsers.Add(new AppUser { Id = 2, Email = "john@gmail.com" });
+            
+            context.Splits.Add(new Split { Name = "Today", UserId = 1 });
+            context.Splits.Add(new Split { Name = "Yesterday", UserId = 1 });
+            context.Splits.Add(new Split { Name = "Split Of Another User", UserId = 2 });
 
             context.Contacts.Add(new Contact { Name = "John" });
             context.Contacts.Add(new Contact { Name = "Mark" });

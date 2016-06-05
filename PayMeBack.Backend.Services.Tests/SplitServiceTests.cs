@@ -38,16 +38,16 @@ namespace PayMeBack.Backend.Services.Tests
         }
 
         [Fact]
-        public void List_ReturnsSplits()
+        public void List_ReturnsSplitsForUser()
         {
             var splitsStub = new List<Split>
             {
                 new Split { Name = "Tomorrow" },
                 new Split { Name = "Yesterday" },
             };
-            _splitRepositoryMock.Setup(r => r.Get(null)).Returns(splitsStub);
+            _splitRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<Split, bool>>>())).Returns(splitsStub);
 
-            var splits = _splitService.List();
+            var splits = _splitService.List(1);
 
             Assert.NotEmpty(splits);
         }

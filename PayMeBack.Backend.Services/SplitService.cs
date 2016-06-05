@@ -25,9 +25,9 @@ namespace PayMeBack.Backend.Services
             return _splitRepository.GetById(id);
         }
 
-        public IEnumerable<Split> List()
+        public IEnumerable<Split> List(int userId)
         {
-            return _splitRepository.Get();
+            return _splitRepository.Get(s => s.UserId == userId);
         }
 
         public Split Create(string name, DateTime created)
