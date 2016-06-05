@@ -28,7 +28,7 @@ namespace PayMeBack.Backend.Web.Tests
         }
 
         [Fact]
-        public async Task Authentication_NoAuthorizationHeader_ShouldReturn401()
+        public async Task Authentication_NoAuthenticationHeader_ShouldReturn401()
         {
             await _middleware.Invoke(_context);
 
@@ -36,22 +36,42 @@ namespace PayMeBack.Backend.Web.Tests
         }
 
         [Fact]
-        public async Task Authentication_AuthorizationHeaderDoesNotStartWithBearer_ShouldReturn401()
+        public async Task Authentication_MethodOptions_ShouldReturn200()
         {
-            _context.Request.Headers.Add("Authorization", "Does not start with bearer");
+            _context.Request.Method = "OPTIONS";
+            await _middleware.Invoke(_context);
+
+            Assert.Equal(200, _context.Response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Authentication_PathLogin_ShouldProceed()
+        {
+            _context.Request.Path = "/login";
+            await _middleware.Invoke(_context);
+
+            Assert.Equal(200, _context.Response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Authentication_AuthenticationHeaderDoesNotStartWithBearer_ShouldReturn401()
+        {
+            _context.Request.Headers.Add("Authentication", "Does not start with bearer");
 
             await _middleware.Invoke(_context);
 
             Assert.Equal(401, _context.Response.StatusCode);
         }
 
-        [Fact]
-        public async Task Authentication_AuthorizationHeaderIsProvided_ServiceIsCalledWithToken()
+        [Theory]
+        [InlineData("Authentication", "Bearer")]
+        [InlineData("authentication", "bearer")]
+        public async Task Authentication_AuthenticationHeaderIsProvided_ServiceIsCalledWithToken(string authentication, string bearer)
         {
             var userStub = new AppUser { Id = 5, Email = "thomas@gmail.com" };
             _userServiceMock.Setup(s => s.GetUserForToken(It.Is<string>(t => t == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo"))).Returns(userStub);
 
-            _context.Request.Headers.Add("Authorization", "Bearer: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
+            _context.Request.Headers.Add(authentication, $"{bearer} eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
             await _middleware.Invoke(_context);
 
@@ -59,12 +79,12 @@ namespace PayMeBack.Backend.Web.Tests
         }
 
         [Fact]
-        public async Task Authentication_AuthorizationHeaderIsProvidedAndServiceValidatesIt_ShouldProceed()
+        public async Task Authentication_AuthenticationHeaderIsProvidedAndServiceValidatesIt_ShouldProceed()
         {
             var userStub = new AppUser { Id = 5, Email = "thomas@gmail.com" };
             _userServiceMock.Setup(s => s.GetUserForToken(It.Is<string>(t => t == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo"))).Returns(userStub);
 
-            _context.Request.Headers.Add("Authorization", "Bearer: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
+            _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
             await _middleware.Invoke(_context);
 
@@ -72,16 +92,29 @@ namespace PayMeBack.Backend.Web.Tests
         }
 
         [Fact]
-        public async Task Authentication_AuthorizationHeaderIsProvidedAndServiceValidatesIt_IdentityShouldBeSetInContext()
+        public async Task Authentication_AuthenticationHeaderIsProvidedAndServiceValidatesIt_IdentityShouldBeSetInContext()
         {
             var userStub = new AppUser { Id = 5, Email = "thomas@gmail.com" };
             _userServiceMock.Setup(s => s.GetUserForToken(It.Is<string>(t => t == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo"))).Returns(userStub);
 
-            _context.Request.Headers.Add("Authorization", "Bearer: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
+            _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
 
             await _middleware.Invoke(_context);
 
             Assert.Equal(userStub.Id.ToString(), _context.User.GetUserId());
+        }
+
+        [Fact]
+        public async Task Authentication_NoUserFoundForToken_ShouldReturn401()
+        {
+            _userServiceMock.Setup(s => s.GetUserForToken(It.Is<string>(t => t == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo")))
+                .Returns<AppUser>(null);
+
+            _context.Request.Headers.Add("Authentication", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjN9.tWz1EhWgVV-LCG1-uUBYt_K11tefk45bfC3K5pVYfpo");
+
+            await _middleware.Invoke(_context);
+
+            Assert.Equal(401, _context.Response.StatusCode);
         }
     }
 }

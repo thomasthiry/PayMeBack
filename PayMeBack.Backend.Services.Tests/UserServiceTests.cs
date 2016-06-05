@@ -22,7 +22,7 @@ namespace PayMeBack.Backend.Services.Tests
         {
             _userRepositoryMock = new Mock<IGenericRepository<AppUser>>();
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
-            _dateTimeProviderMock.Setup(d => d.Now()).Returns(new DateTime(2020,6,1,12,0,0, DateTimeKind.Utc));
+            _dateTimeProviderMock.Setup(d => d.Now()).Returns(new DateTime(2020, 6, 1, 12, 0, 0, DateTimeKind.Utc));
             _userService = new UserService(_userRepositoryMock.Object, _dateTimeProviderMock.Object);
             JsonWebToken.JsonSerializer = new JsonNetJWTSerializer();
         }
@@ -110,10 +110,31 @@ namespace PayMeBack.Backend.Services.Tests
             Assert.Equal(_dateTimeProviderMock.Object.Now().AddDays(30), expiryDate);
         }
 
-        public DateTime ConvertFromSecondsSinceEpoch(int seconds)
+        private DateTime ConvertFromSecondsSinceEpoch(int seconds)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             return origin.AddSeconds(seconds);
+        }
+
+        [Fact]
+        public void GetUserForToken_TokenExists_ReturnsUser()
+        {
+            var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsImV4cCI6MTU5MzYwNDgwMH0.9owMe3syRA308UNlgDghBnmodrA5FrcTHh_IAf7tRI8";
+            var userStub = new AppUser { Id = 3, Name = "John Smith", Email = "john@gmail.com", PasswordHash = "YkxknXOgltAnhEhO6yjm6EOwIVMO7NIF02x1Zcj99kA=", PasswordSalt = "JjsV9YytLSuZcQIsrIk6cg==" };
+
+            _userRepositoryMock.Setup(r => r.GetById(userStub.Id)).Returns(userStub);
+
+            var user = _userService.GetUserForToken(token);
+
+            Assert.Equal(userStub.Name, user.Name);
+        }
+
+        [Fact]
+        public void GetUserForToken_TokenHasCorruptSignature_ReturnsNull()
+        {
+            var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsImV4cCI6MTU5MzYwNDgwMH0.9owMe3syRA308UNlgDghBnmodrA5FrcTHh_IAf_____";
+
+            Assert.Throws<SecurityException>(() => _userService.GetUserForToken(token));
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+﻿using Microsoft.Data.Entity;
 using PayMeBack.Backend.Models;
 
 namespace PayMeBack.Backend.Repository

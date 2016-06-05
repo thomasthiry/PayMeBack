@@ -39,7 +39,7 @@ namespace PayMeBack.Backend.Web
 
             InjectionConfig.ConfigureCustomServices(services);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True"; //;MultipleActiveResultSets=True
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -57,8 +57,6 @@ namespace PayMeBack.Backend.Web
 
             app.UseIISPlatformHandler();
 
-            app.UseApiKeyAuthenticationMiddleware();
-
             app.UseStaticFiles();
 
             app.UseCors(builder =>
@@ -67,6 +65,8 @@ namespace PayMeBack.Backend.Web
                 builder.AllowAnyHeader();
                 builder.AllowAnyMethod();
             });
+
+            app.UseApiKeyAuthenticationMiddleware();
 
             app.UseMvc(routes =>
             {
@@ -82,7 +82,6 @@ namespace PayMeBack.Backend.Web
                 routes.MapRoute(name: "ContactCreate", template: "splits/{splitId:int}/contacts", defaults: new { controller = "Contact", action = "CreateIfNeededAndAddToSplit" });
                 routes.MapRoute(name: "SplitContactGet", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "GetSplitContact" });
                 routes.MapRoute(name: "SplitContactUpdate", template: "splits/{splitId:int}/contacts/{splitContactId:int}", defaults: new { controller = "Contact", action = "UpdateSplitContact" });
-
             });
 
             JsonWebToken.JsonSerializer = new JsonNetJWTSerializer();

@@ -60,7 +60,7 @@ namespace PayMeBack.Backend.Services
         }
 
         private const string loginFailedMessage = "The email / password provided does not match any user.";
-        private const string secretJwtKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
+        private const string _secretJwtKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
         public UserAndToken Login(string email, string password)
         {
             var user = _userRepository.GetFirst(u => u.Email == email);
@@ -80,12 +80,12 @@ namespace PayMeBack.Backend.Services
                 { "exp", ConvertToSecondsSinceEpoch(_dateTimeProvider.Now().AddDays(30)) }
             };
 
-            var token = JsonWebToken.Encode(payload, secretJwtKey, JwtHashAlgorithm.HS256);
+            var token = JsonWebToken.Encode(payload, _secretJwtKey, JwtHashAlgorithm.HS256);
 
             return new UserAndToken { User = user, Token = token };
         }
 
-        public int ConvertToSecondsSinceEpoch(DateTime date)
+        private int ConvertToSecondsSinceEpoch(DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             TimeSpan diff = date.ToUniversalTime() - origin;
@@ -94,8 +94,21 @@ namespace PayMeBack.Backend.Services
 
         public AppUser GetUserForToken(string token)
         {
-            throw new NotImplementedException();
-        }
+            IDictionary<string, object> payload;
+            try
+            {
+                payload = JsonWebToken.DecodeToObject(token, _secretJwtKey) as IDictionary<string, object>;
+            }
+            catch
+            {
+                throw new SecurityException("The token is not valid.");
+            }
 
+            var userId = Convert.ToInt32(payload["userId"]);
+
+            var user = _userRepository.GetById(userId);
+
+            return user;
+        }
     }
 }

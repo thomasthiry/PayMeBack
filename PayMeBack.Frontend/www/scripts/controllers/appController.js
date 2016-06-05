@@ -1,6 +1,6 @@
 ﻿angular.module('PayMeBack').controller('AppController', function ($scope, $state, $ionicPopup, authService) {
 
-    $scope.username = authService.username();
+    //$scope.username = authService.username();
  
     $scope.$on('auth-not-authenticated', function (event) {
         authService.logout();

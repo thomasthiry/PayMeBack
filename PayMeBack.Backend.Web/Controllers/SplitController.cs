@@ -3,7 +3,6 @@ using Microsoft.AspNet.Mvc;
 using PayMeBack.Backend.Web.Models;
 using PayMeBack.Backend.Contracts.Services;
 using AutoMapper;
-using System;
 
 namespace PayMeBack.Backend.Web.Controllers
 {

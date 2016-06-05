@@ -5,7 +5,6 @@ using PayMeBack.Backend.Contracts.Services;
 using PayMeBack.Backend.Models;
 using PayMeBack.Backend.Repository;
 using PayMeBack.Backend.Services;
-using PayMeBack.Backend.Web.Models;
 
 namespace PayMeBack.Backend.Web.Configurations
 {
@@ -13,12 +12,12 @@ namespace PayMeBack.Backend.Web.Configurations
     {
         public static void ConfigureCustomServices(IServiceCollection services)
         {
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+      
             // Scoped lifetime (per request) is used to prevent concurrence issues with EF: "There is already an open DataReader associated with this Command which must be closed first."
             services.AddScoped<ISplitService, SplitService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IUserService, UserService>();
-
-            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             services.AddScoped<IGenericRepository<Split>, GenericRepository<Split>>();
             services.AddScoped<IGenericRepository<Contact>, GenericRepository<Contact>>();
