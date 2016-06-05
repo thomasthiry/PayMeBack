@@ -1,5 +1,5 @@
 ﻿describe('SplitContactViewController', function () {
-    var $controller, splitContactViewController, contactServiceSpy, $scope = {};
+    var $controller, splitContactViewController, contactServiceSpy, $scope = {}, $state;
     var splitContactReturnedInCallback = { id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com' };
     var splitContactIdInState = 2;
     var splitIdInState = 5;
@@ -11,6 +11,8 @@
         contactServiceSpy.getSplitContactById.and.returnValue({ then: function (callback) { return callback(splitContactReturnedInCallback); } });
         contactServiceSpy.updateSplitContact.and.returnValue({ then: function (callback) { return callback(); } });
 
+        $state = jasmine.createSpyObj('$state', ['go']);
+
         module(function ($provide) {
             $provide.value('contactService', contactServiceSpy);
             $provide.value('$stateParams', { splitId: splitIdInState, splitContactId: splitContactIdInState });
@@ -20,7 +22,7 @@
             $controller = _$controller_;
         });
 
-        splitViewController = $controller('SplitContactViewController', { $scope: $scope });
+        splitViewController = $controller('SplitContactViewController', { $scope: $scope, $state: $state });
     });
 
     describe('controller initialization', function () {
@@ -37,6 +39,9 @@
         });
         it('should call the contact service', function () {
             expect(contactServiceSpy.updateSplitContact).toHaveBeenCalledWith($scope.splitContact);
+        });
+        it('should call navigate back to the view of split', function () {
+            expect($state.go).toHaveBeenCalledWith('splitView', { splitId: $scope.splitContact.splitId });
         });
     });
 });
