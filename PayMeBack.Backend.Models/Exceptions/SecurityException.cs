@@ -2,9 +2,9 @@
 
 namespace PayMeBack.Backend.Models
 {
-    public class SecurityException : Exception
+    public class AuthenticationException : Exception
     {
-        public SecurityException(string message) : base(message)
+        public AuthenticationException(string message) : base(message)
         {
 
         }

@@ -6,8 +6,8 @@
         authService.logout();
         $state.go('login');
         var alertPopup = $ionicPopup.alert({
-            title: 'Session Lost!',
-            template: 'Sorry, You have to login again.'
+            title: 'Login Error',
+            template: 'Please login.'
         });
     });
  

@@ -32,6 +32,6 @@ function contactService(backendHostUrl, $http) {
     };
 
     function _errorCallback(response) {
-        alert('Error connecting. Details: ' + response.status + ' - ' + response.statusText);
+        
     }
 }

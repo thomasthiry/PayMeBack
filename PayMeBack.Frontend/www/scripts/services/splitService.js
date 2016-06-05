@@ -37,6 +37,6 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
     }
 
     function _errorCallback(response) {
-        alert('Error connecting. Details: ' + response.status + ' - ' + response.statusText);
+        
     }
 }

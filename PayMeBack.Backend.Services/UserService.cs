@@ -66,13 +66,13 @@ namespace PayMeBack.Backend.Services
             var user = _userRepository.GetFirst(u => u.Email == email);
             if (user == null)
             {
-                throw new SecurityException(loginFailedMessage);
+                throw new AuthenticationException(loginFailedMessage);
             }
 
             var requestPasswordHash = Convert.ToBase64String(GeneratePasswordHash(password, Convert.FromBase64String(user.PasswordSalt)));
             if (requestPasswordHash != user.PasswordHash)
             {
-                throw new SecurityException(loginFailedMessage);
+                throw new AuthenticationException(loginFailedMessage);
             }
 
             var payload = new Dictionary<string, object>() {
@@ -101,7 +101,7 @@ namespace PayMeBack.Backend.Services
             }
             catch
             {
-                throw new SecurityException("The token is not valid.");
+                throw new AuthenticationException("The token is not valid.");
             }
 
             var userId = Convert.ToInt32(payload["userId"]);

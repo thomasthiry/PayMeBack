@@ -20,9 +20,9 @@ namespace PayMeBack.Backend.Web.Middleware
             {
                 await _next.Invoke(context);
             }
-            catch (SecurityException ex)
+            catch (AuthenticationException ex)
             {
-                context.Response.StatusCode = 403;
+                context.Response.StatusCode = 401;
             }
         }
     }

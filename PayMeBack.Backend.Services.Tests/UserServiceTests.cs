@@ -69,7 +69,7 @@ namespace PayMeBack.Backend.Services.Tests
 
             _userRepositoryMock.Setup(r => r.GetFirst(It.IsAny<Expression<Func<AppUser, bool>>>())).Returns(userStub);
 
-            Assert.Throws<SecurityException>(() => _userService.Login(userStub.Email, password));
+            Assert.Throws<AuthenticationException>(() => _userService.Login(userStub.Email, password));
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace PayMeBack.Backend.Services.Tests
         {
             _userRepositoryMock.Setup(r => r.GetFirst(It.IsAny<Expression<Func<AppUser, bool>>>())).Returns((AppUser)null);
 
-            Assert.Throws<SecurityException>(() => _userService.Login("john@gmail.com", "MyPass1"));
+            Assert.Throws<AuthenticationException>(() => _userService.Login("john@gmail.com", "MyPass1"));
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace PayMeBack.Backend.Services.Tests
         {
             var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsImV4cCI6MTU5MzYwNDgwMH0.9owMe3syRA308UNlgDghBnmodrA5FrcTHh_IAf_____";
 
-            Assert.Throws<SecurityException>(() => _userService.GetUserForToken(token));
+            Assert.Throws<AuthenticationException>(() => _userService.GetUserForToken(token));
         }
     }
 }
