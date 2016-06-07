@@ -1,6 +1,8 @@
-﻿angular.module('PayMeBack').service('contactService', ['backendHostUrl', '$http', contactService]);
+﻿angular.module('PayMeBack').service('contactService', ['backendHostUrl', '$http', '$cordovaContacts', '$ionicPlatform', contactService]);
 
-function contactService(backendHostUrl, $http) {
+function contactService(backendHostUrl, $http, $cordovaContacts, $ionicPlatform) {
+
+
     this.getBySplitId = function (splitId) {
         return $http.get(backendHostUrl + '/splits/' + splitId + '/contacts').then(
             function successCallback(response) {
@@ -34,4 +36,20 @@ function contactService(backendHostUrl, $http) {
     function _errorCallback(response) {
         
     }
+
+    this.searchPhoneContacts = function (searchTerm) {
+        // Used for debugging on Chrome
+        return { then: function (callback) { callback([{ displayName: 'Olivier Roger' }, { displayName: 'Olivier Desvachez' }]) } };
+
+        //$ionicPlatform.ready(function () { // disabled because it doesn't return a promise
+            var options = {
+                filter: searchTerm, // 'Bob'
+                multiple: true, // Yes, return any contact that matches criteria.
+                fields: ['displayName', 'name', 'emails'], // These are the fields to search for 'bob'.
+                desiredFields: ['displayName', 'name', 'emails'] //return fields, others will be null.
+            };
+            return $cordovaContacts.find(options);
+        //});
+    }
+
 }

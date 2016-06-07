@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('PayMeBack', ['ionic']);
+var app = angular.module('PayMeBack', ['ionic', 'ngCordova']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider

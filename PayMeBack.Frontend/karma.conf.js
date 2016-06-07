@@ -16,8 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/ionic/release/js/ionic.bundle.js',
+      'bower_components/ngCordova/dist/ng-cordova.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-resource/angular-resource.js',
       'www/scripts/**/*.js',
       'tests/**/*.specs.js'
     ],

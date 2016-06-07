@@ -1,9 +1,14 @@
-﻿var contactService;
-var contactRepositorySpy;
+﻿var contactService, contactRepositorySpy, $cordovaContactsSpy;
 
 describe('ContactService', function () {
     beforeEach(function () {
         module('PayMeBack');
+
+        $cordovaContactsSpy = jasmine.createSpyObj('$cordovaContactsSpy', ['find']);
+
+        module(function ($provide) {
+            $provide.value('$cordovaContacts', $cordovaContactsSpy);
+        });
 
         inject(function ($injector) {
             contactService = $injector.get('contactService');
@@ -46,10 +51,19 @@ describe('ContactService', function () {
 
     describe('updateSplitContact', function () {
         it('should call the web service', function () {
-            var splitContactToUpdate = { id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com', owes: 111, paid:222, comments: 'more' };
+            var splitContactToUpdate = { id: 2, splitId: 3, contactId: 5, name: 'Olivier', email: 'olivier@gmail.com', owes: 111, paid: 222, comments: 'more' };
             $httpBackend.expect('PUT', backendHostUrl + '/splits/3/contacts/2').respond(200, '');
             contactService.updateSplitContact(splitContactToUpdate);
             $httpBackend.flush();
+        });
+    });
+
+    describe('searchPhoneContacts', function () {
+        it('should call the $cordovaContacts service', function () {
+            var phoneContactsReturnedInCallback = [{ displayName: "Olivier Roger" }, { displayName: "Olivier Desvachez" }];
+            $cordovaContactsSpy.find.and.returnValue({ then: function (callback) { return callback(phoneContactsReturnedInCallback); } });
+            contactService.searchPhoneContacts('olivier');
+            expect($cordovaContactsSpy.find).toHaveBeenCalled();
         });
     });
 });

@@ -10,7 +10,7 @@
         splitServiceSpy = jasmine.createSpyObj('splitServiceSpy', ['get']);
         splitServiceSpy.get.and.returnValue({ then: function (callback) { return callback(splitReturnedInCallback); } });
 
-        contactServiceSpy = jasmine.createSpyObj('contactServiceSpy', ['getBySplitId', 'createIfNeededAndAddToSplit']);
+        contactServiceSpy = jasmine.createSpyObj('contactServiceSpy', ['getBySplitId', 'createIfNeededAndAddToSplit', 'searchPhoneContacts']);
         contactServiceSpy.getBySplitId.and.returnValue({ then: function (callback) { return callback(contactsReturnedInCallback); } });
 
         $state = jasmine.createSpyObj('$state', ['go']);
@@ -64,6 +64,34 @@
         });
         it('should call navigate to the settle view with the splitId', function () {
             expect($state.go).toHaveBeenCalledWith('settleView', { splitId: splitIdInState });
+        });
+    });
+
+    describe('change the value of the contact to add', function () {
+        beforeEach(function () {
+            var phoneContactsReturnedInCallback = [{ displayName: "Olivier Roger" }, { displayName: "Olivier Desvachez"}];
+            contactServiceSpy.searchPhoneContacts.and.returnValue({ then: function (callback) { return callback(phoneContactsReturnedInCallback); } });
+            $scope.form.contactEmailToAdd = "olivier";
+            $scope.searchPhoneContacts();
+        });
+        it('should call the service with email to search', function () {
+            expect(contactServiceSpy.searchPhoneContacts).toHaveBeenCalledWith($scope.form.contactEmailToAdd);
+        });
+        it('should set the returned contacts in the autocomplete list', function () {
+            expect($scope.autocompleteContacts.length).toBeGreaterThan(1);
+        });
+    });
+
+    describe('change the value of the contact to add to less than 2 chars', function () {
+        beforeEach(function () {
+            $scope.form.contactEmailToAdd = "o";
+            $scope.searchPhoneContacts();
+        });
+        it('should not call the service', function () {
+            expect(contactServiceSpy.searchPhoneContacts).not.toHaveBeenCalled();
+        });
+        it('should empty the autocomplete list', function () {
+            expect($scope.autocompleteContacts.length).toBe(0);
         });
     });
 });
