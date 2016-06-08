@@ -44,11 +44,11 @@
             contactServiceSpy.createIfNeededAndAddToSplit.and.returnValue({ then: function (callback) { return callback(newContactReturnedInCallback); } });
             $scope.splitContacts = [];
 
-            $scope.addContact();
+            $scope.clickOnAddContactByEmail();
         });
 
         it('should call createIfNeededAndAddToSplit on the contact service', function () {
-            expect(contactServiceSpy.createIfNeededAndAddToSplit).toHaveBeenCalledWith(splitIdInState, contactEmailToAdd);
+            expect(contactServiceSpy.createIfNeededAndAddToSplit).toHaveBeenCalledWith(splitIdInState, contactEmailToAdd, undefined);
         });
         it('should fetch and set the split again', function () {
             expect($scope.splitContacts.length).toBeGreaterThan(1);
@@ -92,6 +92,30 @@
         });
         it('should empty the autocomplete list', function () {
             expect($scope.autocompleteContacts.length).toBe(0);
+        });
+    });
+
+    describe('click on an autocomplete contact', function () {
+        var newContactReturnedInCallback = { id: 3, email: 'olivier.roger@gmail.com', name: 'Olivier Roger' }
+        beforeEach(function () {
+            contactServiceSpy.createIfNeededAndAddToSplit.and.returnValue({ then: function (callback) { return callback(newContactReturnedInCallback); } });
+            $scope.splitContacts = [];
+            $scope.form.contactEmailToAdd = "oliv";
+
+            $scope.autocompleteContacts = [{ displayName: 'Olivier Roger', emails: [{ value: 'olivier.roger@gmail.com' }] }, { displayName: 'Olivier Desvachez', emails: [{ value: 'olivier.desvachez@gmail.com' }] }];
+            $scope.clickOnAutocompleteContact($scope.autocompleteContacts[0]);
+        });
+        it('should call createIfNeededAndAddToSplit on the contact service', function () {
+            expect(contactServiceSpy.createIfNeededAndAddToSplit).toHaveBeenCalledWith(splitIdInState, 'olivier.roger@gmail.com', 'Olivier Roger');
+        });
+        it('should fetch and set the split again', function () {
+            expect($scope.splitContacts.length).toBeGreaterThan(1);
+        });
+        it('should empty the textbox', function () {
+            expect($scope.form.contactEmailToAdd).toEqual('');
+        });
+        it('should empty the autocomplete list', function () {
+            expect($scope.autocompleteContacts.length).toEqual(0);
         });
     });
 });

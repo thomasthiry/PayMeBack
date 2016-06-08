@@ -38,21 +38,38 @@ namespace PayMeBack.Backend.Services.Tests
         {
             _contactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>());
 
-            var contactStub = new Contact { Id = 5, Email = "john@smith.com" };
+            var contactStub = new Contact { Id = 5, Email = "john@smith.com", Name = "John Smith" };
             _contactRepositoryMock.Setup(r => r.Insert(It.IsAny<Contact>())).Returns(contactStub);
 
             var splitContactStub = new SplitContact { ContactId = 5, SplitId = 1 };
             _splitContactRepositoryMock.Setup(r => r.Insert(It.IsAny<SplitContact>())).Returns(splitContactStub);
 
-            var contact = _contactService.CreateIfNeededAndAddToSplit(splitContactStub.SplitId, contactStub.Email);
+            var contact = _contactService.CreateIfNeededAndAddToSplit(splitContactStub.SplitId, contactStub.Email, contactStub.Name);
 
             Assert.Equal(contactStub.Email, contact.Email);
+            Assert.Equal(contactStub.Name, contact.Name);
+        }
+
+        [Fact]
+        public void CreateIfNeededAndAddToSplit_NameIsNotProvided_EmailIsUsedAsName()
+        {
+            _contactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>());
+
+            var contactStub = new Contact { Id = 5, Email = "john@smith.com", Name = "John Smith" };
+            _contactRepositoryMock.Setup(r => r.Insert(It.Is<Contact>(c => c.Name == contactStub.Email))).Returns(contactStub);
+
+            var splitContactStub = new SplitContact { ContactId = 5, SplitId = 1 };
+            _splitContactRepositoryMock.Setup(r => r.Insert(It.IsAny<SplitContact>())).Returns(splitContactStub);
+
+            var contact = _contactService.CreateIfNeededAndAddToSplit(splitContactStub.SplitId, contactStub.Email, null);
+
+            _contactRepositoryMock.VerifyAll();
         }
 
         [Fact]
         public void CreateIfNeededAndAddToSplit_ContactExists_LinksAndReturnsContact()
         {
-            var contactStub = new Contact { Id = 5, Email = "john@smith.com" };
+            var contactStub = new Contact { Id = 5, Email = "john@smith.com", Name = "John Smith" };
             _contactRepositoryMock.Setup(r => r.Get(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact> { contactStub });
 
             _contactRepositoryMock.Setup(r => r.Insert(It.IsAny<Contact>())).Throws(new Exception("Should not have been called"));
@@ -60,9 +77,10 @@ namespace PayMeBack.Backend.Services.Tests
             var splitContactStub = new SplitContact { ContactId = 5, SplitId = 1 };
             _splitContactRepositoryMock.Setup(r => r.Insert(It.IsAny<SplitContact>())).Returns(splitContactStub);
 
-            var contact = _contactService.CreateIfNeededAndAddToSplit(splitContactStub.SplitId, contactStub.Email);
+            var contact = _contactService.CreateIfNeededAndAddToSplit(splitContactStub.SplitId, contactStub.Email, contactStub.Name);
 
             Assert.Equal(contactStub.Email, contact.Email);
+            Assert.Equal(contactStub.Name, contact.Name);
         }
 
         [Fact]

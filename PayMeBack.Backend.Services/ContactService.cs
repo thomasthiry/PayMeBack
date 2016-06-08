@@ -25,13 +25,14 @@ namespace PayMeBack.Backend.Services
             return splitContacts;
         }
 
-        public Contact CreateIfNeededAndAddToSplit(int splitId, string email)
+        public Contact CreateIfNeededAndAddToSplit(int splitId, string email, string name)
         {
             var contact = _contactRepository.Get(c => c.Email == email).FirstOrDefault();
 
             if (contact == null)
             {
-                contact = new Contact { Name = email, Email = email };
+                var nameToUse = string.IsNullOrEmpty(name) ? email : name;
+                contact = new Contact { Name = nameToUse, Email = email };
                 _contactRepository.Insert(contact);
             }
 

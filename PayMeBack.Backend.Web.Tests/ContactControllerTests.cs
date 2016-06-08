@@ -44,12 +44,13 @@ namespace PayMeBack.Backend.Web.Tests
         [Fact]
         public void CreateIfNeededAndAddToSplit_ReturnsNewContactDto()
         {
-            var contactStub = new Contact { Email = "Olivier" };
-            _contactServiceMock.Setup(s => s.CreateIfNeededAndAddToSplit(1, contactStub.Email)).Returns(contactStub);
+            var contactStub = new Contact { Email = "john@smith.com", Name = "John Smith" };
+            _contactServiceMock.Setup(s => s.CreateIfNeededAndAddToSplit(1, contactStub.Email, contactStub.Name)).Returns(contactStub);
 
-            var contact = _controller.CreateIfNeededAndAddToSplit(1, new ContactCreationDto { Email = contactStub.Email });
+            var contact = _controller.CreateIfNeededAndAddToSplit(1, new ContactCreationDto { Email = contactStub.Email, Name = contactStub.Name });
 
             Assert.Equal(contactStub.Email, contact.Email);
+            Assert.Equal(contactStub.Name, contact.Name);
         }
 
         [Fact]

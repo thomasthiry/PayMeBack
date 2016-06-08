@@ -31,10 +31,11 @@ namespace PayMeBack.Backend.IntegrationTests
         {
             var contactController = CreateController();
 
-            var contactCreationDto = new ContactCreationDto { Email = "john@smith.com" };
+            var contactCreationDto = new ContactCreationDto { Email = "john@smith.com", Name = "John Smith" };
             var contactDto = contactController.Controller.CreateIfNeededAndAddToSplit(1, contactCreationDto);
 
             Assert.Equal(contactCreationDto.Email, contactDto.Email);
+            Assert.Equal(contactCreationDto.Name, contactDto.Name);
         }
 
         [Fact]

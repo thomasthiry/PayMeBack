@@ -1,5 +1,11 @@
 ﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$state', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $state, $stateParams, splitService, contactService) {
-    
+
+    $scope.form = { contactEmailToAdd: '' };
+
+    splitService.get($stateParams.splitId).then(function (split) {
+        $scope.split = split;
+    });
+
     $scope.$on("$ionicView.enter", function (scopes, states) {
         $scope.refreshListOfContacts();
     });
@@ -10,9 +16,18 @@
         });
     }
 
-    $scope.addContact = function () {
-        contactService.createIfNeededAndAddToSplit($scope.split.id, $scope.form.contactEmailToAdd).then(function () {
+    $scope.clickOnAddContactByEmail = function () {
+        addContact($scope.split.id, $scope.form.contactEmailToAdd);
+    }
+
+    $scope.clickOnAutocompleteContact = function (autocompletePhoneContact) {
+        addContact($scope.split.id, autocompletePhoneContact.emails[0].value, autocompletePhoneContact.displayName);
+    }
+
+    function addContact (splitId, contactEmail, contactName) {
+        contactService.createIfNeededAndAddToSplit(splitId, contactEmail, contactName).then(function () {
             $scope.form.contactEmailToAdd = '';
+            $scope.autocompleteContacts = [];
 
             $scope.refreshListOfContacts();
         });
@@ -32,10 +47,4 @@
             $scope.autocompleteContacts = returnedContacts;
         });
     }
-
-    $scope.form = { contactEmailToAdd: '' };
-
-    splitService.get($stateParams.splitId).then(function (split) {
-        $scope.split = split;
-    });
 }]);

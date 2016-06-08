@@ -27,7 +27,7 @@ namespace PayMeBack.Backend.Web.Controllers
         [HttpPost]
         public ContactDto CreateIfNeededAndAddToSplit([FromRoute]int splitId, [FromBody]ContactCreationDto contactCreationDto)
         {
-            return _mapper.Map<ContactDto>(_contactService.CreateIfNeededAndAddToSplit(splitId, contactCreationDto.Email));
+            return _mapper.Map<ContactDto>(_contactService.CreateIfNeededAndAddToSplit(splitId, contactCreationDto.Email, contactCreationDto.Name));
         }
 
         [HttpGet]

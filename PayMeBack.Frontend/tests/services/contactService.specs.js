@@ -33,9 +33,9 @@ describe('ContactService', function () {
 
     describe('createIfNeededAndAddToSplit', function () {
         it('should call the web service', function () {
-            var expectedContact = { email: 'john@facebook.com', splitId: 1 };
+            var expectedContact = { email: 'john@facebook.com', splitId: 1, name: 'John' };
             $httpBackend.expect('POST', backendHostUrl + '/splits/1/contacts', expectedContact).respond(201, '');
-            contactService.createIfNeededAndAddToSplit(expectedContact.splitId, expectedContact.email);
+            contactService.createIfNeededAndAddToSplit(expectedContact.splitId, expectedContact.email, expectedContact.name);
             $httpBackend.flush();
         });
     });

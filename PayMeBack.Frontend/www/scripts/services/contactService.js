@@ -10,8 +10,8 @@ function contactService(backendHostUrl, $http, $cordovaContacts, $ionicPlatform)
             }, _errorCallback);
     };
 
-    this.createIfNeededAndAddToSplit = function (splitId, contactEmailToAdd) {
-        var contactToCreate = { email: contactEmailToAdd, splitId: splitId };
+    this.createIfNeededAndAddToSplit = function (splitId, contactEmailToAdd, contactNameToAdd) {
+        var contactToCreate = { email: contactEmailToAdd, splitId: splitId, name: contactNameToAdd };
         return $http.post(backendHostUrl + '/splits/' + splitId + '/contacts', contactToCreate).then(
             function successCallback(response) {
                 return response.data;
@@ -35,7 +35,7 @@ function contactService(backendHostUrl, $http, $cordovaContacts, $ionicPlatform)
 
     this.searchPhoneContacts = function (searchTerm) {
         // Used for debugging on Chrome
-        return { then: function (callback) { callback([{ displayName: 'Olivier Roger' }, { displayName: 'Olivier Desvachez' }]) } };
+        //return { then: function (callback) { callback([{ displayName: 'Olivier Roger', emails: [{ value: 'olivier.roger@gmail.com' }] }, { displayName: 'Olivier Desvachez', emails: [{ value: 'olivier.desvachez@gmail.com' }] }]) } };
 
         //$ionicPlatform.ready(function () { // disabled because it doesn't return a promise
         var options = {
