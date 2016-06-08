@@ -5,12 +5,12 @@
         <div class="item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-person placeholder-icon"></i>
-                <input type="text" placeholder="Add someone by email" ng-change="searchPhoneContacts()" ng-model="form.contactEmailToAdd">
+                <input type="text" placeholder="Add someone by email" ng-change="searchPhoneContacts()" ng-model-options="{ debounce: 500 }" ng-model="form.contactEmailToAdd">
             </label>
             <button class="button icon ion-plus-round" ng-click="addContact()"></button>
         </div>
         <ion-list id="autocompleteContacts">
-            <ion-item ng-repeat="autocompleteContact in autocompleteContacts"><i class="icon ion-plus-round"></i> {{autocompleteContact.displayName}}</ion-item>
+            <ion-item ng-repeat="autocompleteContact in autocompleteContacts"><i class="icon ion-plus-round"></i> {{autocompleteContact.displayName}} &lt;{{autocompleteContact.emails[0].value}}&gt;</ion-item>
         </ion-list>
         <ion-list>
             <ion-item ng-repeat="splitContact in splitContacts track by splitContact.id" ui-sref="splitContactView({splitId: {{ split.id }}, splitContactId: {{ splitContact.id }} })">

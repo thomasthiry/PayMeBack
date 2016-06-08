@@ -33,23 +33,23 @@ function contactService(backendHostUrl, $http, $cordovaContacts, $ionicPlatform)
             }, _errorCallback);
     };
 
-    function _errorCallback(response) {
-        
-    }
-
     this.searchPhoneContacts = function (searchTerm) {
         // Used for debugging on Chrome
         return { then: function (callback) { callback([{ displayName: 'Olivier Roger' }, { displayName: 'Olivier Desvachez' }]) } };
 
         //$ionicPlatform.ready(function () { // disabled because it doesn't return a promise
-            var options = {
-                filter: searchTerm, // 'Bob'
-                multiple: true, // Yes, return any contact that matches criteria.
-                fields: ['displayName', 'name', 'emails'], // These are the fields to search for 'bob'.
-                desiredFields: ['displayName', 'name', 'emails'] //return fields, others will be null.
-            };
-            return $cordovaContacts.find(options);
+        var options = {
+            filter: searchTerm, // 'Bob'
+            multiple: true, // Yes, return any contact that matches criteria.
+            fields: ['displayName', 'name', 'emails'], // These are the fields to search for 'bob'.
+            desiredFields: ['displayName', 'name', 'emails'] //return fields, others will be null.
+        };
+        return $cordovaContacts.find(options);
         //});
+    };
+
+    function _errorCallback(response) {
+
     }
 
 }

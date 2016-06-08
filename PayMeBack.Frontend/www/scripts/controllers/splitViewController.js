@@ -29,7 +29,7 @@
         }
             
         contactService.searchPhoneContacts($scope.form.contactEmailToAdd).then(function (returnedContacts) {
-            $scope.autocompleteContacts = returnedContacts; console.log($scope.autocompleteContacts);
+            $scope.autocompleteContacts = returnedContacts;
         });
     }
 
