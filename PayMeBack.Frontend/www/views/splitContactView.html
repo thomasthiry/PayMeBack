@@ -1,6 +1,9 @@
 ﻿
 <ion-view>
     <ion-nav-title>{{ splitContact.name }}</ion-nav-title>
+    <ion-nav-buttons side="secondary">
+        <button class="button" ng-click="save_click()">Save</button>
+    </ion-nav-buttons>
     <ion-content class="padding">
         <div class="list">
             <label class="item item-input">
@@ -23,9 +26,6 @@
                 <span class="input-label">Comments</span>
                 <textarea style="width:100%;height:100px;" ng-model="splitContact.comments"></textarea>
             </label>
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="button button-balanced" ng-click="save_click()">Save</button>
-            </div>
         </div>
     </ion-content>
 </ion-view>
