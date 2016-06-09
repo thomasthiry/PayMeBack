@@ -49,7 +49,7 @@ function contactService(backendHostUrl, $http, $cordovaContacts, $ionicPlatform)
     };
 
     function _errorCallback(response) {
-
+        return $q.reject();
     }
 
 }

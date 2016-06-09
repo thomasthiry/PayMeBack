@@ -1,19 +1,28 @@
-﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$state', '$stateParams', 'splitService', 'contactService', function SplitViewController($scope, $state, $stateParams, splitService, contactService) {
-
-    $scope.form = { contactEmailToAdd: '' };
-
-    splitService.get($stateParams.splitId).then(function (split) {
-        $scope.split = split;
-    });
+﻿angular.module('PayMeBack').controller('SplitViewController', ['$scope', '$state', '$stateParams', '$ionicPopup', 'splitService', 'contactService', function SplitViewController($scope, $state, $stateParams, $ionicPopup, splitService, contactService) {
 
     $scope.$on("$ionicView.enter", function (scopes, states) {
         $scope.refreshListOfContacts();
     });
 
-    $scope.refreshListOfContacts = function () {
-        contactService.getBySplitId($stateParams.splitId).then(function (splitContacts) {
-            $scope.splitContacts = splitContacts;
+    $scope.form = { contactEmailToAdd: '' };
+
+    var showErrorPopup = function (response) {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Connection failed',
+            template: 'Please check your network'
         });
+    };
+
+    splitService.get($stateParams.splitId).then(
+        function (split) {
+            $scope.split = split;
+        }, showErrorPopup);
+
+    $scope.refreshListOfContacts = function () {
+        contactService.getBySplitId($stateParams.splitId).then(
+            function (splitContacts) {
+                $scope.splitContacts = splitContacts;
+            }, showErrorPopup);
     }
 
     $scope.clickOnAddContactByEmail = function () {
@@ -25,12 +34,13 @@
     }
 
     function addContact (splitId, contactEmail, contactName) {
-        contactService.createIfNeededAndAddToSplit(splitId, contactEmail, contactName).then(function () {
-            $scope.form.contactEmailToAdd = '';
-            $scope.autocompleteContacts = [];
+        contactService.createIfNeededAndAddToSplit(splitId, contactEmail, contactName).then(
+            function () {
+                $scope.form.contactEmailToAdd = '';
+                $scope.autocompleteContacts = [];
 
-            $scope.refreshListOfContacts();
-        });
+                $scope.refreshListOfContacts();
+            }, showErrorPopup);
     }
 
     $scope.goToSettle = function () {
@@ -43,8 +53,9 @@
             return;
         }
             
-        contactService.searchPhoneContacts($scope.form.contactEmailToAdd).then(function (returnedContacts) {
-            $scope.autocompleteContacts = returnedContacts;
-        });
+        contactService.searchPhoneContacts($scope.form.contactEmailToAdd).then(
+            function (returnedContacts) {
+                $scope.autocompleteContacts = returnedContacts;
+            }, showErrorPopup);
     }
 }]);

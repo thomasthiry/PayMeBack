@@ -7,7 +7,7 @@
         $state.go('login');
         var alertPopup = $ionicPopup.alert({
             title: 'Login Error',
-            template: 'Please login.'
+            template: 'Please login'
         });
     });
  

@@ -13,8 +13,8 @@
             },
             function (err) {
                 var alertPopup = $ionicPopup.alert({
-                    title: 'Login failed!',
-                    template: 'Please check your credentials!'
+                    title: 'Login failed',
+                    template: 'Please check your credentials'
                 });
             });
     };

@@ -1,6 +1,7 @@
-﻿angular.module('PayMeBack').service('splitService', ['backendHostUrl', 'dateTimeProvider', '$http', splitService]);
+﻿angular.module('PayMeBack').service('splitService', ['backendHostUrl', 'dateTimeProvider', '$http', '$q', splitService]);
 
-function splitService(backendHostUrl, dateTimeProvider, $http) {
+function splitService(backendHostUrl, dateTimeProvider, $http, $q) {
+
     this.list = function () {
         return $http.get(backendHostUrl + '/splits').then(
             function successCallback(response) {
@@ -37,6 +38,6 @@ function splitService(backendHostUrl, dateTimeProvider, $http) {
     }
 
     function _errorCallback(response) {
-        
+        return $q.reject();
     }
 }

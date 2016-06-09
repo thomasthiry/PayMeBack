@@ -1,16 +1,23 @@
-﻿angular.module('PayMeBack').controller('SplitContactViewController', ['$scope', '$state', '$stateParams', 'contactService', function SplitContactViewController($scope, $state, $stateParams, contactService) {
+﻿angular.module('PayMeBack').controller('SplitContactViewController', ['$scope', '$state', '$stateParams', '$ionicPopup', 'contactService', function SplitContactViewController($scope, $state, $stateParams, $ionicPopup, contactService) {
 
-    contactService.getSplitContactById($stateParams.splitId, $stateParams.splitContactId).then(function (splitContact) {
-        splitContact.splitId = $stateParams.splitId;
-        splitContact.id = $stateParams.splitContactId;
-        $scope.splitContact = splitContact;
-    });
+    var showErrorPopup = function (response) {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Connection failed',
+            template: 'Please check your network'
+        });
+    };
+
+    contactService.getSplitContactById($stateParams.splitId, $stateParams.splitContactId).then(
+        function (splitContact) {
+            splitContact.splitId = $stateParams.splitId;
+            splitContact.id = $stateParams.splitContactId;
+            $scope.splitContact = splitContact;
+        }, showErrorPopup);
 
     $scope.save_click = function () {
-        contactService.updateSplitContact($scope.splitContact).then(function() {
-            $state.go('splitView', { splitId: $stateParams.splitId });
-        });
-
-        //$state.transitionTo('splitView', { splitId: $stateParams.splitId }, { reload: true, inherit: true, notify: true });
+        contactService.updateSplitContact($scope.splitContact).then(
+            function () {
+                $state.go('splitView', { splitId: $stateParams.splitId });
+            }, showErrorPopup);
     };
 }]);
