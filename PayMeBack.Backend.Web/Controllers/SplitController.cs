@@ -23,7 +23,7 @@ namespace PayMeBack.Backend.Web.Controllers
         [HttpGet]
         public IEnumerable<SplitDto> List()
         {
-            var userId = Convert.ToInt32(HttpContext.User.GetUserId());
+            var userId = GetCurrentUserId();
             return _mapper.Map<IEnumerable<SplitDto>>(_splitService.List(userId));
         }
 
@@ -38,7 +38,8 @@ namespace PayMeBack.Backend.Web.Controllers
         [HttpPost]
         public SplitDto Create([FromBody]SplitCreationDto splitCreationDto)
         {
-            var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created);
+            var userId = GetCurrentUserId();
+            var createdSplit = _splitService.Create(splitCreationDto.Name, splitCreationDto.Created, userId);
             return _mapper.Map<SplitDto>(createdSplit);
         }
 
@@ -47,6 +48,11 @@ namespace PayMeBack.Backend.Web.Controllers
         public SettlementDto Settle([FromRoute]int id)
         {
             return _mapper.Map<SettlementDto>(_splitService.Settle(id));
+        }
+
+        private int GetCurrentUserId()
+        {
+            return Convert.ToInt32(HttpContext.User.GetUserId());
         }
     }
 }

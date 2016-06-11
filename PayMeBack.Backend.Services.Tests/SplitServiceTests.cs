@@ -55,13 +55,14 @@ namespace PayMeBack.Backend.Services.Tests
         [Fact]
         public void Create_ReturnsCreatedSplit()
         {
-            var splitStub = new Split { Id = 3, Name = "Created split", Created = new DateTime(2016, 12, 05, 12, 30, 58) };
-            _splitRepositoryMock.Setup(r => r.Insert(It.Is<Split>(s => s.Name == splitStub.Name && s.Created == splitStub.Created))).Returns(splitStub);
+            var splitStub = new Split { Id = 3, Name = "Created split", Created = new DateTime(2016, 12, 05, 12, 30, 58), UserId = 5 };
+            _splitRepositoryMock.Setup(r => r.Insert(It.Is<Split>(s => s.Name == splitStub.Name && s.Created == splitStub.Created && s.UserId == splitStub.UserId))).Returns(splitStub);
 
-            var split = _splitService.Create(splitStub.Name, splitStub.Created);
+            var split = _splitService.Create(splitStub.Name, splitStub.Created, splitStub.UserId);
 
             Assert.Equal(splitStub.Name, split.Name);
             Assert.Equal(splitStub.Created, split.Created);
+            Assert.Equal(splitStub.UserId, split.UserId);
         }
 
         [Fact]

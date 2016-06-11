@@ -30,9 +30,9 @@ namespace PayMeBack.Backend.Services
             return _splitRepository.Get(s => s.UserId == userId);
         }
 
-        public Split Create(string name, DateTime created)
+        public Split Create(string name, DateTime created, int userId)
         {
-            var split = new Split { Name = name, Created = created };
+            var split = new Split { Name = name, Created = created, UserId = userId };
             return _splitRepository.Insert(split);
         }
 

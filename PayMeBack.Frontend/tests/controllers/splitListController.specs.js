@@ -42,16 +42,4 @@
             expect($state.go).toHaveBeenCalledWith('splitView', { splitId: splitReturnedInCallback.id });
         });
     });
-
-    describe('click on add with no network', function () {
-        beforeEach(function () {
-            splitServiceSpy.create.and.returnValue({ then: function (callback, errorCallback) { return errorCallback(); } });
-            $scope.add_click();
-        });
-        it('should show the error popup', function () {
-            expect(splitServiceSpy.list).toHaveBeenCalled();
-            expect($scope.splits.length).toEqual(2);
-            expect($scope.splits[1].name).toEqual('Tomorrow');
-        });
-    });
 });

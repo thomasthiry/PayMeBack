@@ -39,7 +39,8 @@ namespace PayMeBack.Backend.Web
 
             InjectionConfig.ConfigureCustomServices(services);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True"; //;MultipleActiveResultSets=True
+            //var connection = @"Server=(localdb)\mssqllocaldb;Database=PayMeBack_dev;Trusted_Connection=True";
+            var connection = @"Server=192.168.1.4\sqlexpress;Database=PayMeBack_dev;User Id=sa;Password=Bonjour1;";
 
             services.AddEntityFramework()
                 .AddSqlServer()
